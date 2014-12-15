@@ -1,0 +1,17 @@
+﻿@using Teamroom.Web.Views
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Action("ProductsSidebar", "Product")
+
+
+<div class="page-content-wrapper">
+    <div class="page-content">
+        @RenderSection("pageHeader", false)
+        @RenderBody()
+    </div>
+</div>
+@section scripts{
+    @RenderSection("scripts", required: false)
+}

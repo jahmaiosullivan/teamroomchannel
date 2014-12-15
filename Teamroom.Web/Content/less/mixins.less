@@ -1,0 +1,48 @@
+﻿.gray(@percent) {
+  color: lighten(@black, percentage(@percent / 100));
+}
+
+.background-cover(@cover: cover) {
+  -webkit-background-size: @cover;
+  -moz-background-size: @cover;
+  -o-background-size: @cover;
+  background-size: @cover;
+}
+
+.textShadowBlack(@shadow: 0 1px 0px rgba(0,0,0,1)) {
+  text-shadow: @shadow;
+}
+.textShadowWhite(@shadow: 0 1px 0px rgba(255,255,255,1)) {
+  text-shadow: @shadow;
+}
+
+.highlight(@backgroundColor, @textColor) {
+  ::selection, -moz::selection {
+    background: @backgroundColor;
+    color: @textColor;
+  }
+}
+
+.radius(@radius) {
+	-moz-border-radius: @radius;
+	-webkit-border-radius: @radius;
+	border-radius: @radius;
+}
+
+.boxShadow(@boxShadow) {
+	-moz-box-shadow: @boxShadow;
+	-webkit-box-shadow: @boxShadow;
+	box-shadow: @boxShadow;
+}
+
+.opacity(@opacity) {
+	@opacityPercent: @opacity * 100;
+	opacity: @opacity;
+	-ms-filter: ~"progid:DXImageTransform.Microsoft.Alpha(Opacity=@{opacityPercent})";
+	filter: ~"alpha(opacity=@{opacityPercent})";
+}
+
+.wordWrap(@wordWrap: break-word) {
+	-ms-word-wrap: @wordWrap;
+	word-wrap: @wordWrap;
+}

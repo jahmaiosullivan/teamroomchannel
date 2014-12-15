@@ -1,0 +1,149 @@
+﻿@using HobbyClue.Web.ViewModels
+@using Teamroom.Web.Views
+
+
+@using (Html.BeginForm("Create", "Event", FormMethod.Post, new { @id = "newhobby-form", novalidate = "novalidate" }))
+{
+    <div>
+        <div class="form-group row">
+            <label class="col-md-2 control-label">Name: </label>
+            <div class="col-md-10">
+                <input id="hobbyName" name="hobbyName" type="text" class="form-control input-medium" placeholder="Enter name of your hobby">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-md-2">Description: </label>
+            <div class="col-md-10">
+                <textarea id="hobbyDescription" class="wysihtml5 form-control" rows="4"></textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-md-2"> </label>
+            <div class="col-md-10">
+                <div>
+                    <span class="btn btn-success fileinput-button">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>Add a picture...</span>
+                        <!-- The file input field used as target for the file upload widget -->
+                        <input id="newhobbyfu" type="file" name="files[]" multiple>
+                    </span>
+                </div>
+                <!-- The container for the uploaded files -->
+                <div id="files" class="files widget widget-recent-photos" style="margin-top:10px;">
+                    <ul id="newHobbyPicList"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnCreateHobby" type="submit" class="btn btn-primary">Create</button>
+    </div>
+}
+
+<script>
+    
+    $(document).ready(function () {
+        wireNewHobbyValidation();
+        wireNewHobbyImageUpload();
+
+        $('.files').on('click', 'a.delete', function () {
+            $(this).parents('li:first').remove();
+        });
+
+        $('#btnCreateHobby').click(function() {
+        });
+    });
+
+    function wireNewHobbyImageUpload() {
+        'use strict';
+        // Change this to the location of your server-side upload handler:
+        var uploadButton = $('<button/>');
+        $(uploadButton).addClass('btn btn-primary')
+                       .prop('disabled', true)
+                       .text('Processing...')
+                       .on('click', function () {
+                            var $this = $(this);
+                            var data = $this.data();
+                            $this.off('click').text('Abort').on('click', function () {
+                                                                            $this.remove();
+                                                                            data.abort();
+                                                                        });
+                            data.submit().always(function () {
+                            $this.remove();
+                        });
+                    });
+
+        $('#newhobbyfu').fileupload({
+            url: '/file/ajaxupload',
+            paramName: "files",
+            formData: { tempid: HobbyClue.General.guid() },
+            autoUpload: true,
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            maxFileSize: 5000000, // 5 MB
+            // Enable image resizing, except for Android and Opera,
+            // which actually support image resizing, but fail to
+            // send Blob objects via XHR requests:
+            disableImageResize: /Android(?!.*Chrome)|Opera/
+                .test(window.navigator.userAgent),
+            previewMaxWidth: 200,
+            previewMaxHeight: 150,
+            previewCrop: true
+        })
+        .on('fileuploadadd', function (e, data) { })
+        .on('fileuploadprocessalways', function (e, data) { })
+        .on('fileuploadfail', function (e, data) {
+            $.each(data.files, function (index) { 
+                var error = $('<span class="text-danger"/>').text('File upload failed.');
+                $(data.context.children()[index]).append('<br>').append(error);
+            });
+        })
+        .on('fileuploaddone', function (e, data) {
+            var previewElement = $('<li/>').appendTo('ul#newHobbyPicList');
+            $(previewElement).attr('data-filename', data.result.files[0].imageUrl).prepend('<a href="#" class="delete"><i class="fa fa-trash-o"></i></a>').prepend(data.files[0].preview);
+        })
+        .prop('disabled', !$.support.fileInput)
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+    }
+    
+    function wireNewHobbyValidation()
+    {
+        $("#newhobby-form").validate({
+            rules: {
+                hobbyName: {
+                    required: true,
+                    minlength: 4,
+                    maxlength: 50
+                }
+            },
+            messages: {
+                hobbyName: {
+                    required: "Please enter a name for your hobby"
+                }
+            },
+            submitHandler: function (form) {
+                var newHobby = {
+                    Name: $('#hobbyName').val(),
+                    Description: $('#hobbyDescription').val(),
+                    ImageUrl: $('#newHobbyPicList > li:first').attr('data-filename')
+                };
+                 $.ajax({
+                    beforeSend: function (request) {
+                        request.setRequestHeader("RequestVerificationToken", '@Html.TokenHeaderValue()');
+                    },
+                    url: '/api/hobby/save',
+                    type: 'POST',
+                    data: JSON.stringify(newHobby),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (item) {
+                        var hobbyItem = ko.mapping.fromJS(item);
+                        viewModel.allHobbies.push(hobbyItem);
+                        $('#newHobbyModal').modal('hide');
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) { }
+                });
+            }
+        });
+
+    }
+</script>

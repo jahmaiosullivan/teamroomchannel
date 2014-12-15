@@ -1,0 +1,24 @@
+﻿@using Teamroom.Web.Views
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section headerbottomcontent {
+    @RenderSection("headerbottomcontent", required: true)
+}
+
+<div class="col-md-3">
+        @RenderSection("leftsidebar", required: true)
+    </div>
+    <div id="content" class="col-md-6">
+        @RenderBody()
+    </div>
+    <div class="col-md-3">
+        @RenderSection("rightsidebar", required: true)
+    </div>
+
+
+@section scripts{
+    @RenderSection("scripts", required: false)
+}

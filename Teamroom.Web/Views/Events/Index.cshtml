@@ -1,0 +1,207 @@
+﻿@using HobbyClue.Data.Models
+@using HobbyClue.Web.ViewModels
+@using Teamroom.Web.Views
+@model HobbyClue.Web.ViewModels.EventIndexViewModel
+
+@Html.Partial("UploadModal")           
+
+<input type="hidden" id="deckId" value="@Model.Deck.Id"/>
+
+<div class="page-title">
+    <div class="grid-row" style="padding: 5px;">
+        <h1>@Model.Deck.Title</h1>
+        <nav class="bread-crumbs">
+            <a href="#">Home</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;
+            <span>@Model.Deck.Title</span>&nbsp;
+        </nav>
+    </div>
+</div>
+
+<div class="page">
+    <div class="grid-col grid-col-12 composer">
+            @Html.Partial("Slider", Model.Deck)
+            <p>@Model.Deck.Description</p>
+            <div class="share">
+                <span>74</span>
+                <a href="#" class="fa fa-facebook"></a>
+                <span>66</span>
+                <a href="#" class="fa fa-twitter"></a>
+                <span>45</span>
+                <a href="#" class="fa fa-pinterest"></a>
+                <span>12</span>
+                <a href="#" class="fa fa-google-plus"></a>
+                <span>10</span>
+                <a href="#" class="fa fa-linkedin"></a>
+            </div>
+            <div class="pull-right">
+                <div class="rating">
+                    <span style="width:60%"></span>
+                </div>
+
+            </div>
+
+            <div id="commentsList" class="comments">
+                <h2>Comments</h2>
+                @CommentsHml(Model.Messages)
+            </div>
+                </div>
+    @*<div class="grid-col grid-col-3">
+        @SidebarWidgets()
+    </div>*@
+</div>
+   
+
+@helper CommentsHml(IEnumerable<MessageViewModel> messages, int level = 0)
+{
+    if (messages.Any())
+    {
+        foreach (var comment in messages)
+        {
+            <ul class="commentsBlock" data-commentid="@comment.Id">
+                <li>
+                    <i class="fa fa-user"></i>
+                    <div class="text">
+                        <div class="author">
+                            @if (comment.IsOwner)
+                            {
+                                <a href="#" class="post-edit">edit &nbsp;<i class="fa fa-edit"></i></a>
+                                <a href="#" class="post-delete">delete &nbsp;<i class="fa fa-trash-o"></i></a>
+                            }
+                            @if (level < 2)
+                            {
+                                <a href="#" class="reply">Reply &nbsp;<i class="fa fa-reply"></i></a>
+                            }
+                            <a href="#">@comment.CreatorName</a> &nbsp; @comment.CreatedDate, 47 minutes ago
+                        </div>
+                        <p>@comment.Body</p>
+                    </div>
+                    @if (comment.Children.Any())
+                    {
+                        <div>Right here</div>
+                        level++;
+                        @CommentsHml(comment.Children, level)
+                    }
+                    else
+                    {
+                        <div>Right here</div>
+                    }
+                 
+                </li>
+            </ul>
+        }
+    }
+    else
+    {
+        <a id="firstComment" href="#">Leave a comment</a>
+    }
+}
+
+
+@helper SidebarWidgets()
+{
+    <div class="widget-area" style="display: none;">
+        <div class="widget widget-recent-posts">
+            <div class="head"><i class="green fa fa-pencil"></i>Related Decks</div>
+            <ul>
+                <li>
+                    <a href="#"><img src="pic/recent-posts/item-1.jpg" width="54" height="54" alt=""></a>
+                    <p><a href="#">Pellentesque eget odio</a><br>Tortor dignissim laoreet sed ac erat aenean.</p>
+                    <div>
+                        <span>2 days ago</span>
+                        <!--
+                            -->
+                        <a href="#" class="fa fa-heart"></a>
+                        <!--
+                            -->
+                        <a href="#" class="fa fa-comment"></a>
+                    </div>
+                </li>
+                <li>
+                    <a href="#"><img src="pic/recent-posts/item-2.jpg" width="54" height="54" alt=""></a>
+                    <p><a href="#">Pellentesque eget odio</a><br>Tortor dignissim laoreet sed ac erat aenean.</p>
+                    <div>
+                        <span>3 days ago</span>
+                        <!--
+                            -->
+                        <a href="#" class="fa fa-heart"></a>
+                        <!--
+                            -->
+                        <a href="#" class="fa fa-comment"></a>
+                    </div>
+                </li>
+                <li>
+                    <a href="#"><img src="pic/recent-posts/item-3.jpg" width="54" height="54" alt=""></a>
+                    <p><a href="#">Pellentesque eget odio</a><br>Tortor dignissim laoreet sed ac erat aenean.</p>
+                    <div>
+                        <span>5 days ago</span>
+                        <!--
+                            -->
+                        <a href="#" class="fa fa-heart"></a>
+                        <!--
+                            -->
+                        <a href="#" class="fa fa-comment"></a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="widget widget-categories">
+            <div class="head"><i class="blue fa fa-align-justify"></i>Related Tags</div>
+            <div class="cont">
+                <ul>
+                    <li><a href="#"><i class="fa fa-angle-right"></i>Design</a></li>
+                    <li><a href="#"><i class="fa fa-angle-right"></i>Feature</a></li>
+                    <li><a href="#"><i class="fa fa-angle-right"></i>Film</a></li>
+                    <li><a href="#"><i class="fa fa-angle-right"></i>Music</a></li>
+                    <li><a href="#"><i class="fa fa-angle-right"></i>News</a></li>
+                    <li><a href="#"><i class="fa fa-angle-right"></i>Photography</a></li>
+                    <li><a href="#"><i class="fa fa-angle-right"></i>Travel</a></li>
+                    <li><a href="#"><i class="fa fa-angle-right"></i>TV</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+}
+
+
+<script>
+    $(document).ready(function() {
+        $('.reply').on('click', function () {
+            $('.respond').remove();
+            $(this).parents('li:first').append('<div class="respond"><textarea class="commentText" rows="10" placeholder="Your comment (required)"></textarea><button type="submit" class="button button-alt post-comment" data-isfirst="false">Post</button></div>');
+            return false;
+        });
+
+        $('#firstComment').on('click', function () {
+            alert('clicked');
+            $(this).parent().append('<div class="respond">' +
+                                        '<textarea class="commentText" rows="10" placeholder="Your comment (required)"></textarea>' +
+                                        '<button type="submit" class="button button-alt post-comment" data-isfirst="true">Post</button>' +
+                                    '</div>');
+            return false;
+        });
+
+
+        $('#commentsList').on('click', '.post-comment', function () {
+            var params = { Body: $(this).siblings('textarea').val(), DeckId: $('#deckId').val(), ParentId: $(this).parents('.commentsBlock:first').attr('data-commentid'), IsFirstMessage: $(this).attr('data-isfirst') };
+            $.ajax({
+                url: '/api/messages',
+                type: 'POST',
+                data: params,
+                success: function (data) { },
+                error: function (jqXHR, textStatus, errorThrown) { },
+            });
+        });
+
+        $('#commentsList').on('click', '.post-delete', function () {
+            $.ajax({
+                url: '/api/messages/' + $(this).parents('.commentsBlock:first').attr('data-commentid'),
+                type: 'DELETE',
+                success: function (data) { },
+                error: function (jqXHR, textStatus, errorThrown) { },
+            });
+        });
+
+    });
+</script>

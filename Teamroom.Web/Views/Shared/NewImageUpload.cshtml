@@ -1,0 +1,54 @@
+﻿@using HobbyClue.Web.ViewModels;
+@using Teamroom.Web.Views
+@model CardViewModel
+
+<div class="uploadingImage">
+    @using (Html.BeginForm("", "", FormMethod.Post, new { id = "fileupload", enctype = "multipart/form-data" }))
+    {
+        <div class="innercontainer">
+            <div role="presentation">
+                <div class="files"></div>
+            </div>
+        </div>
+        <div class="noimage fileinput-button">
+            <img id="uploadedImage" src="http://www.placehold.it/250x250/EFEFEF/AAAAAA&amp;text=select+image" alt="" height="250" width="250" data-uploaded="false" />
+            <input class="uploadBtn" type="file" name="files[]" multiple>
+        </div>
+        <label id="customeimageerror" for="uploadedImage" class="customerror">Please set an image by clicking the image placeholder above</label>
+    }
+</div>
+<div id="newActivityFieldContainer">
+    <div>
+        <h4>Description</h4>
+        <div class="input-group">
+            <textarea cols="20" id="Description" name="Description" rows="2"></textarea>
+        </div>
+    </div>
+    <div>
+        <h4>Where is it</h4>
+        <div class="input-group">
+            <input name="newActivityLocation" class="form-control input-mid mapsautocomplete" id="newActivityLocation" placeholder="Enter name of a place or address" type="text" value="" autocomplete="off">
+        </div>
+    </div>
+</div>
+
+@Html.Partial("FileUploadTemplates")
+
+<script>
+    $(document).ready(function () {
+        HobbyClue.ImageUpload.initialize();
+
+        HobbyClue.NewActivity._wireLocationBox(document.getElementById('newActivityLocation'));
+
+        $('.btn.imagedelete').click(function () {
+            var deletebtn = $(this);
+            $.ajax({
+                type: 'DELETE',
+                url: "/api/image/" + $(this).data('filename'),
+                dataType: 'text'
+            }).done(function () {
+                $(deletebtn).closest('tr').remove();
+            });
+        });
+    });
+</script>

@@ -1,0 +1,210 @@
+﻿@using HobbyClue.Web.ViewModels
+@using Teamroom.Web.Views
+@model GroupViewModel
+@{
+    Layout = "~/Views/Shared/_TwoColumnLayout.cshtml";
+}
+
+
+@section leftsidebar{
+    @Html.Partial("Sidebar", new SideBarViewModel { Selected = SidebarOptions.Past, GroupName = @Model.Name })
+}
+
+@section headerbottomcontent {
+    <h1 data-bind="text: name"></h1>
+    <nav class="bread-crumbs">
+     </nav>
+}
+
+<div id="inner" data-bind="attr: {'data-groupid': id() }">
+    <ul id="stream" data-bind="foreach: pastEvents">
+        <li class="postHolder" data-bind="attr: {id: 'event'+id() }">
+            <div class="postContent row">
+                <div class="row">
+                    <div class="pull-left col-md-7">
+                        <h2 class="eventtitle"><a href="javascript:;" data-bind="text: title"></a></h2>
+                    </div>
+                    <div class="col-md-5">
+                        <a href="#">Upload Photos</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="item isotope-item" data-bind="if: image">
+                            <ul class="entry-gallery">
+                                <li>
+                                    <a data-bind="attr: {href: image, title: title }" rel="nofollow">
+                                        <img data-bind="attr: {src: image }" width="100%" height="100%" alt="event main image">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="when" style="font-size: 18px; font-weight: 300;">
+                            <i class="icon fa fa-calendar"></i>
+                            <time id="event-startdate">
+                                <span data-bind="text: startDateDisplayText"></span>
+                                <span>
+                                    <span data-bind="text: ' at ' + startTime()"></span>
+                                    <!-- ko if: endTime -->
+                                    <span data-bind="text: ' until ' + endTime()"></span>
+                                    <!-- /ko -->
+                                </span>
+                            </time>
+                        </div>
+                        <p data-bind="html: description"></p>
+                        <div class="where">
+                            at <a href="#" target="_blank" data-bind="text: locationName"></a>
+                        </div>
+                        <div>
+                            <h4 data-bind="text: attendeeCount() + ' attended'"></h4>
+                            <div class="widget widget-attendees">
+                                <ul class=" userlist" data-bind="foreach: attendees">
+                                    <!-- ko if: isAttending -->
+                                    <li>
+                                        <img class="extrasmallavatar" data-bind="attr: {'src': user.avatarThumbnailUrl() }" alt="user avatar">
+                                        <div></div>
+                                    </li>
+                                    <!-- /ko -->
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            Hosted by: <a href="#">Jahmai OSullivan</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="postFooter">
+                <span class="adminactions">
+                    <a href="#delete" class="deleteevent" data-bind="click: function(data, event) { $parent.deleteevent($data)}"><i class="fa fa-trash-o"></i>delete</a>
+                    <a href="#" class="commentLink pull-right" data-bind="text: posts().length + ' comments', attr: {'data-eventId': id }, click: function(data, event) { $parent.toggleComment(data) }">Comment</a>
+                </span>
+            </div>
+            <div data-bind="attr: {'id': 'commentSection' + id() }" class="comments">
+                <ul data-bind="foreach: posts">
+                    <li class="commentHolder">
+                        <img data-bind="attr: { src: postedByAvatar }">
+                        <p style="margin-top: 0;margin-bottom: 0;"><a data-bind="text: postedByName"></a>: <span data-bind="html: message"></span></p>
+                        <div> <span class="timeago" data-bind="timeAgo: postedDate"></span></div>
+                        <a href="#" class="deletePost" data-bind="click: function(data, event) { deletePost(data) }">delete<i class="fa fa-trash-o"></i></a>
+                    </li>
+                </ul>
+                <div style="margin: 10px;">
+                    <textarea class="commentTextArea" data-bind="value: newComment" placeholder="write a comment..."></textarea>
+                    <div class="clearfix" style="padding-bottom: 10px;">
+                        <div>
+                            <a href="#" class="reply submit" data-bind="click: function(data, event) { $parent.createPost(data) }">Post &nbsp;<i class="fa fa-reply"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<script>
+    var viewModel;
+    var antiForgeryToken;
+    $(document).ready(function () {
+        viewModel = initializeViewModel(@Html.Raw(Model.ToJson()), '@Html.Raw(CurrentUser != null ? Guid.Parse(CurrentUser.Id) : Guid.Empty)');
+        wireOverlays();
+        antiForgeryToken = '@Html.TokenHeaderValue()';
+    });
+
+    function initializeViewModel(jsonString, currentUserId)
+    {
+        var viewModel = ko.mapping.fromJS(jsonString);
+        viewModel.createPost = function (item) {
+            var post = { EventId: item.id(), Message: item.newComment() }
+            return HobbyClue.Ajax.ajaxJsonPost('@Html.TokenHeaderValue()','/api/events/createpost',post, function (result) {
+                item.posts.push(ko.mapping.fromJS(result));
+                item.newComment('');
+            },function () {
+                error('unable to add comment');
+            });
+        };
+
+        viewModel.addEventComputedColumns = function(event) {
+            event.Attended = ko.computed(function () {
+                return $.grep(event.attendees(), function(n) {
+                    return n.user.id() == currentUserId;
+                }).length > 0;
+            });
+
+            event.attendeeCount = ko.computed(function() {
+                return $.grep(event.attendees(), function(n) {
+                    return n.isAttending() == true;
+                }).length;
+            });
+
+            $.each(event.posts(), function(index, post) {
+                var jsObject = ko.mapping.toJS(post);
+                jsObject.EventId = event.id();
+                post.deletePost = function () {
+                    return HobbyClue.Ajax.ajaxJsonPost('@Html.TokenHeaderValue()', '/api/events/deletepost', jsObject, function(result) {
+                        event.posts.remove(function(p) { return p.postId() == post.postId(); });
+                    }, function() {
+                        error('unable to remove comment');
+                    }, 'DELETE');
+                };
+            });
+        }
+
+        //Add computed event properties
+        $.each(viewModel.pastEvents(), function(index, event) {
+            viewModel.addEventComputedColumns(event);
+        });
+
+   
+
+        viewModel.deleteevent = function (event) {
+            var eventItem = { Id: event.id() };
+            $.ajax({
+                beforeSend: function (request) {
+                    request.setRequestHeader("RequestVerificationToken", '@Html.TokenHeaderValue()');
+                },
+                url: '/api/events',
+                type: 'DELETE',
+                data: JSON.stringify(eventItem),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (item) {
+                    viewModel.pastEvents.remove(function(i) { return i.id() == event.id(); });
+                },
+                error: function (jqXHR, textStatus, errorThrown) { }
+            });
+        };
+
+        viewModel.toggleComment = function(element) {
+            $('#commentSection' + element.id()).toggle();
+        }
+
+
+        ko.applyBindings(viewModel);
+        return viewModel;
+    }
+
+
+    function wireOverlays() {
+        $(".fancybox").fancybox({
+            padding: 0,
+            fitToView: true, // avoids scaling the image to fit in the viewport
+            beforeShow: function () {
+                // set size to (fancybox) img
+                $(".fancybox-image").css({
+                    "width": 800,
+                    "height": 600
+                });
+                // set size for parent container
+                this.width = 800;
+                this.height = 600;
+            },
+            afterLoad: function () {
+                this.inner.prepend('<div style="position: absolute; top: 0; left: 0;"><h1>1. My custom title</h1></div>');
+                //this.content = '<h1>2. My custom title</h1>' + this.content.html();
+            }
+        });
+    }
+</script>

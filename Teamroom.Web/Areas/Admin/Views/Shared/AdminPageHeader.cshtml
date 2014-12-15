@@ -1,0 +1,9 @@
+﻿@model PageHeaderViewModel
+
+<h3 class="page-title">
+    @string.Format("{0}", Model.Title ?? ViewBag.Title)
+    @if (!string.IsNullOrEmpty(Model.SubTitle))
+    {
+        <small>@Model.SubTitle</small>
+    }
+</h3>

@@ -1,0 +1,24 @@
+﻿@using Teamroom.Web.Views
+<div id="tagSelectModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Select Tags</h3>
+                <a class="modalClose" data-dismiss="modal" title="close">x</a>
+            </div>
+            <div class="modal-body">
+                <div class="fourcolumntable">
+                    <div class="row">
+                        <div data-bind="foreach: alltags">
+                            <div class="column" data-bind="attr: {'data-tagid': id}">
+                                <i class="tagcheck fa fa-check-circle" data-bind="css: isUserTag()  ? 'selected' : ''"></i>
+                                <span data-bind="text: name"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

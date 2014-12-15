@@ -1,0 +1,44 @@
+﻿@using Teamroom.Web.Views
+<div class="modal fade" id="addModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div>
+                <h3>Add Picture</h3>
+                <a class="modalClose" data-dismiss="modal" title="close">x</a>
+            </div>
+            <div class="modal-body">
+                <div id="newActivityBox" class="clearfix"></div>
+                <div class="modal-footer">
+                    <button id="addTags" class="actionbutton" data-bind="click: AddCardTags">Add Tags <i class="fa fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="selectcardtags" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Select Tags</h4>
+            </div>
+            <div class="modal-body">
+                <div class="fourcolumntable">
+                    <div id="cardtags" class="row">
+                        <label id="cardtagserror" class="customerror">Please select at least one tag</label>
+                        <div data-bind="foreach: alltags">
+                            <div class="column cardtag" data-bind="attr: {'data-tagid': id}, click: $parent.togglecardtagselect, css:{'selected': isCardTag()}">
+                                <i class="tagcheck fa fa-check-circle"></i>
+                                <span data-bind="text: name"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="saveNewActivity" class="actionbutton" data-bind="click: SaveActivity">Post</button>
+            </div>
+        </div>
+    </div>
+</div>

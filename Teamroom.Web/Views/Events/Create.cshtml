@@ -1,0 +1,139 @@
+﻿@using HobbyClue.Web.ViewModels
+@using Teamroom.Web.Views
+@model CreateEventViewModel
+
+<div class="page-content-alt-2">
+    <div class="grid-row">
+        <section id="portfolio" class="portfolio portfolio-4">
+            <h2>Create a hobby deck</h2>
+            @using (Html.BeginForm("Create","Event", FormMethod.Post, new {@id = "register-form", novalidate="novalidate"}))
+            {
+                <div id="form-content">
+                    <fieldset>
+                        <div class="control-group">
+                            <label for="title">Title</label>
+                            <div class="controls">
+                                <input type="text" name="title" id="title" placeholder="Title (required)" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label for="description">Description</label>
+                            <div class="controls">
+                                <textarea name="description" id="description" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="location">Location</label>
+                            <div class="controls">
+                                <input id="location" class="controls" type="text" placeholder="Search Box">
+                            </div>
+                        </div>
+
+                        @Html.Partial("Tags", Model.Tags)
+                        @Html.Partial("PictureList",Model.Cards)
+
+                        <div class="control-group">
+                            <button class="submit btn btn-primary" type="submit">Post</button>
+                        </div>
+                    </fieldset>
+                </div>
+            }            
+        </section>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        wireOverlays();
+        wireValidation();
+
+        $('.filter > a').on('click', function () {
+            $(this).toggleClass('active');
+        });
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+    });
+
+    function initialize() {
+        new google.maps.places.SearchBox(document.getElementById('location'));
+    }
+
+    
+    function wireOverlays() {
+        $(".fancybox")
+            .fancybox({
+                openEffect: 'none',
+                closeEffect: 'none',
+                padding: 0,
+                nextEffect: 'none',
+                prevEffect: 'none',
+                margin: [20, 60, 20, 60], // Increase left/right margin
+                afterLoad: function () {
+                    this.inner.prepend('<h1>1. My custom title</h1>');
+                    //this.content = '<h1>2. My custom title</h1>' + this.content.html();
+                }
+            });
+    }
+
+
+    function wireValidation() {
+        jQuery.validator.addMethod("checkTags", function (value) {
+            return $('.widget-tags').find('.active').length > 0 ? true : false;
+        }, "* At least one tag must be selected");
+
+                   
+        //form validation rules
+        $("#register-form").validate({
+            rules: {
+                title: "required",
+                body: "tagSelected",
+                checkTags: { checkTags: true }
+            },
+            messages: {
+                title: "Please enter a title"
+            },
+            submitHandler: function (form) {
+                var jsonArr = [];
+                $.each($('.card'), function (index, card) {
+                    jsonArr.push({
+                        id: $(card).data('cardid'),
+                        comment: $(card).find('.comment:first').val()
+                    });
+                });
+
+                var tags = [];
+                $.each($('.filter > a.active'), function (index, tag) {
+                    tags.push({
+                        id: $(tag).data('tagid'),
+                        name: $(tag).text()
+                    });
+                });
+                
+                var newActivity = {
+                    title: $('#title', form).val(),
+                    Description: $('#description', form).val(),
+                    cards: jsonArr,
+                    Location: $('#location', form).val(),
+                    Tags: tags
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: form.action,
+                    data: JSON.stringify(newActivity),
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    success: function () {
+                        alert('redirecting');
+                        window.location.replace("/");
+                    }
+                });
+            }
+        });
+
+    }
+
+
+</script>

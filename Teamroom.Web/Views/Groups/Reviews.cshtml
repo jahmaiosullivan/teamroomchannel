@@ -1,0 +1,7 @@
+﻿@using HobbyClue.Web.ViewModels
+@using Teamroom.Web.Views
+<div class="grid-row" data-bind="attr: {'data-groupid': id }">
+    @Html.Partial("Sidebar", new SideBarViewModel { Selected = SidebarOptions.Reviews, GroupName = "ballardboardgames" })
+    <div class="col-md-9">
+    </div>
+</div>

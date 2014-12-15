@@ -1,0 +1,42 @@
+﻿@using Teamroom.Web.Views
+
+<script id="image-template" type="text/x-handlebars-template">
+    <table id="allImagesList" class="table table-striped">
+        <tbody class="files">
+            {{#each Data}}
+            {{> imageView}}
+            {{/each}}
+        </tbody>
+    </table>
+</script>
+
+@*new images have all lowercase and so do not render*@
+
+<script id="singleimage-template" type="text/x-handlebars-template">
+    <tr class="template-download">
+        <td>
+            <span class="preview">
+                <img src="{{ThumbnailUrl}}">
+            </span>
+        </td>
+        <td>
+            <p class="name">
+                {{#if Url }}
+                <a href="{{Url}}" target="_blank" title="{{Name}}" data-download="{{Name}}">{{Url}}</a>
+                {{/if}}
+            </p>
+            {{#if Error }}
+            <div><span class="label label-danger">Error</span>{{Error}}</div>
+            {{/if}}
+        </td>
+        <td>
+            <span class="size">{{Size}}</span>
+        </td>
+        <td>
+            <button class="btn red imagedelete" data-filename="{{Name}}">
+                <i class="fa fa-trash-o"></i>
+                <span>Delete</span>
+            </button>
+        </td>
+    </tr>
+</script>

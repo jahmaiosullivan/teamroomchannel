@@ -1,0 +1,130 @@
+﻿@using HobbyClue.Web.ViewModels
+@using Teamroom.Web.Views
+
+<style>
+    
+  
+</style>
+
+<div id="groupModal" class="modal fade" data-mode="create" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create New Group</h3>
+                <a class="modalClose" data-dismiss="modal" title="close">X</a>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Create", "Group", FormMethod.Post, new { @id = "newgroup-form", novalidate = "novalidate" }))
+                {
+                    <div>
+                        <div class="form-group">
+                            <label class="control-label">Name: </label>
+                            <div>
+                                <input id="groupname" name="groupname" type="text" class="form-control input-medium" placeholder="Name of your group">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Url: </label>
+                            <div>
+                                <input id="groupurl" name="groupurl" type="text" class="form-control input-medium" placeholder="Url for your group">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Description: </label>
+                            <div>
+                                <textarea id="description" class="wysihtml5 form-control" rows="4"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Logo: </label>
+                            <div>
+                                <div id="uploadbox" onclick="singleupload_input.click();" class="singleupload"></div>
+                                <input type="file" id="singleupload_input" style="display:none;" name="img" value="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Members are called: </label>
+                            <div>
+                                <input id="membername" name="membername" type="text" class="form-control input-medium" placeholder="members">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group right">
+                        <button id="btnCreateGroup" class="submit btn btn-primary" type="submit">Create</button>
+                        @*<button id="btnCreateGroup" data-bind="click: function(data, event) { addGroup(data) }" data-url="/Api/Groups/Save" class="submit btn btn-primary">Create</button>*@
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        wireValidation();
+        $('#uploadbox').singleupload({
+            action: '/file/singlefileupload',
+            inputId: 'singleupload_input',
+            onError: function (code) {
+                console.debug('error code ' + res.code);
+            },
+            onSuccess: function (url, data) {
+                $('#return_url_text').val(url);
+            }
+            /*,onProgress: function(loaded, total) {} */
+        });
+    });
+
+
+    function wireValidation()
+    {
+        $("#newgroup-form").validate({
+            rules: {
+                groupname: {
+                    required: true,
+                    minlength: 4,
+                    maxlength: 250
+                },
+                groupurl: {
+                    required: true,
+                    minlength: 4,
+                    maxlength: 50
+                }
+            },
+            messages: {
+                groupname: {
+                    required: "Please enter a name for your group"
+                },
+                groupurl: {
+                    required: "Please enter a url for your group"
+                }
+            },
+            submitHandler: function (form) {
+                var groupObj = {
+                    name: $(form).find('#groupname').val(),
+                    url: $(form).find('#groupurl').val(),
+                    description: $(form).find('#description').val(),
+                    membersPseudonym: $(form).find('#membername').val(),
+                    imageUrl: $(form).find('#uploadbox > img').attr('src'),
+                };
+                HobbyClue.Ajax.ajaxJsonPost('@Html.TokenHeaderValue()', '/api/groups/save', groupObj,
+                    function (item) {
+                        var mode = $('#groupModal').attr('data-mode');
+                        if (mode == 'create') {
+                            var jsonModel = ko.mapping.fromJS(item);
+                            viewModel.myGroups.unshift(jsonModel);
+                        }
+                        $('#groupModal').modal('hide');
+                    },
+                    function () {
+                        alert('error occurred');
+                    });
+
+              
+            }
+        });
+
+        }
+</script>

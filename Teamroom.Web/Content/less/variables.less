@@ -1,0 +1,49 @@
+﻿// Single primary color that all mixins use. Str8 ballin.
+@primary:        hsl(202, 100%, 50%);
+ 
+// Primary Variants -
+@primaryLight:   hsl(hue(@primary), 100%, 70%);
+@primaryDark:    hsl(hue(@primary), 60%, 40%);
+@primaryFaded:   hsl(hue(@primary), 60%, 65%);
+ 
+// 180degree Variants
+@variant:         spin((@primary), 180);
+@variantLight:    hsl(hue(@variant), 100%, 70%);
+@variantDark:     hsl(hue(@variant), 60%, 40%);
+@variantFaded:    hsl(hue(@variant), 60%, 65%);
+ 
+// 90degree Variants
+@corner:         spin((@primary), 70);
+@cornerLight:    hsl(hue(@corner), 100%, 70%);
+@cornerDark:     hsl(hue(@corner), 60%, 40%);
+@cornerFaded:    hsl(hue(@corner), 60%, 65%);
+
+@brand-primary: #2692FF;
+@font_family: 'Open Sans', sans-serif;
+@color_1: #333;
+@background_color: #fff;
+@grayColor: #eaedf1;
+@default_fontsize: 12px;
+@default_spacing: 5px;
+@normal_blue: #4d90fe;
+@green_color: #35aa47;
+@light_green: #1d943b;
+@bigtext: 6em;
+@darkgrey: #383838;
+@lightgreyborder: 1px solid #dfdfdf;
+@black: #000000;
+@grey: #999999;
+@light-grey: #dfdfdf;
+@white: #FFFFFF;
+@near-black: #030303;
+@green: #51A351;
+@red: #BD362F;
+@blue: #2F96B4;
+@orange: #F89406;
+
+@textblack: #1b1e24;
+
+@sidebarcolor-light: #22262E;
+@sidebarcolor-dark: #1B1E24;
+
+@defaultSpacing: 10px;

@@ -1,0 +1,62 @@
+﻿@using Teamroom.Web.Views
+<div class="modal fade" id="newIntroModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+         @using (Html.BeginForm("Create", "IntrosApi", FormMethod.Post, new { @id = "newIntro-form", novalidate = "novalidate" }))
+         {
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Add New Intro</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label class="col-md-2 control-label">Title: </label>
+                    <div class="col-md-10">
+                        <input id="title" name="title" type="text" class="form-control input-medium" placeholder="Enter a title for your intro">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="control-label col-md-2">Description: </label>
+                    <div class="col-md-10">
+                        <textarea id="description" class="wysihtml5 form-control" rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 control-label">Video Url: </label>
+                    <div class="col-md-10">
+                        <input id="videourl" name="videourl" type="text" class="form-control input-medium" placeholder="Url of your intro video">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="control-label col-md-2"> </label>
+                    <div class="col-md-10">
+                        <div>
+                            <span class="btn btn-success fileinput-button">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                <span>Add a picture...</span>
+                                <!-- The file input field used as target for the file upload widget -->
+                                <input id="newintrofu" type="file" name="files[]" multiple>
+                            </span>
+                        </div>
+                        <!-- The container for the uploaded files -->
+                        <div id="files" class="files widget" style="margin-top:10px;">
+                            <ul id="newPicList"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnCreateIntro" type="submit" class="btn btn-primary">Post Intro</button>
+            </div>
+        }
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        HobbyClue.NewIntro.wireIntroValidation();
+        HobbyClue.NewIntro.wireNewIntroImageUpload();
+    });
+</script>
+

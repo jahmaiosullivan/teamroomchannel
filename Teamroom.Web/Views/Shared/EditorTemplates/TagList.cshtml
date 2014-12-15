@@ -1,0 +1,27 @@
+﻿@using HobbyClue.Web.ViewModels
+@using Teamroom.Web.Views
+@model TagListViewModel
+
+@{
+    var tagsJson = Html.Raw(Html.Action("AllTags", "Shared").ToString());
+    var selectedTagsJson = Model != null ? Html.Raw(Model.ToJson()) : new HtmlString("[]");
+}
+
+
+<ul id="@ViewData.ModelMetadata.PropertyName" name="@ViewData.ModelMetadata.PropertyName"></ul>
+
+<script>
+    $(document).ready(function () {
+        var selectedTags = @selectedTagsJson;
+        for(var i = 0; i < selectedTags.length; i++) {
+            var obj = selectedTags[i];
+            $("#@ViewData.ModelMetadata.PropertyName").append('<li>'+obj +'</li>');
+        }
+
+        $("#@ViewData.ModelMetadata.PropertyName").tagit({
+            availableTags: @tagsJson,
+            removeConfirmation: true,
+            allowSpaces: true
+        });
+    });
+</script>

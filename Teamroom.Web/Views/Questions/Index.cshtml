@@ -1,0 +1,184 @@
+﻿@using HobbyClue.Web.ViewModels
+@using Teamroom.Web.Views
+@model QuestionViewModel
+@{
+    Layout = null;
+}
+
+<style>
+    .modal-dialog {
+        width: 80%;
+    }
+
+    .questionMsgs .message:first-child {
+        border: none;
+        margin-left: 0;
+        background: none;
+    }
+
+    .faded:hover {
+opacity: 1;
+}
+.faded {
+opacity: 0.5;
+}
+</style>
+
+<div id="questionModalContent" class="portlet">
+    <div class="line chatblock">
+        <div class="tools">
+            <a href="javascript:;" class="remove" data-dismiss="modal" aria-hidden="true" style="position: absolute; right: 20px;"></a>
+        </div>
+        <div class="caption" style="width: 100%;">
+            <img class="avatar" data-bind="attr: { src: createdBy.avatarThumbnailUrl, alt: 'Avatar of ' + createdBy.displayName()  }" />
+            <div class="quesHeader" style="margin-right: 30px;vertical-align: middle;height: 45px;">
+                <div class="clearfix">
+                    <h3 class="pull-left" style="margin: 0;color: #2b4a5c;font-weight: 600;line-height: 45px;">
+                        <span data-bind="text: title"></span>
+                    </h3>
+                    <div class="pull-right">
+                        <a href="javascript:;" class="name" data-bind="text: createdBy.displayName"></a><span class="datetime"> <span class="timeago datetime" data-bind="timeAgo: createdDate" style="color: #637b89;"></span></span>
+                    </div>
+                </div>
+                <div class="pull-right faded">
+                    <a href="#" class="btn btn-mini btn-danger" title="lock"><i class="fa fa-lock icon-white"></i></a>
+                    <a href="#" class="btn btn-mini btn-warning" title="delete"><i class="fa fa-trash-o icon-white"></i></a>
+                    <a href="#" class="btn btn-mini btn-success" title="edit"><i class="fa fa-edit icon-white"></i></a>
+                    <a href="#" class="btn btn-mini btn-info" title="flag as inappropriate"><i class="fa fa-flag icon-white"></i></a>
+                    <a href="#" class="btn btn-mini btn-primary" title="mark as resolved"><i class="fa  fa-pencil-square icon-white"></i></a>
+                    <a href="#" class="btn btn-mini btn-primary" title="unmark as resolved"><i class="fa  fa-pencil-square-o icon-white"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="portlet-body" id="chats" style="overflow-y: scroll;">
+        <div>
+            <ul class="chats questionMsgs">
+                <li class="in" style="border-bottom: 1px solid #eee;">
+                    <div class="message">
+                        <p class="body" data-bind="html: body"></p>
+                        <div class="clearfix" style="padding: 5px;">
+                            <a href="javascript:;" data-bind="click: function(data) { setCurrentMessage(null)}" class="reply mdeditorcntrl open-editor" style="display: block;float: right;padding: 0 15px;border-radius: 5px;background: #037cff;font-size: 13px;line-height: 23px;color: #fff;">Reply &nbsp;<i class="fa fa-reply"></i></a>
+                        </div>
+                    </div>
+                </li>
+                <!-- ko if: replies().length == 0 -->
+                <li class="in">
+                    <div class="note note-info" style="height: 150px;">
+                        <p>
+                            Be the first to <a id="inlinereplylink" href="javascript:;">reply</a> to this question.
+                        </p>
+                    </div>
+                </li>
+                <!-- /ko -->
+                <!-- ko foreach: replies -->
+                    <!-- ko template: { name: 'singleMessageTemplate', data: $data  } --><!-- /ko -->
+                <!-- /ko -->
+            </ul>
+        </div>
+        <div style="position: absolute; bottom: 10px; width: 97%; ">
+            <div id="replytoauthor" class="clearfix" style="background-color: #e9eff3; display: none;">
+                <div class="col-md-12">
+                    Reply to <a id="postauthor" href="javascript:;">PostAuthor</a>
+                </div>
+            </div>
+            @Html.Partial("NewMessageBox", "Enter a reply ...")
+        </div>
+    </div>
+</div>
+
+<script id="singleMessageTemplate" type="text/html">
+    <li data-bind="attr:{id: 'reply' + id() }" class="in">
+        <img class="avatar" data-bind="attr: { src: createdBy.avatarThumbnailUrl, alt: 'Avatar of ' + createdBy.displayName()  }" />
+        <div class="message">
+            <span class="arrow"></span>
+            <a href="javascript:;" class="name" data-bind="text: createdBy.displayName"></a>
+            <span class="timeago datetime" data-bind="timeAgo: createdDate" style="color: #637b89;"></span>
+            <span class="body" data-bind="html: body"></span>
+            <div class="clearfix" style="padding: 5px;">
+                <a data-bind="attr: {'data-parentid': id() }, click: function(data) { setCurrentMessage(data)}" data-savefunc="" href="javascript:;" class="reply open-editor mdeditorcntrl" style="display: block;float: right;padding: 0 15px;border-radius: 5px;background: #037cff;font-size: 13px;line-height: 23px;color: #fff;">Reply &nbsp;<i class="fa fa-reply"></i></a>
+            </div>
+            <!-- ko template: { if: children().length > 0 } -->
+            <ul class="children">
+                <!-- ko template: { name: 'singleMessageTemplate', foreach: children  } --><!-- /ko -->  
+            </ul>
+            <!-- /ko -->
+        </div>
+    </li>
+</script>
+
+<script>
+    function setCurrentMessage(item) {
+        questionViewModel.currentMessage(item);
+    }
+
+    var questionViewModel;
+    $(document).ready(function () {
+        resizeDiv();
+        questionViewModel = ko.mapping.fromJS(@Html.Raw(Model.ToJson()));
+        questionViewModel.currentMessage = ko.observable(null);
+
+        ko.applyBindings(questionViewModel, document.getElementById('questionModalContent'));
+        window.prettyPrint && prettyPrint();
+        var modalContent = $('#questionModalContent');
+
+        HobbyClue.Markdown.initializeNewMessageEditor(
+            modalContent, //root node
+            function (element, e) { //after show
+                if ($(element).hasClass('reply')) {
+                    var parentId = $(element).attr('data-parentid');
+                    var replyBlock = $('#reply' + parentId);
+                    $('#postauthor', modalContent).text(replyBlock.find('a.name').text());
+                    $('#replytoauthor', modalContent).show();
+                }
+            },
+            function (editor) { //save function
+                var parentMessage = questionViewModel.currentMessage();
+                var reply = { Body: editor.parseContent(), ParentMessageId: parentMessage != null ? parentMessage.id() : 0, QuestionId: questionViewModel.id() };
+                $.ajax({
+                    beforeSend: function (request) {
+                        request.setRequestHeader("RequestVerificationToken", '@Html.TokenHeaderValue()');
+                    },
+                    url: '/api/questions/reply',
+                    type: 'POST',
+                    data: JSON.stringify(reply),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (item) {
+                        var newReply = ko.mapping.fromJS(item);
+                        if (questionViewModel.currentMessage() == null) {
+                            questionViewModel.replies.push(newReply);
+                            scrollToEndOfReplies();
+                        } else {
+                            parentMessage.children.push(newReply);
+                        }
+                        window.prettyPrint && prettyPrint();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) { }
+                });
+            },
+            function (e) { //editor hidden function
+                $('#replytoauthor', modalContent).hide();
+            },
+            true, //hide title
+            true, //auto focus
+            'Reply' //save button text
+        );
+    });
+
+    window.onresize = function(event) {
+        resizeDiv();
+    }
+
+    function scrollToEndOfReplies() {
+        var objDiv = document.getElementById("chats");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
+
+    function resizeDiv() {
+        var vph = 0.88 * $(window).height();
+        var innervph = 0.75 * $(window).height();
+        $('#chats').css({ 'height': innervph + 'px' });
+        $('#questionModalContent').css({ 'height': vph + 'px' });
+    }
+</script>

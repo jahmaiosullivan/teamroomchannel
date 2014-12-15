@@ -1,0 +1,66 @@
+﻿@using HobbyClue.Web.ViewModels
+@using Teamroom.Web.Views
+@model CompanyViewModel
+
+@Html.Partial("HomeLeftSidebar")
+<div id="content-wrapper" class="content-wrapper">
+    <div id="content-wrapper-inside" class="content-wrapper__inside  sidebar--true full-width--true">
+        <div id="main-content" class="main-content main-content--xl main-content--l-plus main-content--m-plus">
+            <div class="main-content__inside" role="main">
+                <div class="nano-content" tabindex="0">
+                    <div class="sleek-blog sleek-blog--page">
+                        <ul class="loop-container loop-container--style-list">
+                            <li>
+                                <article id="@string.Format("post-{0}", Model.Id)" class="post format-standard sleek-animate-appearance sleek-fade-in-bottom-soft post--size-large image-light sleek-animate-appearance--start">
+                                    <div class="post__inwrap">
+                                        <div class="row">
+                                            <div class="post__meta col-md-12">
+                                                <div class="pull-left">
+                                                    @if (!string.IsNullOrEmpty(Model.Logo))
+                                                    {
+                                                        <img id="companyLogo" alt="@Model.Name" src="@Model.Logo" height="32" width="32" style="float: left;top: 5px;position: relative;" />
+                                                    }
+                                                    <h2 style="margin:0; padding: 0;float: left">@Model.Name<button id="btnKeepInTouch" type="button" class="btn btn-primary" style="margin-left: 10px;">Keep in touch</button></h2>
+                                                </div>
+                                                <div class="pull-right"><small class="address"><a href="#"><span class="icon-pointer"></span> @Model.Location</a></small></div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-bottom: 10px;">
+                                            <div class="col-md-12">
+                                                <h3 class="page-title">@Model.Name</h3>
+                                            </div>
+                                        </div>
+                                        <div class="format-head">
+                                            <div class="post__media">
+                                                <img src='@Model.Intro.Images.ToList()[0]' class='attachment-l wp-post-image' alt='sleek_post01_00_00' />
+                                            </div>
+                                        </div>
+                                        <div class="post__text">
+                                            <p class="excerpt">
+                                                @Html.Raw(Model.Description)
+                                            </p>
+                                        </div>
+                                        <div class="separator"></div>
+                                    </div>
+                                </article>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <aside id="sidebar" class="sidebar dark-mode" role="complementary">
+            @Html.Partial("ConversationSidebar")
+        </aside>
+    </div>
+</div>
+
+
+
+@section scripts {
+    <script>
+            $(document).ready(function () {
+                QuickSidebar.init(); // init quick sidebar
+            });
+    </script>
+}

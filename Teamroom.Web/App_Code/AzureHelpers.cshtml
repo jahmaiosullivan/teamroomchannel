@@ -1,0 +1,27 @@
+﻿@using System.Security.Cryptography
+@using System.Text
+@using HobbyClue.Data.Azure.Base
+@using HobbyClue.Web.Configuration
+@using Teamroom.Web.Configuration
+
+@functions {
+    public static string GenerateAuthKey(string url, string time)
+    {
+        const string account = "hobbyclue";
+        var cloudClientWrapper = WebContainer.Current.GetInstance<ICloudClientWrapper>();
+        var sharedKey = Convert.FromBase64String(cloudClientWrapper.StorageAccount.Credentials.ExportBase64EncodedKey());
+
+        var resourcePath = new Uri(url).PathAndQuery;
+        if (resourcePath.Contains("?"))
+        {
+            resourcePath = resourcePath.Substring(0, resourcePath.IndexOf("?"));
+        }
+
+        var stringToSign = string.Format("{0}\n/{1}{2}", time, account, resourcePath);
+        var hasher = new HMACSHA256(sharedKey);
+
+        var signedSignature = Convert.ToBase64String(hasher.ComputeHash(Encoding.UTF8.GetBytes(stringToSign)));
+        var authorizationHeader = string.Format("{0} {1}:{2}", "SharedKeyLite", account, signedSignature);
+        return authorizationHeader;
+    }
+}

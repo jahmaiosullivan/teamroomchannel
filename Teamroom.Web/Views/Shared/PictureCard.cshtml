@@ -1,0 +1,40 @@
+﻿@using Teamroom.Web.Views
+<div data-bind="attr: {'data-activityid': id}" class="picturecard">
+    <article class="post hentry clearfix">
+        @if (Request.IsAuthenticated && CurrentUser.IsInRole("Administrator"))
+        {
+            <div class="adminActions">
+                <ul>
+                    <li><a class="delete" href="#" data-bind="click: $parent.removeActivity">delete</a></li>
+                </ul>
+            </div>
+        }
+        <div data-bind="template: { name: $parent.templateName($data), data: $data }"></div>
+        <div class="innerdetails">
+            <div class="details">
+                <div class="leftside">
+                    <div class="user-profile-pic text-left">
+                        <img data-bind="attr: {src: creator.avatar}" alt="">
+                    </div>
+                </div>
+                <div class="middle">
+                    <div class="authorUsername" data-bind="text: creator.name"></div>
+                    <span class="description" data-bind="text: description"></span>
+                    <div data-bind="text: location.address"></div>
+                    <div data-bind="foreach: tags">
+                        <a class="hashtag" data-bind="text: '#' + $data.name(), attr: {href: '/@Model.Region/@Model.CurrentCity/' + $data.name() }"></a>
+                    </div>
+                </div>
+                <div class="rightside">
+                    <time data-bind="text: createdDate, attr: {datetime: ztime}" class="cluetime"></time>
+                    <div class="rating">
+                        <a href="#" class="ratingup" data-bind="click: $parent.incrementVote"><i class="fa fa-thumbs-o-up"></i><span data-bind="text: thumbsUpCount"></span> </a>
+                        <a href="#" class="ratingdown" data-bind="click: $parent.decrementVote"><i class="fa fa-thumbs-o-down"></i><span data-bind="text: thumbsDownCount"></span></a>
+                    </div>
+                    <a href="#" data-bind="click: function() {$parent.openPopup($index())}"><span data-bind="text: commentCount"></span> comments</a>
+                </div>
+            </div>
+        </div>
+    </article>
+</div>
+

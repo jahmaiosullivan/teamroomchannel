@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="">
+    <title>HobbyClue - @ViewBag.Title</title>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    @Styles.Render("~/global/styles")
+    @Styles.Render("~/admin/styles")
+    <!--[if lt IE 9]>
+        <script src="/areas/admin/scripts/plugins/respond.min.js"></script>
+        <script src="/areas/admin/scripts/plugins/excanvas.min.js"></script>
+    <![endif]-->    
+    @Scripts.Render("~/global/scripts")
+    @Scripts.Render("~/admin/scripts")
+
+    <script>
+        jQuery(document).ready(function() {
+            Metronic.init(); // init metronic core componets
+            Layout.init(); // init layout
+            QuickSidebar.init(); // init quick sidebar
+            Demo.init(); // init demo features
+            HobbyClue.handleWysihtml5($('body'));
+        });
+    </script>
+</head>
+<body class="home page-header-fixed">
+    @Html.Partial("AdminTopHeader")
+    <div class="page-container">
+        @{ Html.RenderAction("Sidebar", "Admin"); }
+        <div class="page-content-wrapper">
+            <div class="page-content">
+                @RenderSection("pageHeader", required: true)
+                @RenderBody()
+            </div>
+        </div>
+        @Html.Partial("AdminNotificationsBar")
+    </div>
+    @Html.Partial("AdminFooter")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+
+

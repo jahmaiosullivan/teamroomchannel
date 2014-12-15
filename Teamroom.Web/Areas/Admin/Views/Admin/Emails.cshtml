@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Emails";
+}
+@section pageHeader {
+    @Html.Partial("AdminPageHeader", new PageHeaderViewModel())
+}
+
+<div id="emails-page">
+    <div class="form-group row">
+        <label class="control-label col-md-2" for="emailnewmember">New member email: </label>
+        <div class="col-md-10">
+            <textarea id="emailnewmember" class="wysihtml5 form-control" rows="4"></textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="control-label col-md-2" for="emaileventannouncement">Event announcement email: </label>
+        <div class="col-md-10">
+            <textarea id="emaileventannouncement" class="wysihtml5 form-control" rows="4"></textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="control-label col-md-2" for="emaileventreminder">Event reminder email: </label>
+        <div class="col-md-10">
+            <textarea id="emaileventreminder" class="wysihtml5 form-control" rows="4"></textarea>
+        </div>
+    </div>
+</div>

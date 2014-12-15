@@ -1,0 +1,378 @@
+﻿@using Teamroom.Web.Views
+
+<div class="sidebar__content">
+    <div class="sidebar__general js-nano-sidebar-general nano has-scrollbar">
+        <div class="nano-content" tabindex="0" style="right: -21px;">
+
+            <div class="page-quick-sidebar-wrapper">
+                <div class="page-quick-sidebar">
+                    <div>
+                        <ul class="nav nav-tabs nav-justified">
+                            <li class="active">
+                                <a href="#quick_sidebar_tab_1" data-toggle="tab" aria-expanded="true">
+                                    My Interactions
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="#quick_sidebar_tab_2" data-toggle="tab" aria-expanded="false">
+                                    Community
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="#quick_sidebar_tab_3" data-toggle="tab" aria-expanded="false">
+                                    Team
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active page-quick-sidebar-chat" id="quick_sidebar_tab_1">
+                                <button class="btn" style="background-color:orange; color: white;">Ask a question</button>
+                                <div class="page-quick-sidebar-chat-users" data-rail-color="#ddd" data-wrapper-class="page-quick-sidebar-list">
+                                    <ul class="media-list list-items">
+                                        @Media("Bob Nilson", "/areas/admin/content/layout/img/avatar3.jpg", "Project Manager",8)
+                                        @Media("Nick Larson", "/areas/admin/content/layout/img/avatar1.jpg", "Art Director")
+                                        @Media("Deon Hubert", "/areas/admin/content/layout/img/avatar4.jpg", "CTO", 3)
+                                        @Media("Ella Wong", "/areas/admin/content/layout/img/avatar2.jpg", "CEO")
+                                        @Media("Lara Kunis", "/areas/admin/content/layout/img/avatar6.jpg", "CEO, Loop Inc", 2)
+                                        @Media("Ernie Kyllonen", "/areas/admin/content/layout/img/avatar7.jpg", "Project Manager,<br>SmartBizz PTL", isNew: true)
+                                        @Media("Lisa Stone", "/areas/admin/content/layout/img/avatar8.jpg", "CTO, Keort Inc")
+                                        @Media("Deon Portalatin", "/areas/admin/content/layout/img/avatar9.jpg", "CFO, H&D LTD",7)
+                                        @Media("Irina Savikova", "/areas/admin/content/layout/img/avatar10.jpg", "CEO, Tizda Motors Inc")
+                                        @Media("Maria Gomez", "/areas/admin/content/layout/img/avatar11.jpg", "Manager, Infomatic Inc", 4)
+                                        @Media("Bob Nilson", "/areas/admin/content/layout/img/avatar3.jpg", "Project Manager", 8)
+                                        @Media("Nick Larson", "/areas/admin/content/layout/img/avatar1.jpg", "Art Director")
+                                        @Media("Deon Hubert", "/areas/admin/content/layout/img/avatar4.jpg", "CTO", 3)
+                                        @Media("Ella Wong", "/areas/admin/content/layout/img/avatar2.jpg", "CEO")
+                                        @Media("Lara Kunis", "/areas/admin/content/layout/img/avatar6.jpg", "CEO, Loop Inc", 2)
+                                        @Media("Ernie Kyllonen", "/areas/admin/content/layout/img/avatar7.jpg", "Project Manager,<br>SmartBizz PTL", isNew: true)
+                                        @Media("Lisa Stone", "/areas/admin/content/layout/img/avatar8.jpg", "CTO, Keort Inc")
+                                        @Media("Deon Portalatin", "/areas/admin/content/layout/img/avatar9.jpg", "CFO, H&D LTD", 7)
+                                        @Media("Irina Savikova", "/areas/admin/content/layout/img/avatar10.jpg", "CEO, Tizda Motors Inc")
+                                        @Media("Maria Gomez", "/areas/admin/content/layout/img/avatar11.jpg", "Manager, Infomatic Inc", 4)
+                                    </ul>
+                                </div>
+                                <div class="page-quick-sidebar-item">
+                                    <div class="page-quick-sidebar-chat-user">
+                                        <div class="page-quick-sidebar-nav">
+                                            <a href="javascript:;" class="page-quick-sidebar-back-to-list"><i class="icon-arrow-left"></i>Back</a>
+                                        </div>
+                                        <div class="page-quick-sidebar-chat-user-messages">
+                                            <div class="post in">
+                                                <img class="avatar" alt="" src="/areas/admin/content/layout/img/avatar3.jpg" />
+                                                <div class="message">
+                                                    <span class="arrow"></span>
+                                                    <a href="#" class="name">Bob Nilson</a>
+                                                    <span class="datetime">20:15</span>
+                                                    <span class="body">
+                                                        When could you send me the report ?
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="post in">
+                                                <img class="avatar" alt="" src="/areas/admin/content/layout/img/avatar2.jpg" />
+                                                <div class="message">
+                                                    <span class="arrow"></span>
+                                                    <a href="#" class="name">Ella Wong</a>
+                                                    <span class="datetime">20:15</span>
+                                                    <span class="body">
+                                                        Its almost done. I will be sending it shortly
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="post in">
+                                                <img class="avatar" alt="" src="/areas/admin/content/layout/img/avatar3.jpg" />
+                                                <div class="message">
+                                                    <span class="arrow"></span>
+                                                    <a href="#" class="name">Bob Nilson</a>
+                                                    <span class="datetime">20:15</span>
+                                                    <span class="body">
+                                                        Alright. Thanks! :)
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="post in">
+                                                <img class="avatar" alt="" src="/areas/admin/content/layout/img/avatar2.jpg" />
+                                                <div class="message">
+                                                    <span class="arrow"></span>
+                                                    <a href="#" class="name">Ella Wong</a>
+                                                    <span class="datetime">20:16</span>
+                                                    <span class="body">
+                                                        You are most welcome. Sorry for the delay.
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="post in">
+                                                <img class="avatar" alt="" src="/areas/admin/content/layout/img/avatar3.jpg" />
+                                                <div class="message">
+                                                    <span class="arrow"></span>
+                                                    <a href="#" class="name">Bob Nilson</a>
+                                                    <span class="datetime">20:17</span>
+                                                    <span class="body">
+                                                        No probs. Just take your time :)
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="post in">
+                                                <img class="avatar" alt="" src="/areas/admin/content/layout/img/avatar2.jpg" />
+                                                <div class="message">
+                                                    <span class="arrow"></span>
+                                                    <a href="#" class="name">Ella Wong</a>
+                                                    <span class="datetime">20:40</span>
+                                                    <span class="body">
+                                                        Alright. I just emailed it to you.
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="post in">
+                                                <img class="avatar" alt="" src="/areas/admin/content/layout/img/avatar3.jpg" />
+                                                <div class="message">
+                                                    <span class="arrow"></span>
+                                                    <a href="#" class="name">Bob Nilson</a>
+                                                    <span class="datetime">20:17</span>
+                                                    <span class="body">
+                                                        Great! Thanks. Will check it right away.
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="post in">
+                                                <img class="avatar" alt="" src="/areas/admin/content/layout/img/avatar2.jpg" />
+                                                <div class="message">
+                                                    <span class="arrow"></span>
+                                                    <a href="#" class="name">Ella Wong</a>
+                                                    <span class="datetime">20:40</span>
+                                                    <span class="body">
+                                                        Please let me know if you have any comment.
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="post in">
+                                                <img class="avatar" alt="" src="/areas/admin/content/layout/img/avatar3.jpg" />
+                                                <div class="message">
+                                                    <span class="arrow"></span>
+                                                    <a href="#" class="name">Bob Nilson</a>
+                                                    <span class="datetime">20:17</span>
+                                                    <span class="body">
+                                                        Sure. I will check and buzz you if anything needs to be corrected.
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane page-quick-sidebar-chat" id="quick_sidebar_tab_2">
+                                <button class="btn" style="background-color:orange; color: white;">Ask a question</button>
+                                <div class="page-quick-sidebar-chat-users" data-rail-color="#ddd" data-wrapper-class="page-quick-sidebar-list">
+                                    <ul class="media-list list-items">
+                                        @Media("Bob Nilson", "/areas/admin/content/layout/img/avatar3.jpg", "Project Manager", 8)
+                                        @Media("Nick Larson", "/areas/admin/content/layout/img/avatar1.jpg", "Art Director")
+                                        @Media("Deon Hubert", "/areas/admin/content/layout/img/avatar4.jpg", "CTO", 3)
+                                        @Media("Ella Wong", "/areas/admin/content/layout/img/avatar2.jpg", "CEO")
+                                        @Media("Lara Kunis", "/areas/admin/content/layout/img/avatar6.jpg", "CEO, Loop Inc", 2)
+                                        @Media("Ernie Kyllonen", "/areas/admin/content/layout/img/avatar7.jpg", "Project Manager,<br>SmartBizz PTL", isNew: true)
+                                        @Media("Lisa Stone", "/areas/admin/content/layout/img/avatar8.jpg", "CTO, Keort Inc")
+                                        @Media("Deon Portalatin", "/areas/admin/content/layout/img/avatar9.jpg", "CFO, H&D LTD", 7)
+                                        @Media("Irina Savikova", "/areas/admin/content/layout/img/avatar10.jpg", "CEO, Tizda Motors Inc")
+                                        @Media("Maria Gomez", "/areas/admin/content/layout/img/avatar11.jpg", "Manager, Infomatic Inc", 4)
+                                        @Media("Bob Nilson", "/areas/admin/content/layout/img/avatar3.jpg", "Project Manager", 8)
+                                        @Media("Nick Larson", "/areas/admin/content/layout/img/avatar1.jpg", "Art Director")
+                                        @Media("Deon Hubert", "/areas/admin/content/layout/img/avatar4.jpg", "CTO", 3)
+                                        @Media("Ella Wong", "/areas/admin/content/layout/img/avatar2.jpg", "CEO")
+                                        @Media("Lara Kunis", "/areas/admin/content/layout/img/avatar6.jpg", "CEO, Loop Inc", 2)
+                                        @Media("Ernie Kyllonen", "/areas/admin/content/layout/img/avatar7.jpg", "Project Manager,<br>SmartBizz PTL", isNew: true)
+                                        @Media("Lisa Stone", "/areas/admin/content/layout/img/avatar8.jpg", "CTO, Keort Inc")
+                                        @Media("Deon Portalatin", "/areas/admin/content/layout/img/avatar9.jpg", "CFO, H&D LTD", 7)
+                                        @Media("Irina Savikova", "/areas/admin/content/layout/img/avatar10.jpg", "CEO, Tizda Motors Inc")
+                                        @Media("Maria Gomez", "/areas/admin/content/layout/img/avatar11.jpg", "Manager, Infomatic Inc", 4)
+                                    </ul>
+                                </div>
+                                <div class="page-quick-sidebar-item">
+                                    <div class="page-quick-sidebar-chat-user">
+                                        <div class="page-quick-sidebar-nav">
+                                            <a href="javascript:;" class="page-quick-sidebar-back-to-list"><i class="icon-arrow-left"></i>Back</a>
+                                        </div>
+                                        <div class="page-quick-sidebar-chat-user-messages">
+                                            <div class="post in">
+                                                <img class="avatar" alt="" src="/areas/admin/content/layout/img/avatar3.jpg" />
+                                                <div class="message">
+                                                    <span class="arrow"></span>
+                                                    <a href="#" class="name">Bob Nilson</a>
+                                                    <span class="datetime">20:15</span>
+                                                    <span class="body">
+                                                        When could you send me the report ?
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="post in">
+                                                <img class="avatar" alt="" src="/areas/admin/content/layout/img/avatar2.jpg" />
+                                                <div class="message">
+                                                    <span class="arrow"></span>
+                                                    <a href="#" class="name">Ella Wong</a>
+                                                    <span class="datetime">20:15</span>
+                                                    <span class="body">
+                                                        Its almost done. I will be sending it shortly
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="post in">
+                                                <img class="avatar" alt="" src="/areas/admin/content/layout/img/avatar3.jpg" />
+                                                <div class="message">
+                                                    <span class="arrow"></span>
+                                                    <a href="#" class="name">Bob Nilson</a>
+                                                    <span class="datetime">20:15</span>
+                                                    <span class="body">
+                                                        Alright. Thanks! :)
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="post in">
+                                                <img class="avatar" alt="" src="/areas/admin/content/layout/img/avatar2.jpg" />
+                                                <div class="message">
+                                                    <span class="arrow"></span>
+                                                    <a href="#" class="name">Ella Wong</a>
+                                                    <span class="datetime">20:16</span>
+                                                    <span class="body">
+                                                        You are most welcome. Sorry for the delay.
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="post in">
+                                                <img class="avatar" alt="" src="/areas/admin/content/layout/img/avatar3.jpg" />
+                                                <div class="message">
+                                                    <span class="arrow"></span>
+                                                    <a href="#" class="name">Bob Nilson</a>
+                                                    <span class="datetime">20:17</span>
+                                                    <span class="body">
+                                                        No probs. Just take your time :)
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="post in">
+                                                <img class="avatar" alt="" src="/areas/admin/content/layout/img/avatar2.jpg" />
+                                                <div class="message">
+                                                    <span class="arrow"></span>
+                                                    <a href="#" class="name">Ella Wong</a>
+                                                    <span class="datetime">20:40</span>
+                                                    <span class="body">
+                                                        Alright. I just emailed it to you.
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="post in">
+                                                <img class="avatar" alt="" src="/areas/admin/content/layout/img/avatar3.jpg" />
+                                                <div class="message">
+                                                    <span class="arrow"></span>
+                                                    <a href="#" class="name">Bob Nilson</a>
+                                                    <span class="datetime">20:17</span>
+                                                    <span class="body">
+                                                        Great! Thanks. Will check it right away.
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="post in">
+                                                <img class="avatar" alt="" src="/areas/admin/content/layout/img/avatar2.jpg" />
+                                                <div class="message">
+                                                    <span class="arrow"></span>
+                                                    <a href="#" class="name">Ella Wong</a>
+                                                    <span class="datetime">20:40</span>
+                                                    <span class="body">
+                                                        Please let me know if you have any comment.
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="post in">
+                                                <img class="avatar" alt="" src="/areas/admin/content/layout/img/avatar3.jpg" />
+                                                <div class="message">
+                                                    <span class="arrow"></span>
+                                                    <a href="#" class="name">Bob Nilson</a>
+                                                    <span class="datetime">20:17</span>
+                                                    <span class="body">
+                                                        Sure. I will check and buzz you if anything needs to be corrected.
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane page-quick-sidebar-chat" id="quick_sidebar_tab_3">
+                                <div class="page-quick-sidebar-chat-users" data-rail-color="#ddd" data-wrapper-class="page-quick-sidebar-list">
+                                    <h3 class="list-heading">Online Now</h3>
+                                    <ul class="media-list list-items">
+                                        @TeamMember("Bob Nilson", "/areas/admin/content/layout/img/avatar3.jpg", "Project Manager")
+                                        @TeamMember("Nick Larson", "/areas/admin/content/layout/img/avatar1.jpg", "Art Director")
+                                        @TeamMember("Deon Hubert", "/areas/admin/content/layout/img/avatar4.jpg", "CTO")
+                                        @TeamMember("Ella Wong", "/areas/admin/content/layout/img/avatar2.jpg", "CEO")
+                                        @TeamMember("Lara Kunis", "/areas/admin/content/layout/img/avatar6.jpg", "CEO, Loop Inc")
+                                        @TeamMember("Ernie Kyllonen", "/areas/admin/content/layout/img/avatar7.jpg", "Project Manager,<br>SmartBizz PTL")
+                                        @TeamMember("Lisa Stone", "/areas/admin/content/layout/img/avatar8.jpg", "CTO, Keort Inc")
+                                        @TeamMember("Deon Portalatin", "/areas/admin/content/layout/img/avatar9.jpg", "CFO, H&D LTD")
+                                        @TeamMember("Irina Savikova", "/areas/admin/content/layout/img/avatar10.jpg", "CEO, Tizda Motors Inc")
+                                        @TeamMember("Maria Gomez", "/areas/admin/content/layout/img/avatar11.jpg", "Manager, Infomatic Inc")
+                                        @TeamMember("Bob Nilson", "/areas/admin/content/layout/img/avatar3.jpg", "Project Manager")
+                                        @TeamMember("Nick Larson", "/areas/admin/content/layout/img/avatar1.jpg", "Art Director")
+                                        @TeamMember("Deon Hubert", "/areas/admin/content/layout/img/avatar4.jpg", "CTO")
+                                        @TeamMember("Ella Wong", "/areas/admin/content/layout/img/avatar2.jpg", "CEO")
+                                        @TeamMember("Lara Kunis", "/areas/admin/content/layout/img/avatar6.jpg", "CEO, Loop Inc")
+                                        @TeamMember("Ernie Kyllonen", "/areas/admin/content/layout/img/avatar7.jpg", "Project Manager,<br>SmartBizz PTL")
+                                        @TeamMember("Lisa Stone", "/areas/admin/content/layout/img/avatar8.jpg", "CTO, Keort Inc")
+                                        @TeamMember("Deon Portalatin", "/areas/admin/content/layout/img/avatar9.jpg", "CFO, H&D LTD")
+                                        @TeamMember("Irina Savikova", "/areas/admin/content/layout/img/avatar10.jpg", "CEO, Tizda Motors Inc")
+                                        @TeamMember("Maria Gomez", "/areas/admin/content/layout/img/avatar11.jpg", "Manager, Infomatic Inc")
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="nano-pane"><div class="nano-slider" style="height: 348px; transform: translate(0px, 0px);"></div></div>
+    </div>
+</div>
+@helper Media(string threadCreator, string avatarUrl, string subheading, int replyCnt = 0, bool isNew = false)
+{
+    <li class="media">
+        @if (replyCnt > 0)
+        {
+            <div class="media-status">
+                <span class="badge badge-success">@replyCnt</span>
+            </div>
+        }
+        @if (isNew)
+        {
+            <div class="media-status">
+                <span class="label label-sm label-success">new</span>
+            </div>
+        }
+        <img class="media-object" src="@avatarUrl" alt="avatar of @threadCreator">
+        <div class="media-body">
+            <h4 class="media-heading">@threadCreator</h4>
+            <div class="media-heading-sub">
+                @subheading
+            </div>
+            <div class="media-heading-small">
+                Last seen 03:10 AM
+            </div>
+        </div>
+    </li>
+}
+
+@helper TeamMember(string threadCreator, string avatarUrl, string subheading)
+{
+    <li class="media">
+        <div class="media-status">
+            <span class="badge badge-success" style="background-color: green;"> </span>
+        </div>
+        <img class="media-object" src="@avatarUrl" alt="avatar of @threadCreator">
+        <div class="media-body">
+            <h4 class="media-heading">@threadCreator</h4>
+            <div class="media-heading-sub">
+                @subheading
+            </div>
+            <div class="media-heading-small">
+                Last seen 03:10 AM
+            </div>
+        </div>
+    </li>
+}

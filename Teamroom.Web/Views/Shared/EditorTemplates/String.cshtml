@@ -1,0 +1,10 @@
+﻿@using Teamroom.Web.Views
+@{
+    var placeholder = string.Empty;
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("placeholder"))
+    {
+        placeholder = ViewData.ModelMetadata.AdditionalValues["placeholder"] as string;
+    }
+}
+
+@Html.TextBoxFor(x => x, new { @class = "form-control input-mid", placeholder = placeholder })

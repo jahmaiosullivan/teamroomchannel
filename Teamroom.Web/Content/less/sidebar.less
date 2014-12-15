@@ -1,0 +1,75 @@
+﻿#sidebar
+{
+    .make-md-column(2); 
+    height: 100%;
+    color: white;
+    @media(min-width: @screen-desktop) {
+        width: 12%;
+        background-color: @sidebarcolor-dark;
+        padding: 0;
+        position: fixed;
+    }
+    @media(max-width: @screen-xs) {
+        display:none;
+    }
+}
+
+
+section#useractions{
+    margin-top: @defaultSpacing;
+    margin-bottom: @defaultSpacing;
+}
+
+section#useractions .links{
+    width: 100px;
+}
+
+section#useractions .authorUsername{
+    margin-bottom:@defaultSpacing;
+}
+
+
+
+section#useractions .user-profile-pic{
+    margin-right: @defaultSpacing;
+}
+
+#sidebar a, #sidebar .tags i {
+    color: #8B91A0;
+}
+
+ #sidebar .tags i {
+     margin-right: @defaultSpacing;
+ }
+
+#sidebar a {
+    display: block;
+    padding: 0 10px;
+    min-height: 35px;
+    line-height: 35px;
+    font-size: 0.9em;
+    color: white;
+}
+
+#sidebar ul > li.selected a {
+    background-color: rgba(0, 0, 0, 0.298039);
+    border-left: 5px solid @brand-primary2;
+    border-right: 5px solid @brand-primary2;
+    color: white;
+    padding-left:@defaultSpacing;
+}
+
+#sidebar #btnAddNew {
+    @media(min-width: @screen-desktop) {
+        width: 90%;
+    }    
+}
+
+#sidebar ul li.subitems {
+    padding-left: @defaultSpacing;
+    display: none;
+}
+
+#sidebar ul.selected li.subitems, #sidebar ul.donothide li.subitems {
+    display: block;
+}

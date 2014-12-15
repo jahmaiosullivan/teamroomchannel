@@ -1,0 +1,61 @@
+﻿@using HobbyClue.Web.ViewModels
+@using Teamroom.Web.Views
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en">
+    <!--<![endif]-->
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
+        <title>YoorCity - @ViewBag.Title</title>
+        @Styles.Render("~/global/styles")
+        <!-- Custom -->
+        <link href="~/Content/theme1/custom.css" rel="stylesheet">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+        <!-- fonts -->
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="~/Content/theme1/font-awesome-4.0.3/css/font-awesome.min.css">
+
+        <!-- CSS STYLE-->
+        <link rel="stylesheet" type="text/css" href="~/Content/theme1/style.css" media="screen" />
+
+        <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
+        <link rel="stylesheet" type="text/css" href="~/Content/theme1/rs-plugin/css/settings.css" media="screen" />
+     </head>
+
+    <body>
+        <input id="antiforgeryToken" type="hidden" value='@Html.TokenHeaderValue()' />
+        <div class="container-fluid">
+            @RenderBody()
+        </div>
+
+        <!--[if lt IE 9]>
+        <script src="~/Scripts/plugins/respond.min.js"></script>
+        <script src="~/Scripts/plugins/excanvas.min.js"></script>
+        <![endif]-->
+        <script src="~/Scripts/plugins/jquery.min.js" type="text/javascript"></script>
+        <script src="~/Scripts/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+        <!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+        <script src="~/Scripts/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+        <script src="~/Scripts/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="~/Scripts/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+        <script src="~/Scripts/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+        <script src="~/Scripts/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+        <script src="~/Scripts/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+        <script src="~/Scripts/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+        <script src="~/Scripts/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+        @Scripts.Render("~/global/scripts")
+        <!-- END CORE PLUGINS -->
+        @RenderSection("scripts", false)
+</body>
+</html>
+

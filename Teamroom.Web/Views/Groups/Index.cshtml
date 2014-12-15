@@ -1,0 +1,446 @@
+﻿@using HobbyClue.Web.Models
+@using HobbyClue.Web.ViewModels
+@using Teamroom.Web.Views
+@model HomePageViewModel
+           
+@{
+    Layout = "~/Views/Shared/_ThreeColumnLayout.cshtml";
+}
+
+<style>
+    .portfolio .item .pic div {
+        position: relative;
+        overflow: hidden;
+        padding-bottom: 100%;
+    }
+
+    .portfolio .item {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .join-hobby {
+        position: fixed;
+        z-index: 9;
+        right: 10px;
+        top: 160px;
+        display: none;
+    }
+
+    #hobbyPicList li {
+        width: 130px;
+        position: relative;
+        display: inline-block;
+        overflow: hidden;
+        margin: 6px 0 0 6px;
+    }
+
+        #hobbyPicList li a.delete {
+            top: 16px;
+            left: 16px;
+        }
+
+    #txtMessage {
+        margin-bottom: 0;
+    }
+
+    .widget div[class^="col-"] {
+        padding-left: 0;
+    }
+
+    .box-social-buttons {
+        padding-left: 10px;
+        height: 100%;
+    }
+
+        .box-social-buttons a.pukka-share {
+            display: inline-block;
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            color: #fff;
+        }
+
+
+    .brick-content {
+        position: relative;
+        padding: 0 5px;
+        overflow: hidden;
+    }
+
+
+    .brick-medium {
+        width: 250px;
+        height: 520px;
+    }
+
+    .brick-small {
+        width: 250px;
+        height: 250px;
+    }
+
+
+    [class^="icon-"], [class*=" icon-"] {
+        font-family: 'icomoon';
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        /* Better Font Rendering =========== */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .icon-facebook-rounded:before {
+        content: "\e600";
+    }
+
+    .icon-twitter-rounded:before {
+        content: "\e605";
+    }
+
+    .icon-pinterest-rounded:before {
+        content: "\e613";
+    }
+
+    .icon-flickr-rounded:before {
+        content: "\e623";
+    }
+
+    .icon-google-rounded:before {
+        content: "\e633";
+    }
+
+    .box-social-buttons a {
+        margin-right: 10px;
+    }
+</style>
+
+
+@Html.Partial("_Modal", new ModalViewModel { Id = "addHobbyModal", Title = "Hobbies", ShowFooter = false })
+@Html.Partial("_Modal", new ModalViewModel { Id = "newHobbyModal", Title = "Create a New Interest", Content = @Html.Partial("CreateHobbyModal"), ShowFooter = false })
+
+@section leftsidebar {
+@Html.Partial("Sidebar", new SideBarViewModel { Selected = SidebarOptions.Discussions, GroupName = "ballardboardgames" })
+}
+
+@section headerbottomcontent {
+    
+}
+
+
+<div id="content">
+    <div data-bind="if: selectedHobby.name() != null">
+        <div class="publishContainer">
+            <textarea class="msgTextArea" id="txtMessage" data-bind="value: newMessage, jqAutoresize: {},  attr: {placeholder: 'Post something about ' + selectedHobby.name() }" style="height:50px;"></textarea>
+            <ul id="hobbyPicList"></ul>
+            <div class="clearfix" style="border-top: 1px solid #e2e1e1;">
+                <div class="pull-left">
+                    <span class="btn fileinput-button">
+                        <i class="fa fa-camera"></i>
+                        <input id="hobbyPicFileUpload" type="file" name="files[]" multiple>
+                    </span>
+                </div>
+                <div class="pull-right" style="padding: 5px;">
+                    <button id="btnShare" data-bind="click: function(data, event) { addPost(data) }" data-url="/Wall/SavePost" class="submit btn btn-primary"><i class="fa fa-share"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @NewsFeed()
+</div>
+
+
+@section rightsidebar {
+<div class="widget">
+    <div class="widget" style="display: none">
+        <h2 style="background: #5cb85c;color: #fff;padding: 10px;">Top groups in board games</h2>
+        <ul data-bind="foreach: groups">
+            <li>
+                <div class="widget media margin-none ">
+                    <a class="pull-left bg-success text-white" href="#">
+                        <img style="width: 76px; height: 76px;" data-bind="attr: {'src': imageUrl}" alt="user avatar">
+                    </a>
+                    <div class="media-body">
+                        <h3 style="margin: 0"><a data-bind="text: name"></a></h3>
+                        <div>
+                            <a href="#"><span data-bind="text: members().length"></span> members</a>
+                        </div>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, sed.
+                    </div>
+                </div>
+                <div style="border-bottom: solid 1px #f4f4f4;">
+                    <div><a href="#"><span data-bind="text: events().length"></span> events this week</a></div>
+                    <div><a href="#"><span data-bind="text: events().length"></span> avg rsvps per event</a></div>
+                    <div><a href="#">5.0 rating</a></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="widget">
+        <h2 style="background: #5cb85c;color: #fff;padding: 10px;">Trending in your area</h2>
+        <ul data-bind="foreach: groups">
+            <li>
+                <div class="widget media margin-none ">
+                    <a class="pull-left bg-success text-white" href="#">
+                        <img style="width: 76px; height: 76px;" data-bind="attr: {'src': imageUrl}" alt="user avatar">
+                    </a>
+                    <div class="media-body">
+                        <h3 style="margin: 0"><a data-bind="text: name"></a></h3>
+                        <div>
+                            <a href="#"><span data-bind="text: members().length"></span> members</a>
+                        </div>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, sed.
+                    </div>
+                </div>
+
+                <div style="border-bottom: solid 1px #f4f4f4;">
+                    <div data-bind="if: events().length > 0">
+                        <ul data-bind="foreach: events">
+                            <li data-bind="if: $index() < 3">
+                                <p>
+                                    <span data-bind="text: date"></span>
+                                    <span data-bind="text: title"></span>
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </li>
+        </ul>
+    </div>
+</div>
+}
+
+@helper NewsFeed()
+{
+    <section class="main-content clear-fix">
+        <ul id="msgHolder" data-bind="foreach: posts">
+            <li class="postHolder">
+                <div>
+                    <div class="postContent">
+                        <div>
+                            <ul class="entry-gallery">
+                                <li>
+                                    <div>
+                                        <div style="margin: 0; margin-bottom: 10px;">
+                                            <a href="#" class="pull-left">
+                                                <img height="40" data-bind="attr: { src: postedByAvatar }" alt="">
+                                            </a>
+                                            <div class="media-body">
+                                                by <strong><a data-bind="text: postedByName"></a></strong>
+                                                <p class="margin-none"><i class="fa fa-fw fa-clock-o"></i> <span class="timeago" data-bind="timeAgo: postedDate"></span></p>
+                                            </div>
+                                        </div>
+                                        <img src="http://demo.pukkathemes.com/sympagrid/wp-content/uploads/2014/05/DSC_1696ccc-520x290.jpg" width="650" alt="">
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="brick-content clearfix">
+                            <h3><a href="http://demo.pukkathemes.com/sympagrid/first-european-cup-match/" target="_blank">The Golden Rules For Houseguests</a></h3>
+                            <p data-bind="html: message"></p>
+                            <p>
+                                <a href="#" class="commentLink" data-bind="text: postComments().length + ' comments', attr: {'data-postId': postId }, click: function(data, event) { $parent.toggleComment(data) }">Comment</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="clearfix" style="background-color: #f7f7f7; padding: 5px; ">
+                        <span>Share: </span>
+                        <span class="box-social-buttons">
+                            <a href="#" class="fa fa-facebook"></a>
+                            <a href="#" class="fa fa-twitter"></a>
+                            <a href="#" class="fa fa-google-plus"></a>
+                            <a href="#" class="fa fa-pinterest"></a>
+                        </span>
+                    </div> <!-- .box-social -->
+                </div>
+
+                <div data-bind="attr: {'id': 'commentSection' + postId() }" class="comments" style="display: none;">
+                    <ul data-bind="foreach: postComments">
+                        <li class="commentHolder">
+                            <img data-bind="attr: { src: commentedByAvatar }">
+                            <p style="margin-top: 0;margin-bottom: 0;"><a data-bind="text: commentedByName"></a>: <span data-bind="html: message"></span></p>
+                            <div> <span class="timeago" data-bind="timeAgo: commentedDate"></span></div>
+                        </li>
+                    </ul>
+                    <div style="margin: 10px;">
+                        <textarea class="commentTextArea" data-bind="value: newCommentMessage" placeholder="write a comment..."></textarea>
+                        <div class="clearfix" style="padding-bottom: 10px;">
+                            <div>
+                                <a href="#" class="reply submit" data-bind="click: $parent.addComment">Post &nbsp;<i class="fa fa-reply"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </section>
+}
+
+
+@section scripts
+{
+    <script>
+        var viewModel;
+        $(document).ready(function () {
+
+            HobbyClue.Timeline.initializeEndlessScroll(function () {
+                viewModel.loadPosts();
+            });
+            HobbyClue.ImageUpload.wire('hobbyPicFileUpload', 'hobbyPicList');
+            $('#txtMessage').autosize();
+
+            var $window = $(window);
+            //always return window to top on load, so that all the elements are aligned and calculated right
+            $window.scrollTop(0);
+
+            HobbyClue.KnockoutExtensions.Initialize();
+
+            viewModel = new initializeViewModel();
+            ko.applyBindings(viewModel);
+        });
+
+        var postApiUrl = '/api/WallPost/',
+            commentApiUrl = '/api/Comment/';
+
+        function initializeViewModel() {
+            var self = ko.mapping.fromJS(@Html.Raw(Model.ToJson()));
+            self.newMessage = ko.observable();
+            self.uniqueNumber = ko.computed(function () {
+                return new Date().getTime();
+            });
+            self.error = ko.observable();
+            self.loadPosts = function () {
+                //To load existing posts
+                $.ajax({
+                    url: postApiUrl,
+                    dataType: "json",
+                    contentType: "application/json",
+                    cache: false,
+                    type: 'GET'
+                })
+                    .done(function (items) {
+                        $.each(items, function (i, item) {
+                            var newPost = ko.mapping.fromJS(item);
+                            self.posts.push(newPost);
+                        });
+                    })
+                    .fail(function () {
+                        error('unable to load posts');
+                    });
+            }
+
+            self.addPost = function (item) {
+                var post = new Post(item);
+                post.Message(item.newMessage());
+
+                return $.ajax({
+                    url: postApiUrl,
+                    dataType: "json",
+                    contentType: "application/json",
+                    cache: false,
+                    type: 'POST',
+                    data: ko.toJSON(post)
+                })
+                    .done(function (result) {
+                        self.posts.splice(0, 0, ko.mapping.fromJS(result));
+                        self.newMessage('');
+                    })
+                    .fail(function () {
+                        error('unable to add post');
+                    });
+            }
+
+            self.toggleHobby = function (hobby, associated) {
+                var hobbyJSObject = ko.toJS(hobby);
+                hobbyJSObject.isActive = associated;
+                HobbyClue.Ajax.ajaxJsonPost('@Html.TokenHeaderValue()', '/api/hobby/associate', hobbyJSObject,
+                    function (item) {
+                        if (associated) {
+                            self.hobbies.push(hobby);
+                            self.allHobbies.remove(function (hitem) {
+                                return hobbyJSObject.id == hitem.id();
+                            });
+                        } else {
+                            self.hobbies.remove(function (item) {
+                                return hobby.id() == item.id();
+                            });
+                            self.allHobbies.push(hobby);
+                        }
+                    },
+                    function () {
+                        alert('error occurred');
+                    });
+            }
+
+            self.hasHobby = function (id) {
+                return $.grep(self.hobbies(), function (e) {
+                    return e.id() == id;
+                }).length > 0;
+            }
+            self.loadPosts();
+
+            self.addComment = function (post) {
+                var comment = new Comment();
+                comment.Message(post.newCommentMessage());
+                comment.PostId(post.postId());
+                return $.ajax({
+                    url: commentApiUrl,
+                    dataType: "json",
+                    contentType: "application/json",
+                    cache: false,
+                    type: 'POST',
+                    data: ko.toJSON(comment)
+                })
+                    .done(function (result) {
+                        post.postComments.push(ko.mapping.fromJS(result));
+                        post.newCommentMessage('');
+                    })
+                    .fail(function () {
+                    });
+            }
+
+            self.toggleComment = function (element) {
+                $('#commentSection' + element.postId()).toggle();
+            }
+            return self;
+        };
+
+        // Model
+        function Post(data) {
+            var self = this;
+            data = data || {};
+            self.PostId = data.postId;
+            self.Message = ko.observable(data.message || "");
+            self.PostedBy = data.postedBy || "";
+            self.PostedByName = data.postedByName || "";
+            self.PostedByAvatar = data.postedByAvatar || "";
+            self.PostedDate = HobbyClue.Timeline.getTimeAgo(data.postedDate);
+            self.error = ko.observable();
+            self.PostComments = ko.observableArray();
+            self.newCommentMessage = ko.observable();
+        }
+
+        function Comment(data) {
+            var self = this;
+            data = data || {};
+            // Persisted properties
+            self.CommentId = data.commentId;
+            self.PostId = ko.observable(data.postId || 0);
+            self.Message = ko.observable(data.message || "");
+            self.CommentedBy = data.commentedBy || "";
+            self.CommentedByAvatar = data.commentedByAvatar || "";
+            self.CommentedByName = data.commentedByName || "";
+            self.CommentedDate = HobbyClue.Timeline.getTimeAgo(data.commentedDate);
+        }
+
+
+
+
+    </script>
+}

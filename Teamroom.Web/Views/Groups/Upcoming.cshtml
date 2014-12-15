@@ -1,0 +1,380 @@
+﻿@using HobbyClue.Web.Models
+@using HobbyClue.Web.ViewModels
+@using Teamroom.Web.Views
+@model GroupViewModel
+@{
+    Layout = "~/Views/Shared/_TwoColumnLayout.cshtml";
+}
+
+<style>
+     #stream > li {
+        padding-top: 10px;
+    }
+</style>
+
+@section leftsidebar{
+    @Html.Partial("Sidebar", new SideBarViewModel { Selected = SidebarOptions.Upcoming, GroupName = "ballardboardgames" })
+}
+
+@section headerbottomcontent {
+    <h1 data-bind="text: name"></h1>
+    <nav class="bread-crumbs">
+        <a id="createEventModalLink" href='javascript:;'><i class="soc-icon soc-icon-small soc-icon-alt fa fa-plus" style="height: 21px; width: 21px; line-height: 21px; font-size: 12px;"></i>Create an event</a>
+        <a href='javascript:;' data-bind="click: function(data) { joinorleave(data, isMember() ? 'leave' : 'join' )}"><i class="soc-icon soc-icon-small soc-icon-alt fa fa-plus" style="height: 21px; width: 21px; line-height: 21px; font-size: 12px;"></i><span data-bind="text: isMember() ? 'Leave' : 'Join'"></span></a>
+    </nav>
+}
+
+@Html.Partial("_Modal", new ModalViewModel { Id = "createEventModal", Class = "eventModal", Title = "Create New Event", ShowFooter = false })
+@Html.Partial("_Modal", new ModalViewModel { Id = "editEventModal", Class = "eventModal", Title = "Edit Event", ShowFooter = false })
+
+
+<div id="inner" data-bind="attr: {'data-groupid': id() }">
+    <ul id="stream" data-bind="foreach: upcomingEvents">
+        <li class="postHolder" data-bind="attr: {id: 'event'+id() }">
+            <div class="postContent">
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="details">
+                            <div class="row">
+                                <h2 class="eventtitle"><a href="javascript:;" data-bind="text: title"></a></h2>
+                                <div class="when" style="font-size: 18px; font-weight: 300;">
+                                    <i class="icon fa fa-calendar"></i>
+                                    <time id="event-startdate">
+                                        <span data-bind="text: startDateDisplayText" style="font-weight: bold;"></span>
+                                        <span>
+                                            <span data-bind="text: ' at ' + startTime()"></span>
+                                            <!-- ko if: endTime -->
+                                            <span data-bind="text: ' until ' + endTime()"></span>
+                                            <!-- /ko -->
+                                        </span>
+                                    </time>
+                                </div>
+                            </div>
+                            <div class="row item isotope-item fulldetails" data-bind="if: image">
+                                <ul class="entry-gallery">
+                                    <li>
+                                        <a data-bind="attr: {href: image, title: title }" rel="nofollow">
+                                            <img data-bind="attr: {src: image }" width="800" height="320" alt="event main image">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="itemdetails" style="padding-top: 5px;">
+                            <div>
+                                Hosted by: <a href="#">Jahmai OSullivan</a>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <p data-bind="html: description"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div>
+                            <a href="#" data-bind="click: function(data, event) { $parent.rsvp($data, true)}"><i class="soc-icon soc-icon-small soc-icon-grey  fa fa-thumbs-up rsvpbtn" data-bind="css: isGoing() == true ? 'active' : ''"></i> Going</a>
+                            <a href="#" data-bind="click: function(data, event) { $parent.rsvp($data, false)}"><i class="soc-icon soc-icon-small soc-icon-grey  fa fa-thumbs-down rsvpbtn" data-bind="css: isGoing() == false  ? 'active' : ''"></i> Not Going</a>
+                        </div>
+                        <div class="basicdetails">
+                            <div class="where">
+                                at <a target="_blank" data-bind="text: locationName, attr: { 'href': 'http://maps.google.com/maps?f=q&hl=en&q=' + escape(locationName())}"></a>
+                            </div>
+                            <div>
+                                <h4 data-bind="text: attendeeCount() + (attendeeCount() != 1 ? ' attendees' : ' attendee')"></h4>
+                                <div class="widget widget-attendees">
+                                    <ul class=" userlist" data-bind="foreach: attendees">
+                                        <!-- ko if: isAttending -->
+                                        <li>
+                                            <img class="extrasmallavatar" data-bind="attr: {'src': user.avatarThumbnailUrl() }" alt="user avatar">
+                                            <div></div>
+                                        </li>
+                                        <!-- /ko -->
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- ko if: occurrences().length > 1 -->
+                            <div>Recurring event: </div>
+                            <ul class="clearfix" data-bind="foreach: occurrencesFormatted">
+                                <li>
+                                    <div class="row">
+                                        <div class="col-md-5" style="margin-left: 0; padding-left: 0;"><p data-bind="text: $data"></p></div>
+                                        <div class="col-md-7">
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <!-- /ko -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="postFooter">
+                <span class="adminactions">
+                    <a class="editevent" href="javascript:;" data-bind="attr: {'data-eventid': id() }"><i class="fa fa-edit"></i>edit</a>
+                    <a href="#delete" class="deleteevent" data-bind="click: function(data, event) { $parent.deleteevent($data)}"><i class="fa fa-trash-o"></i>delete</a>
+                    <a href="#" class="commentLink pull-right" data-bind="text: posts().length + ' comments', attr: {'data-eventId': id }, click: function(data, event) { $parent.toggleComment(data) }">Comment</a>
+                </span>
+            </div>
+            <div data-bind="attr: {'id': 'commentSection' + id() }" class="comments">
+                <ul data-bind="foreach: posts">
+                    <li class="commentHolder">
+                        <img data-bind="attr: { src: postedByAvatar }">
+                        <p style="margin-top: 0;margin-bottom: 0;"><a data-bind="text: postedByName"></a>: <span data-bind="html: message"></span></p>
+                        <div> <span class="timeago" data-bind="timeAgo: postedDate"></span></div>
+                        <a href="#" class="deletePost" data-bind="click: function(data, event) { deletePost(data) }">delete<i class="fa fa-trash-o"></i></a>
+                    </li>
+                </ul>
+                <div style="margin: 10px;">
+                    <textarea class="commentTextArea" data-bind="value: newComment" placeholder="write a comment..."></textarea>
+                    <div class="clearfix" style="padding-bottom: 10px;">
+                        <div>
+                            <a href="#" class="reply submit" data-bind="click: function(data, event) { $parent.createPost(data) }">Post &nbsp;<i class="fa fa-reply"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<script>
+    var viewModel;
+    var antiForgeryToken;
+    $(document).ready(function () {
+        viewModel = initializeViewModel(@Html.Raw(Model.ToJson()), '@Html.Raw(CurrentUser != null ? Guid.Parse(CurrentUser.Id) : Guid.Empty)');
+        wireOverlays();
+        antiForgeryToken = '@Html.TokenHeaderValue()';
+
+        $('#createEventModalLink').on('click', function() {
+            $('#createEventModal').modal({}).find('.modal-body').load('@string.Format("/events/createeventmodal?time={0}", DateTime.UtcNow.Ticks)', function() {
+                modalLoaded($(this));
+            });
+        });
+
+        $('body').on('click', '.editevent', function() {
+            $('#editEventModal').modal({}).find('.modal-body').load('/events/EditEventModal?id=' +  $(this).data('eventid'), function() {
+                modalLoaded($(this));
+                setEditModalSettings($(this));
+            });
+        });
+    });
+
+    function setEditModalSettings(modal) {
+        var endTime = $('#eventModalContent', modal).data('endtime');
+        if (endTime !== null && endTime !== '') {
+            $('.endTimeSection').show();
+            $('.showEndTime').hide();
+        }
+
+        var frequency = $('#eventModalContent', modal).data('frequency').toLowerCase();
+        var firstdayofweek = $('#eventModalContent', modal).data('firstdayofweek');
+        switch (frequency) {
+            case 'daily':
+                $("input[data-repeattype='daily']").click();
+                break;
+            case 'weekly':
+                $("input[data-repeattype='weekly']").click();
+                $('.bs-select.day').selectpicker('val', firstdayofweek);
+                break;
+            case 'monthly':
+                var dayofmonth = $('#eventModalContent', modal).data('dayofmonth');
+                if (dayofmonth > 0) {
+                    $("input[data-repeattype='specificday']").click();
+                    $('#dayspinner').spinner('value', dayofmonth);
+                } else {
+                    var monthlyweeknum = $('#eventModalContent', modal).data('monthlyweeknum');
+                    $("input[data-repeattype='monthly']").click();
+                    $('.bs-select.monthday').selectpicker('val', firstdayofweek);
+                    $('.bs-select.weeknum').selectpicker('val', monthlyweeknum); //week num
+                }
+                break;
+        }
+
+    }
+
+    function modalLoaded(container) {
+        HobbyClue.init(container);
+        HobbyClue.EventModal.wireValidation('@Html.TokenHeaderValue()');
+        HobbyClue.EventModal.wireElements(document.getElementById('location'));
+    }
+
+    function initializeViewModel(jsonString, currentUserId)
+    {
+        var viewModel = ko.mapping.fromJS(jsonString);
+        
+        viewModel.isMember = ko.computed(function () {
+            return $.grep(viewModel.members(), function(m) {
+                return m.user.id() == currentUserId;
+            }).length > 0;
+        });
+
+        viewModel.rsvp = function (event, isattending) {
+            if (event.isGoing() === isattending) return;
+            var rsvpItem = { isAttending: isattending, eventId: event.id() };
+            HobbyClue.Ajax.ajaxJsonPost('@Html.TokenHeaderValue()', '/api/events/rsvp', rsvpItem,
+                function (item) {
+                    var newAttendee = ko.mapping.fromJS(item);
+                    if(!event.isAttendee()) {
+                        event.attendees.push(newAttendee);
+                    }
+                    else {
+                        var match = ko.utils.arrayFirst(event.attendees(), function (attendee) {
+                            return newAttendee.user.id() === attendee.user.id();
+                        });
+                        if (match) {
+                            event.attendees.replace(match, newAttendee);
+                        }
+                    }
+                },
+                function() {
+                    alert('error occurred');
+                }
+            );
+        };
+
+        viewModel.createPost = function (item) {
+            var post = { EventId: item.id(), Message: item.newComment() }
+            return HobbyClue.Ajax.ajaxJsonPost('@Html.TokenHeaderValue()','/api/events/createpost',post, function (result) {
+                item.posts.push(ko.mapping.fromJS(result));
+                item.newComment('');
+            },function () {
+                error('unable to add comment');
+            });
+        };
+
+        viewModel.addEventComputedColumns = function(event) {
+            //Add computed event properties
+            event.isGoing = ko.computed(function () {
+                var attendee = $.grep(event.attendees(), function(n) {
+                    return n.user.id() == currentUserId;
+                });
+
+                return (attendee.length > 0) ? attendee[0].isAttending() : null;
+            });
+
+            event.isAttendee = ko.computed(function () {
+                return $.grep(event.attendees(), function(n) {
+                    return n.user.id() == currentUserId;
+                }).length > 0;
+            });
+
+            event.attendeeCount = ko.computed(function() {
+                return $.grep(event.attendees(), function(n) {
+                    return n.isAttending() == true;
+                }).length;
+            });
+
+            $.each(event.posts(), function(index, post) {
+                var jsObject = ko.mapping.toJS(post);
+                jsObject.EventId = event.id();
+                post.deletePost = function () {
+                    return HobbyClue.Ajax.ajaxJsonPost('@Html.TokenHeaderValue()', '/api/events/deletepost', jsObject, function(result) {
+                        event.posts.remove(function(p) { return p.postId() == post.postId(); });
+                    }, function() {
+                        error('unable to remove comment');
+                    }, 'DELETE');
+                };
+            });
+        }
+
+        //Add computed event properties
+        $.each(viewModel.upcomingEvents(), function(index, event) {
+            viewModel.addEventComputedColumns(event);
+        });
+
+        viewModel.joinorleave = function(group, operation) {
+            var rsvpObj = { Groupid: group.id(), UserId: currentUserId };
+            if (operation == 'join') {
+                HobbyClue.Ajax.ajaxJsonPost(antiForgeryToken, '/api/groups/join', rsvpObj,
+                function(item) {
+                    var newMember = ko.mapping.fromJS(item);
+                    viewModel.members.push(newMember);
+                }, function() { alert('error occurred'); });
+            } else if (operation == 'leave') {
+                HobbyClue.Ajax.ajaxJsonPost(antiForgeryToken, '/api/groups/leave', rsvpObj,
+                    function(item) {
+                        viewModel.members.remove(function(i) { return i.user.id() == item.user.id; });
+                    }, function() { alert('error occurred'); }, "DELETE");
+            }
+        }
+
+        viewModel.join = function(group, operation) {
+            var rsvpObj = { Groupid: group.id(), UserId: currentUserId };
+                 HobbyClue.Ajax.ajaxJsonPost(antiForgeryToken, '/api/groups/join', rsvpObj,
+                function(item) {
+                    var newMember = ko.mapping.fromJS(item);
+                    viewModel.members.push(newMember);
+                }, function() { alert('error occurred'); });
+            
+        }
+
+        viewModel.deleteevent = function (event) {
+            var eventItem = { Id: event.id() };
+            $.ajax({
+                beforeSend: function (request) {
+                    request.setRequestHeader("RequestVerificationToken", '@Html.TokenHeaderValue()');
+                },
+                url: '/api/events',
+                type: 'DELETE',
+                data: JSON.stringify(eventItem),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (item) {
+                    viewModel.upcomingEvents.remove(function(i) { return i.id() == event.id(); });
+                },
+                error: function (jqXHR, textStatus, errorThrown) { }
+            });
+        };
+
+        viewModel.toggleComment = function(element) {
+            $('#commentSection' + element.id()).toggle();
+        }
+
+
+        ko.applyBindings(viewModel);
+        return viewModel;
+    }
+
+
+    function wireOverlays() {
+        $(".fancybox").fancybox({
+            padding: 0,
+            fitToView: true, // avoids scaling the image to fit in the viewport
+            beforeShow: function () {
+                // set size to (fancybox) img
+                $(".fancybox-image").css({
+                    "width": 800,
+                    "height": 600
+                });
+                // set size for parent container
+                this.width = 800;
+                this.height = 600;
+            },
+            afterLoad: function () {
+                this.inner.prepend('<div style="position: absolute; top: 0; left: 0;"><h1>1. My custom title</h1></div>');
+                //this.content = '<h1>2. My custom title</h1>' + this.content.html();
+            }
+        });
+    }
+
+    function loadMoreEvents (viewModel) {
+        $.ajax({
+            url: '/api/events',
+            type: 'GET',
+            success: function(data) {
+                if (data != 'undefined' && data.length > 0) {
+                    $.each(data, function (i, item) {
+                        item.title = 'New New: ' + item.title;
+                        //item.createdDate = HobbyClue.General.formatDate(new Date(item.createdDate));
+                        var jsonModel = ko.mapping.fromJS(item);
+                        viewModel.appendEvent(jsonModel);
+
+                    });
+                    initializeElements();
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+
+            },
+        });
+    }
+</script>

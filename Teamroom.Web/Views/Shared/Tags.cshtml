@@ -1,0 +1,11 @@
+﻿@using Teamroom.Web.Views
+@model IEnumerable<HobbyClue.Web.ViewModels.TagViewModel>
+
+<div class="cont">
+    <input type="text" class="checkTags" style="visibility: hidden; height: 1px; width: 1px;position: absolute;" />
+    <a href="#" data-filter=".item" name="tags" class="@string.Format("{0}", Model.Any(x => x.IsSelected) ? "": "active")">All</a>
+    @foreach (var t in Model)
+    {
+        <a href="#" data-filter="@string.Format(".item-{0}", @t.Name.ToLower())" data-tagid="@t.Id" class='@string.Format("{0}", @t.IsSelected ? "active" : "")' name="tags">@t.Name</a>
+    }
+</div>

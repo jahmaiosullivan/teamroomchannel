@@ -1,0 +1,56 @@
+﻿@using Teamroom.Web.Views
+<div class="row fileupload-buttonbar">
+    <div class="col-lg-7">
+        <!-- The loading indicator is shown during file processing -->
+        <span class="fileupload-loading"></span>
+    </div>
+    <!-- The global progress information -->
+    <div class="col-lg-5 fileupload-progress fade">
+        <div class="progress-extended"></div>
+    </div>
+</div>
+<div role="presentation">
+    <div class="files"></div>
+</div>
+
+@Html.Partial("FileUploadTemplates")
+
+
+<script>
+    $(document).ready(function () {
+        $('#fileupload').fileupload({
+            autoUpload: true,
+            paramName: "files",
+            url: '/file/ajaxupload',
+            disableImageResize: /Android(?!.*Chrome)|Opera/
+               .test(window.navigator.userAgent),
+            maxFileSize: 5000000,
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            change: function (e, data) {
+                $('.files').empty();
+            },
+            finished: function (e, data) {                
+                var addImagelink = $('.fileinput-button', '.fileupload-buttonbar');
+                $('span', addImagelink).text('Change');
+                if ($('#newActivityFieldContainer').children('#details').length === 0) {
+                    $.get('/clue/NewDetails', function (data) {
+                        $('#newActivityFieldContainer').html(data).show();
+                        HobbyClue.NewActivity._wireLocationBox(document.getElementById('newActivityLocation'));
+                    });
+                }
+            },
+            disableImagePreview: true
+        });
+        
+        $('.btn.imagedelete').click(function() {
+            var deletebtn = $(this);
+            $.ajax({
+                type: 'DELETE',
+                url: "/api/image/" + $(this).data('filename'),
+                dataType: 'text'
+            }).done(function () {
+                $(deletebtn).closest('tr').remove();
+            });
+        });
+    });
+</script>

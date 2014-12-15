@@ -1,0 +1,41 @@
+﻿@using Teamroom.Web.Views
+@model HobbyClue.Web.ViewModels.DeckViewModel
+
+<div class="page-content-alt-2">
+    <div class="grid-row">
+        <section id="portfolio" class="portfolio portfolio-4">
+             @using (Html.BeginForm("Edit", "Event", FormMethod.Post, new { @id = "register-form", novalidate = "novalidate" }))
+            {
+                <div id="form-content">
+                    <fieldset>
+                        <div class="control-group">
+                            <label for="title">Title</label>
+                            <div class="controls">
+                                @Html.TextBoxFor(m => m.Title, new { @placeholder = "Title (required)" })
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label for="description">Description</label>
+                            <div class="controls">
+                                @Html.TextAreaFor(m => m.Description, new { @rows = 3 })
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="location">Location</label>
+                            <div class="controls">
+                                @Html.TextBoxFor(m => m.Location, new { @class = "controls", @placeholder = "Search Box" })
+                            </div>
+                        </div>
+
+                        @Html.Partial("Tags", Model.Tags)
+                        @Html.Partial("PictureList", Model.AllCards)
+
+                        <div class="control-group">
+                            <button class="submit btn btn-primary" type="submit">Save</button>
+                        </div>
+                    </fieldset>
+                </div>
+            }
+        </section>
+    </div>
+</div>

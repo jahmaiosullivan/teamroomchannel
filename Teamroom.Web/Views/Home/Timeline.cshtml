@@ -1,0 +1,83 @@
+﻿@using HobbyClue.Web.ViewModels
+@using Teamroom.Web.Views
+@model TimelineViewModel
+
+<div id="site-container" class="clearfix">
+    <section id="primary" class="sidebar-off clearfix">
+        <div id="content" role="main">
+            <ul id="timeline" data-bind="foreach: timeline.activities">
+                <li class="animated fadeInUp" data-bind="attr: {'data-tagid': tag.id, 'data-activityId': id }">
+                    <article class="post pic clearfix">
+                        <div class="maindetails">
+                            <h3 class="maintag">
+                                <a data-bind="text: tag.name(), attr: {href: '/@Model.Region/@Model.CurrentCity/' + tag.name()}"></a>
+                            </h3>
+                        </div>
+                        @if (IsAuthenticated && CurrentUser.IsInRole("Administrator"))
+                        {
+                            <ul class="adminActions">
+                                <li><a class="delete" href="#" data-bind="click: $parent.removeActivity">delete</a></li>
+                            </ul>
+                        }
+                        <div class="pic-box">
+                            <div class="entry-gallery">
+                                <ul class="clearfix">
+                                    <li class="mainCard">
+                                        @CardPictureHtml()
+                                    </li>
+                                    <!-- ko foreach: childCards -->
+                                    <li class="childCard">
+                                        @CardPictureHtml(true)
+                                    </li>
+                                    <!-- /ko -->
+                                </ul>
+                            </div>
+                        </div>
+                        
+                    </article>
+                </li>
+            </ul>
+
+        </div>
+    </section>
+</div>
+
+@helper CardPictureHtml(bool isChildItem = false)
+{
+    <figure class="entry-thumb" data-bind="attr: {'data-desc': description, 'data-author': creator.name, 'data-avatar': creator.avatar}">
+        <div class="caption-content">            
+            <a class="caption-link" data-bind="attr: {href: imageUrl}" rel="nofollow" title="Click to comment">
+                <img data-bind="attr: {src: imageUrl}" alt="event picture" />
+            </a>
+            <div class="img-details fixed-bottom bg-inverse-faded">
+                <div class="media margin-none innerAll">
+                    <div class="user-profile-pic pull-left">
+                        <img data-bind="attr: {src: creator.avatar}" alt="">
+                    </div>
+                    <div class="pull-left">
+                        <span>by </span><strong data-bind="text: creator.name"></strong>
+                        <p class="margin-none"><i class="fa fa-fw fa-clock-o"></i> <abbr class="timeago" data-bind="text: createdDate, attr: {title: ztime}"></abbr></p>
+                    </div>
+                    <div class="pull-right">
+                        @if (!isChildItem)
+                        {
+                            <div>
+                                <a data-bind="click: function() {$parent.openPopup($index())}" href="#comments">
+                                    <i class="icon-comment"></i>
+                                    <span data-bind="text: commentCount"></span>
+                                    <span data-bind="text: commentCount() == 1 ? 'Comment' : 'Comments'"></span>
+                                </a>
+                            </div>
+                            <div>
+                                <span class="rating">
+                                    <a href="#" class="ratingup" data-bind="click: $parent.incrementVote"><i class="fa fa-thumbs-o-up"></i><span data-bind="text: thumbsUpCount"></span> </a>
+                                    <a href="#" class="ratingdown" data-bind="click: $parent.decrementVote"><i class="fa fa-thumbs-o-down"></i><span data-bind="text: thumbsDownCount"></span></a>
+                                </span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </figure>
+}

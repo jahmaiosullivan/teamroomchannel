@@ -1,0 +1,45 @@
+﻿@using HobbyClue.Data.Models
+@using Teamroom.Web.Views
+@model HobbyClue.Web.ViewModels.ChooseLocationViewModel
+
+<h2>Choose a Location</h2>
+<div id="locationList" class="fourcolumntable">
+    @{
+        var cntr = 0;
+        foreach (var region in Model.Regions)
+        {
+            if (cntr > 0 && cntr % 4 == 0)
+            {
+                <div class="row"></div>
+            }
+            @CityList(region)
+            cntr++;
+        }
+    }
+</div>
+
+@helper CityList(KeyValuePair<string, IList<City>> region)
+{
+    <div class="column region @region.Key" data-region="@region.Key">
+        <h4 class="regionname">@region.Key</h4>
+        <ul class="cities">
+            @foreach (var city in region.Value)
+            {
+                <li><a class="@city.Name" href="/@region.Key/@city.Name">@city.Name</a></li>
+            }
+        </ul>
+    </div>
+}
+
+
+
+<script>
+    $(document).ready(function () {
+        if ('@Model.Override' == 'False') {
+            if (Modernizr.localstorage && localStorage.getItem("usercurrentcity")) {
+                var locationElements = localStorage.getItem("usercurrentcity").split(',');
+                window.location = $('.' + locationElements[0] + ', ' + locationElements[1]).attr('href');
+            }
+        }
+    });
+</script>

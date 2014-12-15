@@ -1,0 +1,36 @@
+﻿@model DateTimeRange
+@using HobbyClue.Common.Extensions
+@using HobbyClue.Common.Models
+@using HobbyClue.Web
+@using Teamroom.Web.Views
+@{
+    var props = ViewData.ModelMetadata.Properties.ToList();
+    var validationAttributes = Html.GetUnobtrusiveValidationAttributes("");
+}
+
+<div>
+    <div class="datetimerange @ViewData.ModelMetadata.PropertyName">
+        <div class=" input-group date form_datetime startdate">
+            @CalendarBox(props[0].PropertyName, Model != null ? Model.StartDate : DateTime.Now.FormatDateTime(), validationAttributes)
+            <span class="separator">to</span>
+        </div>
+        <div class="input-group date form_datetime enddate">
+            @CalendarBox(props[1].PropertyName, Model != null ? Model.EndDate : DateTime.Now.AddHours(4).FormatDateTime(), validationAttributes)
+        </div>
+    </div>
+    @Html.ValidationMessage(props[0].PropertyName)
+    @Html.ValidationMessage(props[1].PropertyName)
+</div>
+
+
+@helper CalendarBox(string propertyName, string value, IDictionary<string, object> validationAttributes)
+{
+    @Html.TextBox(propertyName, value, new RouteValueDictionary(validationAttributes) { { "class", "form-control input-mid" }, { "size", "16" } })
+        
+    <span class="input-group-btn">
+        <button class="btn default date-set @string.Format("btn{0}", propertyName)" type="button"><i class="fa fa-calendar"></i></button>
+    </span>
+    <div>
+        <div class="clearfix"></div>
+    </div>
+}

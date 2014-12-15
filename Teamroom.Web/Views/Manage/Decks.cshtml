@@ -1,0 +1,13 @@
+﻿@using Teamroom.Web.Views
+@model HobbyClue.Web.ViewModels.ManageDecksViewModel
+           
+<div class="page-title">
+    <div class="grid-row">
+        <div class="pull-left">
+            <h1><i class="fa fa-angle-right"></i>Saved Decks</h1>
+        </div>
+    </div>
+
+</div>
+
+@Html.Partial("DeckGrid", Model.DeckList)

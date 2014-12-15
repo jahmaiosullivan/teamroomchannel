@@ -1,0 +1,15 @@
+﻿@using Teamroom.Web.Views
+@model IEnumerable<HobbyClue.Data.Models.Card>
+
+<div class="grid">
+    @foreach (var card in Model)
+    {
+        <div class="item">
+            <div class="pic card" data-cardid="@card.Id">
+                <div>
+                    <img src="@card.ThumbnailUrl" alt="">
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,90 @@
+﻿@using HobbyClue.Web.Models
+@{
+    ViewBag.Title = "Settings";
+}
+@section pageHeader {
+    @Html.Partial("AdminPageHeader", new PageHeaderViewModel())
+}
+
+<div id="settings-page">
+    <div class="form-group row">
+        <label class="control-label col-md-2" for="name">Name: </label>
+        <div class="col-md-10">
+            <input id="name" type="text" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="control-label col-md-2" for="description">Description: </label>
+        <div class="col-md-10">
+            <textarea id="description" class="wysihtml5 form-control" rows="4"></textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="control-label col-md-2" for="tags">Tags: </label>
+        <div class="col-md-10">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="control-label col-md-2" for="city">Home City: </label>
+        <div class="col-md-10">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-2 control-label">Welcome video: </label>
+        <div class="col-md-10">
+            <div class="yesnotoggle toggle-light toggle"></div>
+            <span>Displays to new members once after they join the group</span>
+            <div><a href="vid">Video Link here</a></div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-2 control-label">Require approval for new members: </label>
+        <div class="col-md-10">
+            <div class="yesnotoggle toggle-light toggle"></div>
+            <span>Coordinators need to approve non-members before they are allowed the group</span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-2 control-label">Private: </label>
+        <div class="col-md-10">
+            <div class="yesnotoggle toggle-light toggle"></div>
+            <span>Non-members cannot see your events or members, only the desription of the group</span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-2 control-label">Locked: </label>
+        <div class="col-md-10">
+            <div class="yesnotoggle toggle-light toggle"></div>
+            <span>Non-members can see events and discussions but cannot join the group</span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="control-label col-md-2" for="greetings">Greetings to new members: </label>
+        <div class="col-md-10">
+            <textarea id="greetings" class="wysihtml5 form-control" rows="4"></textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="control-label col-md-2">Banner Image: </label>
+        <div class="col-md-10">
+            <div id="bannedimageupload" onclick="singleupload_input.click();" class="singleupload"></div>
+        </div>
+    </div>
+    <div class="form-group row" style="display: none;">
+        <label class="control-label col-md-2">Theme colors: </label>
+        <div class="col-md-10">
+            Put some color combos here
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#groupmembers').slimscroll({ height: '600px' });
+        $('.onofftoggle').toggles({ clicker: $('.clickme') });
+        $('.yesnotoggle').toggles({ clicker: $('.clickme'), text: { on: 'YES', off: 'NO' } });
+    });
+</script>
+

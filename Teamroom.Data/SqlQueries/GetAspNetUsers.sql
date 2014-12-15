@@ -1,0 +1,20 @@
+SELECT 
+	 u.[Id]
+    ,u.[BirthDate]
+    ,u.[Email]
+    ,u.[EmailConfirmed]
+    ,u.[PasswordHash]
+    ,u.[SecurityStamp]
+    ,u.[PhoneNumber]
+    ,u.[PhoneNumberConfirmed]
+    ,u.[TwoFactorEnabled]
+    ,u.[LockoutEndDateUtc]
+    ,u.[LockoutEnabled]
+    ,u.[AccessFailedCount]
+    ,u.[UserName]
+    ,u.[Location]
+    ,u.[DisplayName]
+    ,u.[Avatar]
+    ,u.[About]
+  FROM 
+	[AspNetUsers] u

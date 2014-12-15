@@ -1,0 +1,218 @@
+﻿@using HobbyClue.Common.Extensions
+@using HobbyClue.Web.ViewModels
+@using Teamroom.Web.Views
+@model EventViewModel
+
+<style>
+    
+    .eventModal #repeatSettings li { float: left; }
+
+    .eventModal #repeatSettings li input { display: inline; }
+
+    .eventModal  #repeatBlocks li > div { display: inline-block; }
+    
+    .endTimeSection, .eventModal #repeatBlocks > li:not(:first-child) { display: none; }
+
+
+      .eventModal ul#repeatSettings { line-height: 40px; }
+
+      .eventModal ul#repeatSettings li { padding-right: 10px; }
+
+      .eventModal #repeatSettings li input { margin: 0; }
+
+     .eventModal  #newevent-form span.text {line-height: 30px;}
+     
+     .eventModal .modal-dialog { width: 800px; }
+
+     .eventModal #startTimeRow { margin-bottom: 0; }
+
+     ul.rowElements > li {
+         float: left; 
+         margin-right: 10px;
+     }
+
+    .eventModal #endTimeRow { margin-bottom: 0;margin-top: 10px;display:none; }
+    
+    .eventModal #maxAttendees {display: inline; width: 60px;}
+</style>
+
+
+@using (Html.BeginForm("Create", "Event", FormMethod.Post, new { @id = "newevent-form", novalidate = "novalidate" }))
+{
+    <div id="eventModalContent" data-mode="@Model.Mode" data-id="@Model.Id" data-parentid="@Model.ParentId" data-createddate="@Model.CreatedDate" data-createdby="@string.Format("{0}", Model.Creator != null ? Model.Creator.Id.ToString() : string.Empty)" data-frequency="@Model.Frequency" data-firstdayofweek="@Model.FirstDayOfWeek" data-dayofmonth="@Model.DayOfMonth" data-monthlyweeknum="@Model.MonthlyWeekNum" data-endtime="@Model.EndTime">
+        <div class="form-group row">
+            <label class="col-md-2 control-label">Title: </label>
+            <div class="col-md-10">
+                <input id="eventname" name="eventname" type="text" class="form-control input-medium" placeholder="Enter name of your event" value="@Model.Title">
+            </div>
+        </div>
+        <div id="repeatSettingsRow" class="form-group row">
+            <label class="control-label col-md-2">Date: </label>
+            <div class="col-md-10">
+                <div class="row">
+                    <div id="repeaterSection">
+                        <ul id="repeatSettings" class="clearfix">
+                            <li>
+                                <input id="chkNoRepeat" name="eventrepeat" type="radio" checked="checked" value="0" data-repeattype="none">
+                                <span class="radioButtonText">No repeat</span>
+                            </li>
+                            <li>
+                                <input id="chkRepeatDaily" name="eventrepeat" type="radio" value="1" data-repeattype="daily">
+                                <span class="radioButtonText">Daily</span>
+                            </li>
+                            <li>
+                                <input id="chkRepeatWeekly" name="eventrepeat" type="radio" value="2" data-repeattype="weekly">
+                                <span class="radioButtonText">Weekly</span>
+                            </li>
+                            <li>
+                                <input id="chkRepeatMonthly" name="eventrepeat" type="radio" value="3" data-repeattype="monthly">
+                                <span class="radioButtonText">Monthly</span>
+                            </li>
+                            <li>
+                                <input id="chkRepeatSpecific" name="eventrepeat" type="radio" value="4" data-repeattype="specificday">
+                                <span class="radioButtonText">Specific day</span>
+                            </li>
+                        </ul>
+                        <ul id="repeatBlocks">
+                            <li id="none">
+                                <ul class="horizontal">
+                                    <li><span class="text"> On </span></li>
+                                    <li>
+                                        <div id="startDatePicker" class="input-group input-medium date date-picker" data-date-format="@Html.DefaultDateFormat()" data-date-start-date="+0d">
+                                            <input id="startDate" name="startDate" type="text" class="form-control" readonly style="width: 107px;" value="@Model.StartDate.FormatDateOnly()">
+                                            <span class="input-group-btn" style="width: 43px;">
+                                                <button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+                                            </span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li id="daily">
+                                <ul class="horizontal">
+                                    <li><span><input name="dailyday" class="dailyday" type="checkbox" value="1" data-day="sun" @string.Format("{0}", Model.DaysOfWeek.Contains(1) ? "checked='checked'" : "") /> Sun</span></li>
+                                    <li><span><input name="dailyday" class="dailyday" type="checkbox" value="2" data-day="mon" @string.Format("{0}", Model.DaysOfWeek.Contains(2) ? "checked='checked'" : "") /> Mon</span></li>
+                                    <li><span><input name="dailyday" class="dailyday" type="checkbox" value="4" data-day="tue" @string.Format("{0}", Model.DaysOfWeek.Contains(4) ? "checked='checked'" : "") /> Tue</span></li>
+                                    <li><span><input name="dailyday" class="dailyday" type="checkbox" value="8" data-day="wed" @string.Format("{0}", Model.DaysOfWeek.Contains(8) ? "checked='checked'" : "") /> Wed</span></li>
+                                    <li><span><input name="dailyday" class="dailyday" type="checkbox" value="16" data-day="thu" @string.Format("{0}", Model.DaysOfWeek.Contains(16) ? "checked='checked'" : "") /> Thu</span></li>
+                                    <li><span><input name="dailyday" class="dailyday" type="checkbox" value="32" data-day="fri" @string.Format("{0}", Model.DaysOfWeek.Contains(32) ? "checked='checked'" : "") /> Fri</span></li>
+                                    <li><span><input name="dailyday" class="dailyday" type="checkbox" value="64" data-day="sat" @string.Format("{0}", Model.DaysOfWeek.Contains(64) ? "checked='checked'" : "") /> Sat</span></li>
+                                </ul>
+                            </li>
+                            <li id="weekly">
+                                <ul class="rowElements">
+                                    <li>@DaySelect("day")</li>
+                                    <li><span class="text"> of every week </span></li>
+                                </ul>
+                            </li>
+                            <li id="monthly">
+                                <ul class="horizontal">
+                                    <li>
+                                        <select class="bs-select form-control input-small weeknum" data-style="blue" style="width: 100px;">
+                                            <option value="1">First</option>
+                                            <option value="2">Second</option>
+                                            <option value="4">Third</option>
+                                            <option value="8">Fourth</option>
+                                            <option value="16">Last</option>
+                                        </select>
+                                    </li>
+                                    <li>
+                                        @DaySelect("monthday")
+                                    </li>
+                                    <li>
+                                        <span class="text"> of every month</span>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li id="specificday">
+                                <ul class="horizontal">
+                                    <li>
+                                        <div id="dayspinner">
+                                            <div class="input-group time" style="width: 130px;">
+                                                <input type="text" class="spinner-input form-control" maxlength="3" value="1" readonly>
+                                                <div class="spinner-buttons input-group-btn">
+                                                    <button type="button" class="btn spinner-up blue"><i class="fa fa-angle-up"></i></button>
+                                                    <button type="button" class="btn spinner-down blue"><i class="fa fa-angle-down"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li><span class="text"> of every month </span></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="horizontal">
+                            <li><span class="text"> at </span></li>
+                            @TimeRange()
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2 control-label">Where: </label>
+            <div class="col-md-10">
+                <input id="location" name="location" type="text" class="form-control input-medium" placeholder="Enter a location" value="@string.Format("{0}", Model.LocationName)">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-md-2">Description: </label>
+            <div class="col-md-10">
+                <textarea id="description" class="wysihtml5 form-control" rows="4">@Model.Description</textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-md-2">Image: </label>
+            <div class="col-md-10">
+                <div>
+                    <div id="uploadbox" onclick="singleupload_input.click();" class="singleupload" style="background-image: none;" data-image="@Model.Image">
+                        @if (!string.IsNullOrEmpty(Model.Image))
+                        {
+                            <img src="@Model.Image" style="width: 90px; height: 90px;">
+                        }
+                    </div>
+
+                    <input type="file" id="singleupload_input" style="display:none;" name="img" value="" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-md-2">Attendee Limit: </label>
+            <div class="col-md-10">
+                <input id="maxAttendees" class="form-control" type="text" placeholder="Enter a number" value="@Model.MaxAttendees">
+                <span class="text"> attendees (0 for unlimited)</span>
+            </div>
+        </div>
+    </div>
+    <div class="control-group right">
+        <button id="btnCreateEvent" class="submit btn btn-primary" type="submit">@Model.Mode</button>
+    </div>
+}
+
+@helper DaySelect(string className)
+{
+    <select class="bs-select form-control input-small @className" data-style="blue">
+        <option value="1">Sunday</option>
+        <option value="2">Monday</option>
+        <option value="4">Tuesday</option>
+        <option value="8">Wednesday</option>
+        <option value="16">Thursday</option>
+        <option value="32">Friday</option>
+        <option value="64">Saturday</option>
+    </select>
+}
+
+@helper TimeRange()
+{    
+    <li>@TimePicker("StartTime", "startTime", Model.StartDate.FormatTimeOnly())</li>
+    <li class="endTimeSection"><span class="text"> until </span></li>
+    <li class="endTimeSection">@TimePicker("EndTime", "endTime", Model.EndTime)</li>
+    <li><span class="text"> <a class="showEndTime" href="#">End time?</a></span></li>
+}
+
+@helper TimePicker(string id, string className, string value)
+{
+    <div class="input-icon time">
+        <i class="fa fa-clock-o"></i>
+        <input id="@id" name="@id" type="text" class="form-control timepicker timepicker-default @className" value="@value">
+    </div>
+}

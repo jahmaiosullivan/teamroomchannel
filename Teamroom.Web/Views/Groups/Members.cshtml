@@ -1,0 +1,132 @@
+﻿@using HobbyClue.Web.ViewModels
+@using Teamroom.Web.Views
+@model GroupMembersViewModel
+@{
+    Layout = "~/Views/Shared/_TwoColumnLayout.cshtml";
+}
+
+<style>
+    #content {
+        background-color: white;
+    }
+    .memberbox h3 {
+        margin-bottom: 0;
+        padding: 10px;
+        font-size: 23px;
+        font-family: "Open Sans", sans-serif;
+        font-weight: 300;
+    }
+
+    .memberbox {
+        background: #f1f3fa;
+    }
+
+    small {
+        display: block;
+        font-size: 12px;
+        color: #999;
+        margin-top: 5px;
+    }
+
+    .img-responsive, .thumbnail>img, .thumbnail a>img, .carousel-inner>.item>img, .carousel-inner>.item>a>img {
+        display: block;
+        width: 100% \9;
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
+@section leftsidebar{
+    @Html.Partial("Sidebar", new SideBarViewModel { Selected = SidebarOptions.Members, GroupName = "ballardboardgames" })
+}
+@section headerbottomcontent {
+    <h1>Members</h1>
+    <nav class="bread-crumbs">
+        <a id="createEventModalLink" href='javascript:;'><i class="soc-icon soc-icon-small soc-icon-alt fa fa-plus" style="height: 21px; width: 21px; line-height: 21px; font-size: 12px;"></i>Create an event</a>
+    </nav>
+}
+
+<div>
+    <div class="row thumbnails" data-bind="foreach: members">
+        <div class="col-md-3">
+            <div class="memberbox">
+                <h3>
+                    <span data-bind="text: user.displayName"></span>
+                    <!-- ko if: isCoordinator -->
+                    <small>Coordinator</small>
+                    <!-- /ko -->
+                    <!-- ko if: isOwner -->
+                    <small>Group Owner</small>
+                    <!-- /ko -->
+                </h3>
+                <img data-bind="attr: {src: user.avatarThumbnailUrl() } " alt="" class="img-responsive" />
+                <div>
+                    <div>Joined <span data-bind="timeAgo: joinDate"></span></div>
+                    <ul class="actions">
+                        <!-- ko if: isOwner -->
+                        <li><a href="#" data-bind="click: function(data) { $parent.toggleOwner(data, false )}">Revoke group ownership</a></li>
+                        <!-- /ko -->
+                        <!-- ko ifnot: isOwner -->
+                        <li><a href="#" data-bind="click: function(data) { $parent.toggleOwner(data, true )}">Make owner</a></li>
+                        <!-- /ko -->
+                        <!-- ko if: isCoordinator -->
+                        <li><a href="#" data-bind="click: function(data) { $parent.toggleCoordinator(data, false )}">Revoke coordinator</a></li>
+                        <!-- /ko -->
+                        <!-- ko ifnot: isCoordinator -->
+                        <!-- ko ifnot: isOwner -->
+                        <li><a href="#" data-bind="click: function(data) { $parent.toggleCoordinator(data, true )}">Make coordinator</a></li>
+                        <!-- /ko -->
+                        <!-- /ko -->
+                        <li><a href="#" data-bind="click: function(data) { $parent.removeFromGroup(data)}">Remove</a></li>
+                        <li><a href="#">Send message</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var viewModel;
+    var antiForgeryToken;
+    $(document).ready(function () {
+        viewModel = initializeViewModel(@Html.Raw(Model.ToJson()), '@Html.Raw(CurrentUser != null ? Guid.Parse(CurrentUser.Id) : Guid.Empty)');
+        antiForgeryToken = '@Html.TokenHeaderValue()';
+    });
+
+
+    function initializeViewModel(jsonString, currentUserId)
+    {
+        var viewModel = ko.mapping.fromJS(jsonString);
+
+        viewModel.toggleOwner = function(member, value) {
+            var memberObj = { UserId: member.user.id(), GroupId:viewModel.groupId(), isOwner: value };
+            HobbyClue.Ajax.ajaxJsonPost(antiForgeryToken, '/api/groups/SetOwner', memberObj,
+                function(item) {
+                    member.isOwner(value);
+                }, function() { alert('error occurred'); });
+        }
+
+        viewModel.toggleCoordinator = function(member, value) {
+            var memberObj = { UserId: member.user.id(), GroupId:viewModel.groupId(), isCoordinator: value };
+            HobbyClue.Ajax.ajaxJsonPost(antiForgeryToken, '/api/groups/SetCoordinator', memberObj,
+                function(item) {
+                    member.isCoordinator(value);
+                }, function() { alert('error occurred'); });
+        }
+
+        viewModel.removeFromGroup = function(member) {
+            var rsvpObj = { Groupid: viewModel.groupId(), UserId: member.user.id(), LastUpdatedBy: currentUserId };
+               HobbyClue.Ajax.ajaxJsonPost(antiForgeryToken, '/api/groups/leave', rsvpObj,
+                    function(item) {
+                        viewModel.members.remove(function(i) { return i.user.id() == member.user.id(); });
+                    }, function() { alert('error occurred'); }, "DELETE");
+        }
+
+
+        //LastUpdatedBy
+        ko.applyBindings(viewModel);
+        return viewModel;
+    }
+</script>

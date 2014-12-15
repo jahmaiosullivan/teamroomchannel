@@ -1,0 +1,28 @@
+﻿@using Teamroom.Web.Views
+@model HobbyClue.Web.Models.ModalViewModel
+
+<div class="modal fade @Model.Class" id="@Model.Id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @if (Model.ShowHeader)
+            {
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">@Model.Title</h4>
+                </div>
+            }
+            <div class="modal-body">
+                @Html.Raw(Model.Content)
+            </div>
+            @if (Model.ShowFooter)
+            {
+                <div class="modal-footer">
+                    @if (Model.ShowSubmitButton)
+                    {
+                        <button id="@Model.SubmitButtonId" type="submit" class="btn btn-primary submitbutton">@Model.SubmitButtonText</button>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

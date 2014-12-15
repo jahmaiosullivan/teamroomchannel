@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="HobbyClue" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="2" osVersion="*" schemaVersion="2014-06.2.4">
+  <Role name="Teamroom.Web">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="Setting1" value="DefaultEndpointsProtocol=https;AccountName=hobbyclue;AccountKey=WzvwDU7zH3OINp09fzS3ZaYXD33vQ820hRBtFrI/XHOF/4ytlX41QXL5+eJ9TB9CyhtgRy6jSWX1bYqx7f4GQg==" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="Jahmai" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEDDXT5suD/GKRrAcS78KDJgwDQYJKoZIhvcNAQEBBQAEggEAEhVsfe0ISNgY4QF/WJFx+Er2mdSEcFGyEX4UebozANh42I3Jdbfzh9C3hKmBYAtJKejlZsQD9RKzILccFctTNiPL1HikVHnOSdSBWAay3URhKmt12ILVq++YAviAPDW8pLHVV+aefA/PPocGzMcEC7VCdnSqbBYZudX4zsVd9mw5Tew6u0RDJ5WM/YuvI6VBBKWXpacf8I0+JgwVE6Mj7k6EWGMLceDhhSGMF0SNcQeHuLg7h3xRls89JHsWTCtDrVxFRSMNB4V08CihbEam3h8u30twUWlXso5bJ0Pr3eCdAMbk+FnxWBw8n47T1O0nbgiF+LlHtiDFzmf2e6ZTJjAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECJnlZ2LPpJHkgBDKJ+LJWQ+TLxt6kaoE4Pcu" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2015-02-25T23:59:59.0000000-08:00" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="6F1E52BB803945124080F6EE0BAE8AD17EFB615D" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+</ServiceConfiguration>

@@ -1,0 +1,62 @@
+﻿@using Teamroom.Web.Views
+@model IList<HobbyClue.Data.Models.Hobby>
+@{
+    Layout = null;
+}
+
+<style>
+    .modal-dialog {
+        width: 800px;
+    }
+
+    .portfolio-2 .item {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+</style>
+
+<section id="hobbiesList" class="portfolio portfolio-2">
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+        var hobby = Model[i];
+        if (i % 3 == 0)
+        {
+            <div class="clearfix"></div>
+        }
+        <div class="col-md-4">
+            <div class="hobby item isotope-item" data-hobbyname="@hobby.Name" data-hobbyid="@hobby.Id">
+                <div class="pic">
+                    <div>
+                        <img src="@hobby.ImageUrl" alt="">
+                    </div>
+                </div>
+                <h3>@hobby.Name <a href="#" class="fa fa-plus addHobby" title="Add hobby"></a></h3>
+            </div>
+        </div>
+    }
+</section>
+
+<script>
+    $(document).ready(function() {
+        $('#hobbiesList').slimscroll({ height: '700px' });
+
+        $.each($('.hobby'), function (i, item) {
+            if (viewModel.hasHobby($(item).attr('data-hobbyid'))) {
+                $(item).find('.addHobby').toggleClass("fa-plus fa-minus");
+            }
+        });
+
+        $('.addHobby').click(function () {
+            var hobbyContainer = $(this).parents('.hobby:first');
+
+            var newHobby = { id: $(hobbyContainer).attr('data-hobbyid'), name: $(hobbyContainer).attr('data-hobbyname'), postUrl: "", imageUrl: "https://yoorcity.blob.core.windows.net/categoryimages/git1.png" };
+            if ($(this).hasClass('fa-plus')) {
+                viewModel.addHobby(newHobby);
+            }
+            else if ($(this).hasClass('fa-minus')) {
+                viewModel.removeHobby(newHobby);
+            }
+            $(this).toggleClass("fa-plus fa-minus");
+        });
+    });
+</script>

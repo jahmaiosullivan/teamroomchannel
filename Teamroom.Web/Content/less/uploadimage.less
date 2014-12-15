@@ -1,0 +1,39 @@
+﻿#newActivityBox .uploadBtn {
+    /* position: absolute; */
+    position: absolute;    
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    /* transform: translate(-300px, 0) scale(4); */
+    /* font-size: 23px; */
+    /* direction: ltr; */
+    cursor: pointer;
+    transform: none;
+}
+
+#newActivityBox .uploadingImage {
+    .make-md-column(6);
+    padding-left: 0;
+}
+
+#newActivityBox #newActivityFieldContainer {
+    padding-left: 0;
+}
+
+#addModal h3 {    
+    @media(min-width: @screen-desktop) {
+        .center-block();
+        width:100px;
+    }
+}
+
+
+#newActivityFieldContainer {
+    .make-md-column(6);
+}
+
+#newActivityFieldContainer > div {
+    margin-bottom: @defaultSpacing * 2;
+}

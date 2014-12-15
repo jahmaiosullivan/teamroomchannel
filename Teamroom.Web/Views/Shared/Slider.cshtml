@@ -1,0 +1,76 @@
+﻿@using Teamroom.Web.Views
+@model HobbyClue.Web.ViewModels.DeckViewModel
+<style>
+    .slider {
+        margin: 50px 0 10px !important;
+    }
+
+    #carousel li {
+        margin-right: 5px;
+    }
+
+    #carousel img {
+        display: block;
+        opacity: .5;
+        cursor: pointer;
+    }
+
+        #carousel img:hover {
+            opacity: 1;
+        }
+
+    #carousel .flex-active-slide img {
+        opacity: 1;
+        cursor: default;
+    }
+
+    .flexslider .slides img {
+        border-radius: 10px;
+	-moz-border-radius: 10px;
+}
+</style>
+
+@helper Slides()
+{
+    <ul class="slides">
+        @foreach (var card in Model.AllCards)
+        {
+            <li>
+                <img src="@card.ImageUrl" alt="@card.ImageUrl">
+            </li>
+        }
+    </ul>
+}
+<div id="slider" class="flexslider">
+    @Slides()
+</div>
+<div id="carousel" class="flexslider">
+    @Slides()
+</div>
+
+
+<script type="text/javascript">
+
+    $(window).load(function () {
+        $('#carousel').flexslider({
+            animation: "slide",
+            controlNav: false,
+            animationLoop: false,
+            slideshow: false,
+            itemWidth: 210,
+            itemMargin: 5,
+            asNavFor: '#slider'
+        });
+
+        $('#slider').flexslider({
+            animation: "slide",
+            controlNav: false,
+            animationLoop: false,
+            slideshow: false,
+            sync: "#carousel",
+            start: function (slider) {
+                $('body').removeClass('loading');
+            }
+        });
+    });
+</script>

@@ -1,0 +1,32 @@
+﻿@using Teamroom.Web.Views
+@model HobbyClue.Web.ViewModels.DeckViewModel
+
+
+<div class="@string.Format("item item{0}", Model.MainTag != null ? "-" + Model.MainTag.Name.ToLower() : "")">
+    
+    <div class="pic">
+        <div>
+            <img src="https://ci4.googleusercontent.com/proxy/bzFhB_xJwY6w4DQS-Ez3xVaS4B9xmUPgqchbQw88imAK7jLD9wMJuKs_fW2YavJS4vTOHwMBzySKwnPU1vQEeptF67jmEVrMEJBgvkcRRgcOupGNPJQAPCh9j_-a8gpVhZR3o4rhdHFaWu0FnqiHm7GinLQrjIkCXTxFRrfWB_LOMfckgOUhQI06dBtoYTF1WBiHmdCLEJWhHwql1KJWAR8N=s0-d-e1-ft#https://static.cdn.responsys.net/i5/responsysimages/jetblue/contentlibrary/faresale/2014_october/1007_promocode/Promocode/Email_Airways.jpg" alt="">
+            <span></span>
+            <div style="color:white;border-radius: 0px 0px 10px 10px;background: #222;background-color: rgba(0,0,0,.75);bottom: 0;left: 0;position: absolute;text-align: left;width: 100%;padding: 10px;">
+                <a href="/event/index?id=@Model.Id" style="display: block;">@Model.Title</a>
+                <a href="/event/index?id=@Model.Id" style="display: block;">3 comments</a>
+            </div>
+            <ul>
+                <li>
+                    <a href="https://ci4.googleusercontent.com/proxy/bzFhB_xJwY6w4DQS-Ez3xVaS4B9xmUPgqchbQw88imAK7jLD9wMJuKs_fW2YavJS4vTOHwMBzySKwnPU1vQEeptF67jmEVrMEJBgvkcRRgcOupGNPJQAPCh9j_-a8gpVhZR3o4rhdHFaWu0FnqiHm7GinLQrjIkCXTxFRrfWB_LOMfckgOUhQI06dBtoYTF1WBiHmdCLEJWhHwql1KJWAR8N=s0-d-e1-ft#https://static.cdn.responsys.net/i5/responsysimages/jetblue/contentlibrary/faresale/2014_october/1007_promocode/Promocode/Email_Airways.jpg" rel="@string.Format("gallery{0}", Model.Id)" class="fa fa-camera fancybox"></a>
+                    <div style="display: none;">
+                        @foreach (var card in Model.AllCards.Skip(1))
+                        {
+                            <a class="fancybox" rel="@string.Format("gallery{0}", Model.Id)" href="@card.ImageUrl">
+                                <img src="https://ci4.googleusercontent.com/proxy/bzFhB_xJwY6w4DQS-Ez3xVaS4B9xmUPgqchbQw88imAK7jLD9wMJuKs_fW2YavJS4vTOHwMBzySKwnPU1vQEeptF67jmEVrMEJBgvkcRRgcOupGNPJQAPCh9j_-a8gpVhZR3o4rhdHFaWu0FnqiHm7GinLQrjIkCXTxFRrfWB_LOMfckgOUhQI06dBtoYTF1WBiHmdCLEJWhHwql1KJWAR8N=s0-d-e1-ft#https://static.cdn.responsys.net/i5/responsysimages/jetblue/contentlibrary/faresale/2014_october/1007_promocode/Promocode/Email_Airways.jpg" alt="" />
+                            </a>
+                        }
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <h3>Design trends</h3>
+    <p>Morbi vitae urna venenatis, sagittis turpis at, ultricies sem. Mauris lobortis.</p>
+</div>
