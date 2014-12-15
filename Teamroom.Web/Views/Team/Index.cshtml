@@ -5,7 +5,7 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<link href="~/Content/app.v2.css" rel="stylesheet" />
 <!-- Slider -->
 <div class="tp-banner-container">
     <div class="tp-banner">
@@ -72,263 +72,279 @@
 
 
 <section class="content">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-xs-12 col-md-8">
-                <div class="pull-left"><a href="#" class="prevnext"><i class="fa fa-angle-left"></i></a></div>
-                <div class="pull-left">
-                    <ul class="paginationforum">
-                        <li class="hidden-xs"><a href="#">1</a></li>
-                        <li class="hidden-xs"><a href="#">2</a></li>
-                        <li class="hidden-xs"><a href="#">3</a></li>
-                        <li class="hidden-xs"><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">6</a></li>
-                        <li><a href="#" class="active">7</a></li>
-                        <li><a href="#">8</a></li>
-                        <li class="hidden-xs"><a href="#">9</a></li>
-                        <li class="hidden-xs"><a href="#">10</a></li>
-                        <li class="hidden-xs hidden-md"><a href="#">11</a></li>
-                        <li class="hidden-xs hidden-md"><a href="#">12</a></li>
-                        <li class="hidden-xs hidden-sm hidden-md"><a href="#">13</a></li>
-                        <li><a href="#">1586</a></li>
-                    </ul>
-                </div>
-                <div class="pull-left"><a href="#" class="prevnext last"><i class="fa fa-angle-right"></i></a></div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="container">
+       <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-8">
-                <!-- POST -->
-                <div id="firstpost" class="post">
-                    <div class="wrap-ut pull-left">
-                        <div class="userinfo pull-left">
-                            <div class="avatar">
-                                <img src="images/avatar.jpg" alt="" />
-                                <div class="status green">&nbsp;</div>
-                            </div>
-
-                            <div class="icons">
-                                <img src="/images/theme1/icon1.jpg" alt="" /><img src="/images/theme1/icon4.jpg" alt="" />
+                <div class="timeline">
+                    <article class="timeline-item active">
+                        <div class="timeline-caption">
+                            <div class="panel bg bg-primary">
+                                <span class="timeline-icon"><i class="fa fa-bell-o time-icon bg-primary"></i></span>
+                                <span class="timeline-date">7:30 am</span>
+                                <h5><span>Wake up</span> Me </h5>
+                                <div class="m-t-small timeline-action">
+                                    <span class="h3 pull-left m-r-small">4:51</span>
+                                    <button class="btn btn-sm btn-white"><i class="fa fa-pause"></i> Pause</button>
+                                    <button class="btn btn-sm btn-white"><i class="fa fa-check"></i> Confirm</button>
+                                </div>
                             </div>
                         </div>
-                        <div class="posttext pull-left">
-                            <h2><a href="02_topic.html">10 Kids Unaware of Their Halloween Costume</a></h2>
-                            <p>It's one thing to subject yourself to a Halloween costume mishap because, hey, that's your prerogative.</p>
+                    </article>
+                    <article class="timeline-item">
+                        <div class="timeline-caption">
+                            <div class="panel arrow arrow-left">
+                                <span class="timeline-icon"><i class="fa fa-mobile-phone time-icon bg-primary"></i></span>
+                                <span class="timeline-date">12:25 am</span>
+                                <h5><span>Call to</span> Jason Cokde (021-254-3523) </h5>
+                            </div>
                         </div>
-                        <div class="clearfix"></div>
+                    </article>
+                    <article class="timeline-item alt">
+                        <div class="timeline-caption">
+                            <div class="panel arrow arrow-right">
+                                <span class="timeline-icon"><i class="fa fa-male time-icon bg-success"></i></span>
+                                <span class="timeline-date">10:00 am</span>
+                                <h5><span>Appointment</span> Carmark Sook (.inc company) </h5>
+                                <p>Morbi nec nunc condimentum, egestas dui nec, </p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeline-item">
+                        <div class="timeline-caption">
+                            <div class="panel arrow arrow-left">
+                                <span class="timeline-icon"><i class="fa fa-plane time-icon"></i></span>
+                                <span class="timeline-date">8:00 am</span>
+                                <h5><span>Fly to</span> Newyork City </h5>
+                                <p>82°, Very hot with some sun</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeline-item alt">
+                        <div class="timeline-caption">
+                            <div class="panel arrow arrow-right">
+                                <span class="timeline-icon"><i class="fa fa-file-text time-icon bg-info"></i></span>
+                                <span class="timeline-date">9:30 am</span>
+                                <h5><span>Meeting</span> Office a - 2 floor </h5>
+                                <p>Iaculis lorem justo porttitor orci. Vivamus vestibulum tortor augue. Donec elementum mollis velit.</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeline-item">
+                        <div class="timeline-caption">
+                            <div class="panel arrow arrow-left">
+                                <span class="timeline-icon"><i class="fa fa-code time-icon"></i></span>
+                                <span class="timeline-date">9:00 am</span>
+                                <h5><span>Work on</span> Web application project </h5>
+                                <p>Iaculis lorem justo porttitor orci. Donec elementum mollis velit.</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeline-item alt">
+                        <div class="timeline-caption">
+                            <div class="panel arrow arrow-right">
+                                <span class="timeline-icon"><i class="fa fa-file-text time-icon bg-info"></i></span>
+                                <span class="timeline-date">9:30 am</span>
+                                <h5><span>Meeting</span> Office a - 2 floor </h5>
+                                <p>Iaculis lorem justo porttitor orci. Vivamus vestibulum tortor augue. Donec elementum mollis velit.</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeline-item">
+                        <div class="timeline-caption">
+                            <div class="panel arrow arrow-left">
+                                <span class="timeline-icon"><i class="fa fa-code time-icon"></i></span>
+                                <span class="timeline-date">9:00 am</span>
+                                <h5><span>Work on</span> Web application project </h5>
+                                <p>Iaculis lorem justo porttitor orci. Donec elementum mollis velit.</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeline-item alt">
+                        <div class="timeline-caption">
+                            <div class="panel arrow arrow-right">
+                                <span class="timeline-icon"><i class="fa fa-file-text time-icon bg-info"></i></span>
+                                <span class="timeline-date">9:30 am</span>
+                                <h5><span>Meeting</span> Office a - 2 floor </h5>
+                                <p>Iaculis lorem justo porttitor orci. Vivamus vestibulum tortor augue. Donec elementum mollis velit.</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeline-item">
+                        <div class="timeline-caption">
+                            <div class="panel arrow arrow-left">
+                                <span class="timeline-icon"><i class="fa fa-code time-icon"></i></span>
+                                <span class="timeline-date">9:00 am</span>
+                                <h5><span>Work on</span> Web application project </h5>
+                                <p>Iaculis lorem justo porttitor orci. Donec elementum mollis velit.</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeline-item alt">
+                        <div class="timeline-caption">
+                            <div class="panel arrow arrow-right">
+                                <span class="timeline-icon"><i class="fa fa-file-text time-icon bg-info"></i></span>
+                                <span class="timeline-date">9:30 am</span>
+                                <h5><span>Meeting</span> Office a - 2 floor </h5>
+                                <p>Iaculis lorem justo porttitor orci. Vivamus vestibulum tortor augue. Donec elementum mollis velit.</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeline-item">
+                        <div class="timeline-caption">
+                            <div class="panel arrow arrow-left">
+                                <span class="timeline-icon"><i class="fa fa-code time-icon"></i></span>
+                                <span class="timeline-date">9:00 am</span>
+                                <h5><span>Work on</span> Web application project </h5>
+                                <p>Iaculis lorem justo porttitor orci. Donec elementum mollis velit.</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeline-item alt">
+                        <div class="timeline-caption">
+                            <div class="panel arrow arrow-right">
+                                <span class="timeline-icon"><i class="fa fa-file-text time-icon bg-info"></i></span>
+                                <span class="timeline-date">9:30 am</span>
+                                <h5><span>Meeting</span> Office a - 2 floor </h5>
+                                <p>Iaculis lorem justo porttitor orci. Vivamus vestibulum tortor augue. Donec elementum mollis velit.</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeline-item">
+                        <div class="timeline-caption">
+                            <div class="panel arrow arrow-left">
+                                <span class="timeline-icon"><i class="fa fa-code time-icon"></i></span>
+                                <span class="timeline-date">9:00 am</span>
+                                <h5><span>Work on</span> Web application project </h5>
+                                <p>Iaculis lorem justo porttitor orci. Donec elementum mollis velit.</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeline-item alt">
+                        <div class="timeline-caption">
+                            <div class="panel arrow arrow-right">
+                                <span class="timeline-icon"><i class="fa fa-file-text time-icon bg-info"></i></span>
+                                <span class="timeline-date">9:30 am</span>
+                                <h5><span>Meeting</span> Office a - 2 floor </h5>
+                                <p>Iaculis lorem justo porttitor orci. Vivamus vestibulum tortor augue. Donec elementum mollis velit.</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeline-item">
+                        <div class="timeline-caption">
+                            <div class="panel arrow arrow-left">
+                                <span class="timeline-icon"><i class="fa fa-code time-icon"></i></span>
+                                <span class="timeline-date">9:00 am</span>
+                                <h5><span>Work on</span> Web application project </h5>
+                                <p>Iaculis lorem justo porttitor orci. Donec elementum mollis velit.</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeline-item alt">
+                        <div class="timeline-caption">
+                            <div class="panel arrow arrow-right">
+                                <span class="timeline-icon"><i class="fa fa-file-text time-icon bg-info"></i></span>
+                                <span class="timeline-date">9:30 am</span>
+                                <h5><span>Meeting</span> Office a - 2 floor </h5>
+                                <p>Iaculis lorem justo porttitor orci. Vivamus vestibulum tortor augue. Donec elementum mollis velit.</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeline-item">
+                        <div class="timeline-caption">
+                            <div class="panel arrow arrow-left">
+                                <span class="timeline-icon"><i class="fa fa-code time-icon"></i></span>
+                                <span class="timeline-date">9:00 am</span>
+                                <h5><span>Work on</span> Web application project </h5>
+                                <p>Iaculis lorem justo porttitor orci. Donec elementum mollis velit.</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeline-item alt">
+                        <div class="timeline-caption">
+                            <div class="panel arrow arrow-right">
+                                <span class="timeline-icon"><i class="fa fa-file-text time-icon bg-info"></i></span>
+                                <span class="timeline-date">9:30 am</span>
+                                <h5><span>Meeting</span> Office a - 2 floor </h5>
+                                <p>Iaculis lorem justo porttitor orci. Vivamus vestibulum tortor augue. Donec elementum mollis velit.</p>
+                            </div>
+                        </div>
+                    </article>
+                <article class="timeline-item">
+                    <div class="timeline-caption">
+                        <div class="panel arrow arrow-left">
+                            <span class="timeline-icon"><i class="fa fa-code time-icon"></i></span>
+                            <span class="timeline-date">9:00 am</span>
+                            <h5><span>Work on</span> Web application project </h5>
+                            <p>Iaculis lorem justo porttitor orci. Donec elementum mollis velit.</p>
+                        </div>
                     </div>
-                    <div class="postinfo pull-left">
-                        <div class="comments">
-                            <div class="commentbg">
-                                560
-                                <div class="mark"></div>
+                </article>
+                    <article class="timeline-item alt">
+                        <div class="timeline-caption">
+                            <div class="panel arrow arrow-right">
+                                <span class="timeline-icon"><i class="fa fa-file-text time-icon bg-info"></i></span>
+                                <span class="timeline-date">9:30 am</span>
+                                <h5><span>Meeting</span> Office a - 2 floor </h5>
+                                <p>Iaculis lorem justo porttitor orci. Vivamus vestibulum tortor augue. Donec elementum mollis velit.</p>
                             </div>
-
                         </div>
-                        <div class="views"><i class="fa fa-eye"></i> 1,568</div>
-                        <div class="time"><i class="fa fa-clock-o"></i> 24 min</div>
+                    </article>
+                <article class="timeline-item">
+                    <div class="timeline-caption">
+                        <div class="panel arrow arrow-left">
+                            <span class="timeline-icon"><i class="fa fa-code time-icon"></i></span>
+                            <span class="timeline-date">9:00 am</span>
+                            <h5><span>Work on</span> Web application project </h5>
+                            <p>Iaculis lorem justo porttitor orci. Donec elementum mollis velit.</p>
+                        </div>
                     </div>
-                    <div class="clearfix"></div>
-                </div><!-- POST -->
-                <!-- POST -->
-                <div class="post">
-                    <div class="wrap-ut pull-left">
-                        <div class="userinfo pull-left">
-                            <div class="avatar">
-                                <img src="images/avatar2.jpg" alt="" />
-                                <div class="status red">&nbsp;</div>
-                            </div>
-
-                            <div class="icons">
-                                <img src="/images/theme1/icon3.jpg" alt="" /><img src="/images/theme1/icon4.jpg" alt="" /><img src="/images/theme1/icon5.jpg" alt="" /><img src="/images/theme1/icon6.jpg" alt="" />
+                </article>
+                    <article class="timeline-item alt">
+                        <div class="timeline-caption">
+                            <div class="panel arrow arrow-right">
+                                <span class="timeline-icon"><i class="fa fa-file-text time-icon bg-info"></i></span>
+                                <span class="timeline-date">9:30 am</span>
+                                <h5><span>Meeting</span> Office a - 2 floor </h5>
+                                <p>Iaculis lorem justo porttitor orci. Vivamus vestibulum tortor augue. Donec elementum mollis velit.</p>
                             </div>
                         </div>
-                        <div class="posttext pull-left">
-                            <h2><a href="02_topic.html">What Instagram Ads Will Look Like</a></h2>
-                            <p>Instagram offered a first glimpse at what its ads will look like in a blog post Thursday. The sample ad, which you can see below.</p>
+                    </article>
+                <article class="timeline-item">
+                    <div class="timeline-caption">
+                        <div class="panel arrow arrow-left">
+                            <span class="timeline-icon"><i class="fa fa-code time-icon"></i></span>
+                            <span class="timeline-date">9:00 am</span>
+                            <h5><span>Work on</span> Web application project </h5>
+                            <p>Iaculis lorem justo porttitor orci. Donec elementum mollis velit.</p>
                         </div>
-                        <div class="clearfix"></div>
                     </div>
-                    <div class="postinfo pull-left">
-                        <div class="comments">
-                            <div class="commentbg">
-                                89
-                                <div class="mark"></div>
+                </article>
+                    <article class="timeline-item alt">
+                        <div class="timeline-caption">
+                            <div class="panel arrow arrow-right">
+                                <span class="timeline-icon"><i class="fa fa-file-text time-icon bg-info"></i></span>
+                                <span class="timeline-date">9:30 am</span>
+                                <h5><span>Meeting</span> Office a - 2 floor </h5>
+                                <p>Iaculis lorem justo porttitor orci. Vivamus vestibulum tortor augue. Donec elementum mollis velit.</p>
                             </div>
-
                         </div>
-                        <div class="views"><i class="fa fa-eye"></i> 1,568</div>
-                        <div class="time"><i class="fa fa-clock-o"></i> 15 min</div>
+                    </article>
+                    <article class="timeline-item">
+                        <div class="timeline-caption">
+                            <div class="panel arrow arrow-left">
+                                <span class="timeline-icon"><i class="fa fa-code time-icon"></i></span>
+                                <span class="timeline-date">9:00 am</span>
+                                <h5><span>Work on</span> Web application project </h5>
+                                <p>Iaculis lorem justo porttitor orci. Donec elementum mollis velit.</p>
+                            </div>
+                        </div>
+                    </article>
+                    <div class="timeline-footer">
+                        <a href="http://flatfull.com/themes/first/timeline.html#">
+                            <i class="fa fa-plus time-icon inline-block bg-default"></i>
+                        </a>
                     </div>
-                    <div class="clearfix"></div>
-                </div><!-- POST -->
-                <!-- POST -->
-                <div class="post">
-                    <div class="wrap-ut pull-left">
-                        <div class="userinfo pull-left">
-                            <div class="avatar">
-                                <img src="/images/theme1/avatar3.jpg" alt="" />
-                                <div class="status red">&nbsp;</div>
-                            </div>
-
-                            <div class="icons">
-                                <img src="/images/theme1/icon2.jpg" alt="" /><img src="/images/theme1/icon4.jpg" alt="" />
-                            </div>
-                        </div>
-                        <div class="posttext pull-left">
-                            <h2><a href="02_topic.html">The Future of Magazines Is on Tablets</a></h2>
-                            <p>Eric Schmidt has seen the future of magazines, and it's on the tablet. At a Magazine Publishers Association.</p>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="postinfo pull-left">
-                        <div class="comments">
-                            <div class="commentbg">
-                                456
-                                <div class="mark"></div>
-                            </div>
-
-                        </div>
-                        <div class="views"><i class="fa fa-eye"></i> 1,568</div>
-                        <div class="time"><i class="fa fa-clock-o"></i> 2 days</div>
-                    </div>
-                    <div class="clearfix"></div>
-                </div><!-- POST -->
-                <!-- POST -->
-                <div class="post">
-                    <div class="wrap-ut pull-left">
-                        <div class="userinfo pull-left">
-                            <div class="avatar">
-                                <img src="/images/theme1/avatar4.jpg" alt="" />
-                                <div class="status yellow">&nbsp;</div>
-                            </div>
-
-                            <div class="icons">
-                                <img src="/images/theme1/icon1.jpg" alt="" /><img src="/images/theme1/icon4.jpg" alt="" /><img src="/images/theme1/icon6.jpg" alt="" />
-                            </div>
-                        </div>
-                        <div class="posttext pull-left">
-                            <h2><a href="02_topic.html">Pinterest Now Worth $3.8 Billion</a></h2>
-                            <p>Pinterest's valuation is closing in on $4 billion after its latest funding round of $225 million, according to a report.</p>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="postinfo pull-left">
-                        <div class="comments">
-                            <div class="commentbg">
-                                78
-                                <div class="mark"></div>
-                            </div>
-
-                        </div>
-                        <div class="views"><i class="fa fa-eye"></i> 1,568</div>
-                        <div class="time"><i class="fa fa-clock-o"></i> 24 min</div>
-                    </div>
-                    <div class="clearfix"></div>
-                </div><!-- POST -->
-                <!-- POST -->
-                <div class="post">
-                    <div class="wrap-ut pull-left">
-                        <div class="userinfo pull-left">
-                            <div class="avatar">
-                                <img src="/images/theme1/avatar.jpg" alt="" />
-                                <div class="status green">&nbsp;</div>
-                            </div>
-
-                            <div class="icons">
-                                <img src="/images/theme1/icon1.jpg" alt="" /><img src="/images/theme1/icon4.jpg" alt="" />
-                            </div>
-                        </div>
-                        <div class="posttext pull-left">
-                            <h2><a href="02_topic.html">10 Kids Unaware of Their Halloween Costume</a></h2>
-                            <p>It's one thing to subject yourself to a Halloween costume mishap because, hey, that's your prerogative.</p>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="postinfo pull-left">
-                        <div class="comments">
-                            <div class="commentbg">
-                                560
-                                <div class="mark"></div>
-                            </div>
-
-                        </div>
-                        <div class="views"><i class="fa fa-eye"></i> 1,568</div>
-                        <div class="time"><i class="fa fa-clock-o"></i> 24 min</div>
-                    </div>
-                    <div class="clearfix"></div>
-                </div><!-- POST -->
-                <!-- POST -->
-                <div class="post">
-                    <div class="wrap-ut pull-left">
-                        <div class="userinfo pull-left">
-                            <div class="avatar">
-                                <img src="/images/theme1/avatar2.jpg" alt="" />
-                                <div class="status red">&nbsp;</div>
-                            </div>
-
-                            <div class="icons">
-                                <img src="/images/theme1/icon3.jpg" alt="" /><img src="/images/theme1/icon4.jpg" alt="" /><img src="/images/theme1/icon5.jpg" alt="" /><img src="images/icon6.jpg" alt="" />
-                            </div>
-                        </div>
-                        <div class="posttext pull-left">
-                            <h2><a href="02_topic.html">What Instagram Ads Will Look Like</a></h2>
-                            <p>Instagram offered a first glimpse at what its ads will look like in a blog post Thursday. The sample ad, which you can see below.</p>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="postinfo pull-left">
-                        <div class="comments">
-                            <div class="commentbg">
-                                89
-                                <div class="mark"></div>
-                            </div>
-
-                        </div>
-                        <div class="views"><i class="fa fa-eye"></i> 1,568</div>
-                        <div class="time"><i class="fa fa-clock-o"></i> 15 min</div>
-                    </div>
-                    <div class="clearfix"></div>
-                </div><!-- POST -->
-                <!-- POST -->
-                <div class="post">
-                    <div class="wrap-ut pull-left">
-                        <div class="userinfo pull-left">
-                            <div class="avatar">
-                                <img src="/images/theme1/avatar3.jpg" alt="" />
-                                <div class="status red">&nbsp;</div>
-                            </div>
-
-                            <div class="icons">
-                                <img src="/images/theme1/icon2.jpg" alt="" /><img src="/images/theme1/icon4.jpg" alt="" />
-                            </div>
-                        </div>
-                        <div class="posttext pull-left">
-                            <h2><a href="02_topic.html">The Future of Magazines Is on Tablets</a></h2>
-                            <p>Eric Schmidt has seen the future of magazines, and it's on the tablet. At a Magazine Publishers Association.</p>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="postinfo pull-left">
-                        <div class="comments">
-                            <div class="commentbg">
-                                456
-                                <div class="mark"></div>
-                            </div>
-
-                        </div>
-                        <div class="views"><i class="fa fa-eye"></i> 1,568</div>
-                        <div class="time"><i class="fa fa-clock-o"></i> 2 days</div>
-                    </div>
-                    <div class="clearfix"></div>
-                </div><!-- POST -->
-
+                </div>
             </div>
             <div class="col-lg-4 col-md-4">
 
@@ -431,38 +447,6 @@
             </div>
         </div>
     </div>
-
-
-
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-xs-12">
-                <div class="pull-left"><a href="#" class="prevnext"><i class="fa fa-angle-left"></i></a></div>
-                <div class="pull-left">
-                    <ul class="paginationforum">
-                        <li class="hidden-xs"><a href="#">1</a></li>
-                        <li class="hidden-xs"><a href="#">2</a></li>
-                        <li class="hidden-xs"><a href="#">3</a></li>
-                        <li class="hidden-xs"><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">6</a></li>
-                        <li><a href="#" class="active">7</a></li>
-                        <li><a href="#">8</a></li>
-                        <li class="hidden-xs"><a href="#">9</a></li>
-                        <li class="hidden-xs"><a href="#">10</a></li>
-                        <li class="hidden-xs hidden-md"><a href="#">11</a></li>
-                        <li class="hidden-xs hidden-md"><a href="#">12</a></li>
-                        <li class="hidden-xs hidden-sm hidden-md"><a href="#">13</a></li>
-                        <li><a href="#">1586</a></li>
-                    </ul>
-                </div>
-                <div class="pull-left"><a href="#" class="prevnext last"><i class="fa fa-angle-right"></i></a></div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-    </div>
-
-
 </section>
 
 <footer>
