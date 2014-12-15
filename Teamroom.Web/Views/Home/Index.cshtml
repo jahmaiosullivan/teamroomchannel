@@ -1,555 +1,1205 @@
 ﻿@using HobbyClue.Web.ViewModels
-@using Teamroom.Web.Views
 @model HomePageViewModel
-
 @{
-    Layout = "~/Views/Shared/_TwoColumnLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-    
-<link rel="stylesheet" type="text/css" media="screen" href="../../Scripts/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css">
-<style>
-    .md-editor .md-footer {
-        text-align: right;
-    }
+ 
 
-    .md-editor .btn-primary:hover, .md-editor .btn-primary:focus, .md-editor .btn-primary:active, .md-editor .btn-primary.active {
-        background-color: #d64635;
-    }
-    .chats li .message .arrow, .chats li .message {
-        border-color: #c6c6c6;
-    }
-
-    .chats li .message .state {
-        background-color: #c6c6c6;
-        color: white;
-    }
-</style>
-@section pageHeader {
-    <h3 class="page-title"> Dashboard <small>reports & statistics</small></h3>
+@section styles {
+    <!-- styles -->
+    <link rel="stylesheet" href="~/Content/the8/css/animate.css">
+    <link rel="stylesheet" href="~/Content/the8/css/font-awesome.css">
+    <link rel="stylesheet" href="~/Content/the8/css/owl.carousel.css">
+    <link rel="stylesheet" href="~/Content/the8/css/jquery.fancybox.css">
+    <link rel="stylesheet" href="~/Scripts/the8/js/layerslider/css/layerslider.css">
+    <link rel="stylesheet" href="~/Content/the8/css/styles.css">
+    <!--/ styles -->
 }
 
-<div class="row ">
-    <div class="col-md-8 col-sm-8">
-        <div id="questions">
-            @AskAQuestionBox()
-            <div>
-                <div class="page-bar">
-                    <div class="page-toolbar">
-                        <div class="col-md-8" style="padding-left: 0;">
-                            <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-                            <!-- DOC: Apply "sidebar-search-bordered" class the below search form to have bordered search box -->
-                            <!-- DOC: Apply "sidebar-search-bordered sidebar-search-solid" class the below search form to have bordered & solid search box -->
-                            <form method="POST">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search...">
-                                    <span class="input-group-btn" style="visibility: hidden;">
-                                        <a href="javascript:;" class="btn submit"><i class="icon-magnifier"></i></a>
-                                    </span>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- END RESPONSIVE QUICK SEARCH FORM -->
-                        <div class="actions col-md-4" data-placement="top" style="text-align: right; padding-right: 0;">
-                            <div class="btn-group pull-right">
-                                <a href="" class="btn grey-steel btn-sm dropdown-toggle" style="font-size: 18px;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    Filter <span class="fa fa-angle-down">
-                                    </span>
-                                </a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li>
-                                        <a href="javascript:;">
-                                            Newest <span class="label label-sm label-default"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">Most active <span class="label label-sm label-default"></span></a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">Unanswered <span class="label label-sm label-default"></span></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        
+
+<div class="page">
+    <!-- page header top -->
+    <header class="page-header-top">
+        <div class="grid-row">
+            <div class="row">
+                <!-- language selector -->
+                <div class="language-selector">
+                    <i class="fa fa-globe"></i>
+                    <span>Change your language:</span>
+                    <div>
+                        <a href="#">English<i class="fa fa-angle-down"></i></a>
+                        <ul>
+                            <li><a href="#">French</a></li>
+                            <li><a href="#">German</a></li>
+                            <li><a href="#">Сhinese</a></li>
+                            <li><a href="#">Japanese</a></li>
+                        </ul>
                     </div>
                 </div>
-                <ul class="chats">
-                    @Question("Problem with string manipulation or calling array with string manipulation", "/images/avatar1.jpg", "", "Bob Nilson", "20:09")
-                    @Question("Export BACPAC Woes", "/images/avatar2.jpg", "", "Lisa Wong", "20:11")
-                    @Question("New msgbox after old one finish", "/images/avatar1.jpg", "answered", "Bob Nilson", "20:30")
-                    @Question("SQL installation", "/images/avatar3.jpg", "", "Richard Doe", "20:33")
-                    @Question("Entity Framework and Package Manager Publishing to Azure", "/images/avatar1.jpg", "", "Bob Nilson", "20:09")
-                    @Question("Getting the name of a background image from the image's container","/images/avatar2.jpg", "", "Lisa Wong", "20:11")
-                    @Question("How to Employ Validation in a Windows 8.1 Store App", "/images/avatar1.jpg", "", "Bob Nilson", "20:30")
-                    @Question("Problem with string manipulation or calling array with string manipulation", "/images/avatar1.jpg", "", "Bob Nilson", "20:09")
-                    @Question("Export BACPAC Woes", "/images/avatar2.jpg", "", "Lisa Wong", "20:11")
-                    @Question("New msgbox after old one finish", "/images/avatar1.jpg", "", "Bob Nilson", "20:30")
-                    @Question("SQL installation", "/images/avatar3.jpg", "answered", "Richard Doe", "20:33")
-                    @Question("Entity Framework and Package Manager Publishing to Azure", "/images/avatar1.jpg", "answered", "Bob Nilson", "20:09")
-                    @Question("Getting the name of a background image from the image's container", "/images/avatar2.jpg", "answered", "Lisa Wong", "20:11")
-                    @Question("How to Employ Validation in a Windows 8.1 Store App", "/images/avatar1.jpg", "answered", "Bob Nilson", "20:30")
-                    @Question("Problem with string manipulation or calling array with string manipulation", "/images/avatar1.jpg", "answered", "Bob Nilson", "20:09")
-                    @Question("Export BACPAC Woes", "/images/avatar2.jpg", "answered", "Lisa Wong", "20:11")
-                    @Question("New msgbox after old one finish", "/images/avatar1.jpg", "answered", "Bob Nilson", "20:30")
-                    @Question("SQL installation", "/images/avatar3.jpg", "answered", "Richard Doe", "20:33")
-                    @Question("Entity Framework and Package Manager Publishing to Azure", "/images/avatar1.jpg", "answered", "Bob Nilson", "20:09")
-                    @Question("Getting the name of a background image from the image's container", "/images/avatar2.jpg", "answered", "Lisa Wong", "20:11")
-                    @Question("How to Employ Validation in a Windows 8.1 Store App", "/images/avatar1.jpg", "answered", "Bob Nilson", "20:30")
-                </ul>
+                <!--/ language selector -->
             </div>
+
+            <div class="row">
+                <!-- cart summary -->
+                <div class="cart-summary">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span>My cart:</span>
+                    <div>
+                        <a href="#">0 items<i class="fa fa-angle-down"></i></a>
+                        <ul>
+                            <li>
+                                <a href="#"><img src="/Images/the8/pic/catalog-grid/item-2.jpg" width="54" height="54" alt=""></a>
+                                <h4><a href="#">Fujifilm Finepix xp50</a></h4>
+                                <p>1 × $900</p>
+                            </li>
+                            <li>
+                                <a href="#"><img src="/Images/the8/pic/catalog-grid/item-6.jpg" width="54" height="54" alt=""></a>
+                                <h4><a href="#">Motorola Triumph</a></h4>
+                                <p>1 × $5500</p>
+                            </li>
+                            <li class="subtotal">Subtotal: $6400.00</li>
+                            <li class="total">
+                                <a href="#"><i class="fa fa-shopping-cart"></i>&nbsp; View Cart</a>
+                                <a href="#">Checkout &nbsp;<i class="fa fa-share"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--/ cart summary -->
+            </div>
+
+            <div class="row">
+                <!-- follow us -->
+                <div class="follow-us">
+                    <a href="#" class="fa fa-dribbble"></a>
+                    <a href="#" class="fa fa-tumblr"></a>
+                    <a href="#" class="fa fa-rss"></a>
+                    <a href="#" class="fa fa-skype"></a>
+                    <a href="#" class="fa fa-facebook"></a>
+                    <a href="#" class="fa fa-twitter"></a>
+                </div>
+                <!--/ follow us -->
+            </div>
+
+            <a href="#" id="page-header-top-switcher" class="switcher"></a>
         </div>
-    </div>
-    <div class="col-md-4 col-sm-4">
-        <div class="dashboard-stat blue-madison">
-            <div class="visual">
-                <i class="fa fa-comments"></i>
-            </div>
-            <div class="details">
-                <div class="number">
-                    1349
-                </div>
-                <div class="desc">
-                    Service Up
-                </div>
-            </div>
-            <a class="more" href="#">
-                View more <i class="m-icon-swapright m-icon-white"></i>
+    </header>
+    <!--/ page header top -->
+    <!-- page header bottom -->
+    <header id="page-header-bottom" class="page-header-bottom">
+        <div class="grid-row">
+            <!-- logo -->
+            <a href="index.html" class="logo">
+                <img src="/images/the8/img/logo.png" alt="">
             </a>
+            <!--/ logo -->
+            <!-- main nav -->
+            <nav class="main-nav">
+                <ul>
+                    <li>
+                        <a href="index.html" class="active">Home</a>
+                        <ul>
+                            <li><a href="index.html" class="active">Default Style</a></li>
+                            <li><a href="index-blog.html">Blog Style</a></li>
+                            <li><a href="index-parallax.html">Parallax Style</a></li>
+                            <li><a href="index-video.html">Background Video</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Features</a>
+                        <ul>
+                            <li><a href="iOS8-inspired.html">iOS8 Inspired Design</a></li>
+                            <li><a href="woo-ready.html">Woo-Ready</a></li>
+                            <li>
+                                <a href="#">Content Elements</a>
+                                <ul>
+                                    <li><a href="feature-accordion.html">Accordion</a></li>
+                                    <li><a href="feature-buttons.html">Buttons</a></li>
+                                    <li><a href="feature-callout.html">Callout</a></li>
+                                    <li><a href="feature-chart-graph.html">Chart Graph</a></li>
+                                    <li><a href="feature-chart-pie.html">Chart Pie</a></li>
+                                    <li><a href="feature-chart-circle.html">Chart Circle</a></li>
+                                    <li><a href="feature-columns.html">Columns</a></li>
+                                    <li><a href="feature-dividers.html">Dividers</a></li>
+                                    <li><a href="feature-icons.html">Icons</a></li>
+                                    <li><a href="feature-lists.html">Lists</a></li>
+                                    <li><a href="feature-messages.html">Messages</a></li>
+                                    <li><a href="feature-milestone.html">Milestone</a></li>
+                                    <li><a href="feature-pricing-table.html">Pricing Table</a></li>
+                                    <li><a href="feature-progress-bar.html">Progress Bar</a></li>
+                                    <li><a href="feature-services.html">Services</a></li>
+                                    <li><a href="feature-tabs.html">Tabs</a></li>
+                                    <li><a href="feature-team.html">Team</a></li>
+                                    <li><a href="feature-testimonials.html">Testimonials</a></li>
+                                    <li><a href="feature-toggle.html">Toggle</a></li>
+                                    <li><a href="feature-twitter.html">Twitter</a></li>
+                                    <li><a href="feature-twitter-carousel.html">Twitter Carousel</a></li>
+                                    <li><a href="feature-video.html">Video</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Pages</a>
+                        <ul>
+                            <li><a href="page-404.html">404 page</a></li>
+                            <li><a href="page-about.html">About us</a></li>
+                            <li><a href="page-coming.html">Coming soon</a></li>
+                            <li><a href="page-faq.html">FAQ</a></li>
+                            <li><a href="page-team.html">Our team</a></li>
+                            <li><a href="page-process.html">Our process</a></li>
+                            <li><a href="page-progress.html">Our progress</a></li>
+                            <li><a href="page-services.html">Our services</a></li>
+                            <li><a href="page-sitemap.html">Sitemap</a></li>
+                            <li><a href="page-sidebar-one.html">With one sidebar</a></li>
+                            <li><a href="page-sidebar-two.html">With two sidebars</a></li>
+                            <li><a href="page-sidebar-none.html">Full width</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Portfolio</a>
+                        <ul>
+                            <li><a href="portfolio-four.html">Four columns</a></li>
+                            <li><a href="portfolio-three.html">Three columns</a></li>
+                            <li><a href="portfolio-two.html">Two columns</a></li>
+                            <li><a href="portfolio-one.html">One column</a></li>
+                            <li><a href="portfolio-gallery.html">Gallery</a></li>
+                            <li><a href="portfolio-single.html">Single item</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Blog</a>
+                        <ul>
+                            <li><a href="blog.html">Regular view</a></li>
+                            <li><a href="blog-three.html">Three columns</a></li>
+                            <li><a href="blog-two.html">Two columns</a></li>
+                            <li><a href="blog-one.html">One column</a></li>
+                            <li><a href="blog-single.html">Single post</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Shop</a>
+                        <ul>
+                            <li><a href="shop-catalog.html">Catalog</a></li>
+                            <li><a href="shop-product.html">Product</a></li>
+                            <li><a href="shop-cart.html">Cart</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="contacts.html">Contacts</a>
+                    </li>
+                </ul>
+            </nav>
+            <!--/ main nav -->
+            <!-- mobile nav -->
+            <nav id="mobile-nav" class="mobile-nav">
+                <a href="#mobile-nav-1" class="switcher"><i class="fa fa-align-justify"></i></a>
+                <ul id="mobile-nav-1">
+                    <li><a href="#mobile-nav-7" class="opener active"><i class="fa fa-angle-right"></i>Home</a></li>
+                    <li><a href="#mobile-nav-2" class="opener"><i class="fa fa-angle-right"></i>Features</a></li>
+                    <li><a href="#mobile-nav-3" class="opener"><i class="fa fa-angle-right"></i>Pages</a></li>
+                    <li><a href="#mobile-nav-4" class="opener"><i class="fa fa-angle-right"></i>Portfolio</a></li>
+                    <li><a href="#mobile-nav-5" class="opener"><i class="fa fa-angle-right"></i>Blog</a></li>
+                    <li><a href="#mobile-nav-6" class="opener"><i class="fa fa-angle-right"></i>Shop</a></li>
+                    <li><a href="contacts.html">Contacts</a></li>
+                </ul>
+                <ul id="mobile-nav-7">
+                    <li><a href="#mobile-nav-1" class="back"><em>&larr;</em> &nbsp;BACK</a></li>
+                    <li><a href="index.html" class="active">Default Style</a></li>
+                    <li><a href="index-blog.html">Blog Style</a></li>
+                    <li><a href="index-parallax.html">Parallax Style</a></li>
+                    <li><a href="index-video.html">Background Video</a></li>
+                </ul>
+                <ul id="mobile-nav-2">
+                    <li><a href="#mobile-nav-1" class="back"><em>&larr;</em> &nbsp;BACK</a></li>
+                    <li><a href="iOS8-inspired.html">iOS8 Inspired Design</a></li>
+                    <li><a href="woo-ready.html">Woo-Ready</a></li>
+                    <li><a href="#mobile-nav-8" class="opener"><i class="fa fa-angle-right"></i>Content Elements</a></li>
+                </ul>
+                <ul id="mobile-nav-8">
+                    <li><a href="#mobile-nav-2" class="back"><em>&larr;</em> &nbsp;BACK</a></li>
+                    <li><a href="feature-accordion.html">Accordion</a></li>
+                    <li><a href="feature-buttons.html">Buttons</a></li>
+                    <li><a href="feature-callout.html">Callout</a></li>
+                    <li><a href="feature-chart-graph.html">Chart Graph</a></li>
+                    <li><a href="feature-chart-pie.html">Chart Pie</a></li>
+                    <li><a href="feature-chart-circle.html">Chart Circle</a></li>
+                    <li><a href="feature-columns.html">Columns</a></li>
+                    <li><a href="feature-dividers.html">Dividers</a></li>
+                    <li><a href="feature-icons.html">Icons</a></li>
+                    <li><a href="feature-lists.html">Lists</a></li>
+                    <li><a href="feature-messages.html">Messages</a></li>
+                    <li><a href="feature-milestone.html">Milestone</a></li>
+                    <li><a href="feature-pricing-table.html">Pricing Table</a></li>
+                    <li><a href="feature-progress-bar.html">Progress Bar</a></li>
+                    <li><a href="feature-services.html">Services</a></li>
+                    <li><a href="feature-tabs.html">Tabs</a></li>
+                    <li><a href="feature-team.html">Team</a></li>
+                    <li><a href="feature-testimonials.html">Testimonials</a></li>
+                    <li><a href="feature-toggle.html">Toggle</a></li>
+                    <li><a href="feature-twitter.html">Twitter</a></li>
+                    <li><a href="feature-twitter-carousel.html">Twitter Carousel</a></li>
+                    <li><a href="feature-video.html">Video</a></li>
+                </ul>
+                <ul id="mobile-nav-3">
+                    <li><a href="#mobile-nav-1" class="back"><em>&larr;</em> &nbsp;BACK</a></li>
+                    <li><a href="page-404.html">404 page</a></li>
+                    <li><a href="page-about.html">About us</a></li>
+                    <li><a href="page-coming.html">Coming soon</a></li>
+                    <li><a href="page-faq.html">FAQ</a></li>
+                    <li><a href="page-team.html">Our team</a></li>
+                    <li><a href="page-process.html">Our process</a></li>
+                    <li><a href="page-progress.html">Our progress</a></li>
+                    <li><a href="page-services.html">Our services</a></li>
+                    <li><a href="page-sitemap.html">Sitemap</a></li>
+                    <li><a href="page-sidebar-one.html">With one sidebar</a></li>
+                    <li><a href="page-sidebar-two.html">With two sidebars</a></li>
+                    <li><a href="page-sidebar-none.html">Full width</a></li>
+                </ul>
+                <ul id="mobile-nav-4">
+                    <li><a href="#mobile-nav-1" class="back"><em>&larr;</em> &nbsp;BACK</a></li>
+                    <li><a href="portfolio-four.html">Four columns</a></li>
+                    <li><a href="portfolio-three.html">Three columns</a></li>
+                    <li><a href="portfolio-two.html">Two columns</a></li>
+                    <li><a href="portfolio-one.html">One column</a></li>
+                    <li><a href="portfolio-gallery.html">Gallery</a></li>
+                    <li><a href="portfolio-single.html">Single item</a></li>
+                </ul>
+                <ul id="mobile-nav-5">
+                    <li><a href="#mobile-nav-1" class="back"><em>&larr;</em> &nbsp;BACK</a></li>
+                    <li><a href="blog.html">Regular view</a></li>
+                    <li><a href="blog-three.html">Three columns</a></li>
+                    <li><a href="blog-two.html">Two columns</a></li>
+                    <li><a href="blog-one.html">One column</a></li>
+                    <li><a href="blog-single.html">Single post</a></li>
+                </ul>
+                <ul id="mobile-nav-6">
+                    <li><a href="#mobile-nav-1" class="back"><em>&larr;</em> &nbsp;BACK</a></li>
+                    <li><a href="shop-catalog.html">Catalog</a></li>
+                    <li><a href="shop-product.html">Product</a></li>
+                    <li><a href="shop-cart.html">Cart</a></li>
+                </ul>
+            </nav>
+            <!--/ main nav -->
         </div>
-        <div class="portlet">
-            <div class="portlet-title line">
-                <div class="caption">
-                    <i class="fa fa-comments"></i>Tweets
-                </div>
+    </header>
+    <!--/ page header bottom -->
+    <div id="page-header-bottom-holder" class="page-header-bottom-holder"></div>
+    <!-- bg_container -->
+    <div class="holder-bg">
+        <div id="scene" class="scene">
+            <div id="bg_substrate" class="layer" data-depth="0.10"></div>
+            <div id="bg_container" class="parallaxify layer" data-depth="0.10"></div>
+        </div>
+    </div>
+
+    <!--/ bg_container -->
+    <!-- slideshow -->
+    <div class="slideshow-wrap">
+        <div id="layerslider" class="slideshow" style="width:100%; height:470px">
+            <div class="ls-slide">
+                <h1 data-ls="offsetxin: -80; offsetxout: 80; delayin: 800" class="ls-l" style="top: 85px; left: 0px; white-space: nowrap;text-transform: none;">iOS 8-Inspired</h1>
+                <h2 data-ls="offsetxin: -80; offsetxout: 80; delayin: 1000" class="ls-l" style="top: 180px; left: 0px; white-space: nowrap">Clean design, inspired by iOS 8. Complete with "flat" <br>graphics and copious white space.</h2>
+                <img src="/images/the8/pic/slider/slide-1-button.png" alt="" data-ls="offsetxin: -80; offsetxout: 80; delayin: 1200" class="ls-l" style="top: 265px; left: 0">
+                <a href="http://themeforest.net/user/CreativeWS/portfolio" class="ls-link"></a>
+                <img src="/images/the8/pic/slider/slide-1-icons.png" alt="" data-ls="offsetxin: -80; offsetxout: 80; delayin: 1600" class="ls-l" style="top: 345px; left: 0">
+                <img src="/images/the8/pic/slider/slide-1-pic.png" alt="" width="773" height="444" data-ls="delayin: 400" class="ls-l" style="top: 20px; left: 382px">
             </div>
-            <div class="portlet-body">
-                <div class="scroller" style="height: 300px;" data-always-visible="1" data-rail-visible="0">
-                    <ul class="feeds">
-                        <li>
-                            <div class="col1">
-                                <div class="cont">
-                                    <div class="cont-col1">
-                                        <div class="label label-sm label-info">
-                                            <i class="fa fa-check"></i>
-                                        </div>
-                                    </div>
-                                    <div class="cont-col2">
-                                        <div class="desc">
-                                            You have 4 pending tasks. <span class="label label-sm label-warning ">
-                                                Take action <i class="fa fa-share"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col2">
-                                <div class="date">
-                                    Just now
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <div class="col1">
-                                    <div class="cont">
-                                        <div class="cont-col1">
-                                            <div class="label label-sm label-success">
-                                                <i class="fa fa-bar-chart-o"></i>
-                                            </div>
-                                        </div>
-                                        <div class="cont-col2">
-                                            <div class="desc">
-                                                Finance Report for year 2013 has been released.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col2">
-                                    <div class="date">
-                                        20 mins
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <div class="col1">
-                                <div class="cont">
-                                    <div class="cont-col1">
-                                        <div class="label label-sm label-danger">
-                                            <i class="fa fa-user"></i>
-                                        </div>
-                                    </div>
-                                    <div class="cont-col2">
-                                        <div class="desc">
-                                            You have 5 pending membership that requires a quick review.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col2">
-                                <div class="date">
-                                    24 mins
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="col1">
-                                <div class="cont">
-                                    <div class="cont-col1">
-                                        <div class="label label-sm label-info">
-                                            <i class="fa fa-shopping-cart"></i>
-                                        </div>
-                                    </div>
-                                    <div class="cont-col2">
-                                        <div class="desc">
-                                            New order received with <span class="label label-sm label-success">
-                                                Reference Number: DR23923
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col2">
-                                <div class="date">
-                                    30 mins
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="col1">
-                                <div class="cont">
-                                    <div class="cont-col1">
-                                        <div class="label label-sm label-success">
-                                            <i class="fa fa-user"></i>
-                                        </div>
-                                    </div>
-                                    <div class="cont-col2">
-                                        <div class="desc">
-                                            You have 5 pending membership that requires a quick review.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col2">
-                                <div class="date">
-                                    24 mins
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="col1">
-                                <div class="cont">
-                                    <div class="cont-col1">
-                                        <div class="label label-sm label-default">
-                                            <i class="fa fa-bell-o"></i>
-                                        </div>
-                                    </div>
-                                    <div class="cont-col2">
-                                        <div class="desc">
-                                            Web server hardware needs to be upgraded. <span class="label label-sm label-default ">
-                                                Overdue
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col2">
-                                <div class="date">
-                                    2 hours
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <div class="col1">
-                                    <div class="cont">
-                                        <div class="cont-col1">
-                                            <div class="label label-sm label-default">
-                                                <i class="fa fa-briefcase"></i>
-                                            </div>
-                                        </div>
-                                        <div class="cont-col2">
-                                            <div class="desc">
-                                                IPO Report for year 2013 has been released.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col2">
-                                    <div class="date">
-                                        20 mins
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <div class="col1">
-                                <div class="cont">
-                                    <div class="cont-col1">
-                                        <div class="label label-sm label-info">
-                                            <i class="fa fa-check"></i>
-                                        </div>
-                                    </div>
-                                    <div class="cont-col2">
-                                        <div class="desc">
-                                            You have 4 pending tasks. <span class="label label-sm label-warning ">
-                                                Take action <i class="fa fa-share"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col2">
-                                <div class="date">
-                                    Just now
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <div class="col1">
-                                    <div class="cont">
-                                        <div class="cont-col1">
-                                            <div class="label label-sm label-danger">
-                                                <i class="fa fa-bar-chart-o"></i>
-                                            </div>
-                                        </div>
-                                        <div class="cont-col2">
-                                            <div class="desc">
-                                                Finance Report for year 2013 has been released.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col2">
-                                    <div class="date">
-                                        20 mins
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <div class="col1">
-                                <div class="cont">
-                                    <div class="cont-col1">
-                                        <div class="label label-sm label-default">
-                                            <i class="fa fa-user"></i>
-                                        </div>
-                                    </div>
-                                    <div class="cont-col2">
-                                        <div class="desc">
-                                            You have 5 pending membership that requires a quick review.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col2">
-                                <div class="date">
-                                    24 mins
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="col1">
-                                <div class="cont">
-                                    <div class="cont-col1">
-                                        <div class="label label-sm label-info">
-                                            <i class="fa fa-shopping-cart"></i>
-                                        </div>
-                                    </div>
-                                    <div class="cont-col2">
-                                        <div class="desc">
-                                            New order received with <span class="label label-sm label-success">
-                                                Reference Number: DR23923
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col2">
-                                <div class="date">
-                                    30 mins
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="col1">
-                                <div class="cont">
-                                    <div class="cont-col1">
-                                        <div class="label label-sm label-success">
-                                            <i class="fa fa-user"></i>
-                                        </div>
-                                    </div>
-                                    <div class="cont-col2">
-                                        <div class="desc">
-                                            You have 5 pending membership that requires a quick review.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col2">
-                                <div class="date">
-                                    24 mins
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="col1">
-                                <div class="cont">
-                                    <div class="cont-col1">
-                                        <div class="label label-sm label-warning">
-                                            <i class="fa fa-bell-o"></i>
-                                        </div>
-                                    </div>
-                                    <div class="cont-col2">
-                                        <div class="desc">
-                                            Web server hardware needs to be upgraded. <span class="label label-sm label-default ">
-                                                Overdue
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col2">
-                                <div class="date">
-                                    2 hours
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <div class="col1">
-                                    <div class="cont">
-                                        <div class="cont-col1">
-                                            <div class="label label-sm label-info">
-                                                <i class="fa fa-briefcase"></i>
-                                            </div>
-                                        </div>
-                                        <div class="cont-col2">
-                                            <div class="desc">
-                                                IPO Report for year 2013 has been released.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col2">
-                                    <div class="date">
-                                        20 mins
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
+            <div class="ls-slide">
+                <img src="/images/the8/pic/slider/macbook.png" alt="" data-ls="offsetxin:0;durationin:1000;delayin:300;rotatexin:-90;transformoriginin:50% bottom 0;offsetxout:0;rotatexout:-90;transformoriginout:50% bottom 0;durationout:1000;" class="ls-l" style="top: 65px; left: 20px">
+                <img src="/images/the8/pic/slider/iphone.png" alt="" data-ls="offsetxin:0;durationin:1000;delayin:1000;rotateyin:90;transformoriginin:left 50% 0;offsetxout:0;durationout:500;rotateyout:90;transformoriginout:left 50% 0;" class="ls-l" style="top: 230px; left: 0px">
+                <img src="/images/the8/pic/slider/ipad-shadow.png" alt="" data-ls="offsetxin:0;offsetyin:-0;durationin:1000;delayin:1100;fadein:true;scalexin:0.2;scaleyin:0.2;offsetxout:300;offsetyout:-400;durationout:200;fadeout:true;scalexout:0.2;scaleyout:0.2;" class="ls-l" style="top: 145px; left: 270px">
+                <img src="/images/the8/pic/slider/ipad.png" alt="" data-ls="offsetxin:300;offsetyin:-400;durationin:1000;delayin:1000;easingin:easeOutQuart;fadein:true;scalexin:0.2;scaleyin:0.2;offsetxout:300;offsetyout:-400;durationout:200;fadeout:true;scalexout:0.2;scaleyout:0.2;" class="ls-l" style="top: 145px; left: 270px">
+                <h1 data-ls="offsetxin: 300; offsetxout: -80; delayin: 400;durationin:1500;" class="ls-l" style="top: 85px; left: 616px; text-align:right;width:570px;display:block;position:relative;">Retina Ready Graphics</h1>
+                <h2 data-ls="offsetxin: 300; offsetxout: -80; delayin: 800;durationin:1500;" class="ls-l" style="top: 106px; left: 616px; text-align:right;width:570px;display:block; position:relative;">"the 8" provides responsive and flexible layout. All pages look identically great regardless of the device’s resolution and pixel density.</h2>
+            </div>
+            <div class="ls-slide">
+                <img src="/images/the8/pic/slider/2post/ipad.png" alt="" data-ls="offsetxin: -400; offsetxout: 80; delayin: 200;durationin:1000;offsetxout:300;offsetyout:-400;durationout:200;fadeout:true;scalexout:0.2;scaleyout:0.2;" class="ls-l" style="top: 80px; left: 0">
+                <img src="/images/the8/pic/slider/2post/ipad-image.png" alt="" data-ls="offsetxin:300;offsetyin:-400;durationin:1000;delayin:1000;easingin:easeOutQuart;fadein:true;scalexin:0.2;scaleyin:0.2;offsetxout:300;offsetyout:-400;durationout:200;fadeout:true;scalexout:0.2;scaleyout:0.2;" class="ls-l" style="top: 80px; left: 0">
+                <img src="/images/the8/pic/slider/2post/ipad-screan.png" alt="" data-ls="offsetxin:300;offsetyin:-400;durationin:1000;delayin:1200;easingin:easeOutQuart;fadein:true;scalexin:0.2;scaleyin:0.2;offsetxout:300;offsetyout:-400;durationout:200;fadeout:true;scalexout:0.2;scaleyout:0.2;" class="ls-l" style="top: 80px; left: 0">
+                <h1 data-ls="offsetxin: 300; offsetxout: -80; delayin: 400;durationin:1500;" class="ls-l" style="top: 85px; left: 616px; text-align:right;width:570px;display:block;position:relative;text-transform: none;">Parallax Effect</h1>
+                <h2 data-ls="offsetxin: 300; offsetxout: -80; delayin: 1400;durationin:1500;" class="ls-l" style="top: 106px; left: 620px; text-align:right;width:570px;display:block;position:relative;">"the 8" includes Parallax Effect sections. This makes the website look more attractive and creative. Perfect solution that suits your needs!</h2>
+            </div>
+            <div class="ls-slide">
+                <h1 data-ls="offsetxin: 300; offsetxout: -80; delayin: 400;durationin:1500;" class="ls-l" style="top: 85px; left: 616px; text-align:right;width:570px;display:block;position:relative;text-transform: none;">Content Elements</h1>
+                <h2 data-ls="offsetxin: 300; offsetxout: -80; delayin: 800;durationin:1500;" class="ls-l" style="top: 106px; left: 616px; text-align:right;width:570px;display:block;position:relative;">"the 8" contains tons of vividly styled elements: accordions, buttons, lists, charts and much more. Professional development directly into your website!</h2>
+                <img src="/images/the8/pic/slider/post6/ipad-vertical.png" alt="" width="660" height="422" data-ls="offsetxin: -400; offsetxout: 80; delayin: 400;durationin:1500;" class="ls-l" style="top: 10px; left: 0px;z-index:2;">
+                <img src="/images/the8/pic/slider/post6/ipad-horizont.png" alt="" width="660" height="422" data-ls="offsetxin: -400; offsetxout: 80;durationin:1500; " class="ls-l" style="top: 10px; left: 0px;z-index:1;">
+                <img src="/images/the8/pic/slider/post6/icon.png" alt="" width="660" height="422" data-ls="offsetxin: -400; offsetxout: 80; delayin: 800; durationin:1500;" class="ls-l" style="top: 10px; left: 0px;z-index:3;">
+            </div>
+        </div>
+    </div>
+    <!--/ slideshow -->
+    <div class="ft_wrapper">
+        <div class="grid-row">
+            <!-- features -->
+            <ul class="features">
+                <li class="wow fadeInDown">
+                    <div>
+                        <div class="icon icon-green"><i class="fa fa-laptop"></i></div>
+                        <h3>iOS 8 inspired <br>Design</h3>
+                        <p>Clean design, inspired by iOS 8. Complete with "flat" graphics and copious white space. </p>
+                        <div class="sep"></div>
+                        <p><a href="iOS8-inspired.html">Read more <i class="fa fa-angle-right"></i></a></p>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="wow fadeInDown" data-wow-delay="0.3s">
+                    <div>
+                        <div class="icon icon-blue"><i class="fa fa-tablet"></i></div>
+                        <h3>Fully Responsive <br>& Retina-ready</h3>
+                        <p>All pages look identically great regardless of the device’s resolution and pixel density.</p>
+                        <div class="sep"></div>
+                        <p><a href="iOS8-inspired.html">Read more <i class="fa fa-angle-right"></i></a></p>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="wow fadeInDown" data-wow-delay="0.6s">
+                    <div>
+                        <div class="icon icon-purple"><i class="fa fa-magic"></i></div>
+                        <h3>Unlimited Color <br>Schemes</h3>
+                        <p>Template "the 8" utilizes a color picker to let you dynamically change stylesheet color settings.</p>
+                        <div class="sep"></div>
+                        <p><a href="iOS8-inspired.html">Read more <i class="fa fa-angle-right"></i></a></p>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="wow fadeInDown" data-wow-delay="0.9s">
+                    <div>
+                        <div class="icon icon-orange"><i class="fa fa-shopping-cart"></i></div>
+                        <h3>WooCommerce <br>ready</h3>
+                        <p>Our template includes all the styling, pages and widgets to make the woo integration easy. </p>
+                        <div class="sep"></div>
+                        <p><a href="iOS8-inspired.html">Read more <i class="fa fa-angle-right"></i></a></p>
+                    </div>
+                </li>
+            </ul>
+            <!--/ features -->
+        </div>
+    </div>
+    <!-- page content -->
+    <section class="page-content-alt">
+        <div class="grid-row composer">
+            <br />
+            <br />
+            <div class="columns-row">
+                <div class="columns-col columns-col-6 wow fadeInLeft">
+                    <h1>About our product</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi commodo nisl quis tincidunt consequat. Nullam eros ante, commodo id dolor eu, fringilla consectetur mauris. Etiam id sollicitudin ligula. Curabitur eget eros in eros ullamcorper mattis eu eget ante. In ac lacinia lectus. Donec condimentum aliquam est pharetra in.</p>
+                    <br><br>
+                    <ul class="list">
+                        <li class="active"><i class="fa fa-play"></i>Donec turpis diam, vulputate nec velit in.</li>
+                        <li><i class="fa fa-play"></i>Integer fermentum risus eu commodo sagittis.</li>
+                        <li><i class="fa fa-play"></i>Donec turpis ligula, tincidunt sit amet elit nec, pulvinar.</li>
+                        <li><i class="fa fa-play"></i>Integer fermentum risus eu commodo sagittis.</li>
                     </ul>
+                    <br><br>
+                    <a href="#" class="button">View Project</a>
                 </div>
-                <div class="scroller-footer">
-                    <div class="btn-arrow-link pull-right">
-                        <a href="#">See All Records</a>
-                        <i class="icon-arrow-right"></i>
+                <div class="columns-col columns-col-6 wow fadeInRight" data-wow-delay="0.3s">
+                    <div class="wysiwyg">
+                        <img src="/images/the8/pic/about-product.png" alt="" class="pic pic-clear full-width">
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+    <section class="page-content">
+        <div class="grid-row composer">
+            <h1 class="center wow fadeInUp">Recent Projects </h1>
+            <p class="center wow fadeInUp">Donec convallis a velit nec ultricies. Vestibulum elementum neque vitae orci vehicula, ac varius mi fringilla. Nullam molestie lectus vitae lorem aliquet, quis rutrum quam blandit. Nunc arcu mi, blandit ac nisl ut, lacinia dignissim massa. Nulla ultricies in quam id sagittis. Nunc arcu nisi, tempor non lectus id, pharetra euismod mi. Cras elit magna, feugiat non semper ac, convallis ac mauris. Maecenas vulputate metus sed nisi dictum dictum. Integer porta id libero vitae luctus.</p>
+            <br><br>
+        </div>
+
+        <div id="projects" class="projects wow fadeInUp">
+            <div class="filter">
+                <a href="#" data-filter=".item-video" class="active">Videos</a>
+                <!--
+                -->
+                <a href="#" data-filter=".item-photo">Photos</a>
+            </div>
+            <br />
+            <ul>
+                <li class="item item-video">
+                    <img src="/images/the8/pic/projects/item-1.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-2.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="item item-video">
+                    <img src="/images/the8/pic/projects/item-2.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-1.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="item item-video">
+                    <img src="/images/the8/pic/projects/item-3.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-3.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="item item-video">
+                    <img src="/images/the8/pic/projects/item-4.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-2.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="item item-video">
+                    <img src="/images/the8/pic/projects/item-5.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-3.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="item item-video">
+                    <img src="/images/the8/pic/projects/item-6.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-3.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="item item-video">
+                    <img src="/images/the8/pic/projects/item-7.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-1.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="item item-video">
+                    <img src="/images/the8/pic/projects/item-8.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-2.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="item item-video">
+                    <img src="/images/the8/pic/projects/item-9.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-3.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="item item-video">
+                    <img src="/images/the8/pic/projects/item-10.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-2.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="item item-video">
+                    <img src="/images/the8/pic/projects/item-11.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-3.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="item item-video">
+                    <img src="/images/the8/pic/projects/item-12.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-1.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="item item-photo">
+                    <img src="/images/the8/pic/projects/item-12.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-1.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="item item-photo">
+                    <img src="/images/the8/pic/projects/item-11.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-3.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="item item-photo">
+                    <img src="/images/the8/pic/projects/item-10.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-2.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="item item-photo">
+                    <img src="/images/the8/pic/projects/item-9.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-1.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="item item-photo">
+                    <img src="/images/the8/pic/projects/item-8.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-2.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="item item-photo">
+                    <img src="/images/the8/pic/projects/item-7.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-3.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="item item-photo">
+                    <img src="/images/the8/pic/projects/item-6.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-1.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="item item-photo">
+                    <img src="/images/the8/pic/projects/item-5.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-3.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="item item-photo">
+                    <img src="/images/the8/pic/projects/item-4.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-2.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="item item-photo">
+                    <img src="/images/the8/pic/projects/item-3.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-1.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="item item-photo">
+                    <img src="/images/the8/pic/projects/item-2.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-3.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+                <!--
+                -->
+                <li class="item item-photo">
+                    <img src="/images/the8/pic/projects/item-1.jpg" alt="">
+                    <div class="cont">
+                        <div class="text">
+                            <h3>Praesent condimentum</h3>
+                            <p>webdesign, grahics</p>
+                        </div>
+                        <div class="icons">
+                            <a href="pic/portfolio/huge-1.jpg" class="fa fa-plus fancybox"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-share"></a>
+                            <!--
+                            -->
+                            <a href="#" class="fa fa-heart"></a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <section class="page-content-alt-2">
+        <div class="grid-row composer">
+            <div class="columns-row">
+                <div class="columns-col columns-col-6 wow fadeInLeft">
+                    <div class="wysiwyg">
+                        <div class="pad-player">
+                            <iframe src="http://player.vimeo.com/video/4240369?color=ffffff"></iframe>
+                            <div class="pad-shadow"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="columns-col columns-col-6 wow fadeInRight">
+                    <h1>What We Do</h1>
+                    <p>Curabitur eget eros in eros ullamcorper mattis eu eget ante. In ac lacinia lectus. Donec condimentum elementum justo, consequat aliquam est pharetra in.</p>
+                    <br><br>
+                    <dl class="accordion">
+                        <dt class="active"><i></i>Sed ac nibh id lectus tincidunt vulputate ullamcorper .</dt>
+                        <dd>Pellentesque eget odio a tortor dignissim laoreet sed ac erat. Aenean egestas ultrices turpis, et egestas lectus rhoncus vel. Curabitur mattis nibh in turpis imperdiet.</dd>
+                        <dd>Pellentesque eget odio a tortor dignissim laoreet sed ac erat. Aenean egestas ultrices turpis, et egestas lectus rhoncus vel. Curabitur mattis nibh in turpis imperdiet rutrum. Pellentesque elementum urna malesuada, dignissim massa vel, mollis leo. Ut purus nisl, hendrerit eu aliquam vitae, elementum ut arcu. Ut sit amet mattis mi. Vestibulum vel aliquet sapien. Quisque tempor elementum diam at imperdiet. Suspendisse malesuada pretium orci sed posuere. Sed nisi orci, facilisis vel scelerisque sollicitudin, sed justo.</dd>
+                        <dt><i></i>In et pretium sem. Integer gravida enim a lacus venenatis.</dt>
+                        <dd>Pellentesque eget odio a tortor dignissim laoreet sed ac erat. Aenean egestas ultrices turpis, et egestas lectus rhoncus vel. Curabitur mattis nibh in turpis imperdiet rutrum. Pellentesque elementum urna malesuada, dignissim massa vel, mollis leo. Ut purus nisl, hendrerit eu aliquam vitae, elementum ut arcu. Ut sit amet mattis mi. Vestibulum vel aliquet sapien. Quisque tempor elementum diam at imperdiet. Suspendisse malesuada pretium orci sed posuere. Sed nisi orci, facilisis vel scelerisque sollicitudin, vestibulum justo.</dd>
+                        <dt><i></i>Etiam eget lorem commodo, sodales neque ac, dignissim nunc.</dt>
+                        <dd>Pellentesque eget odio a tortor dignissim laoreet sed ac erat. Aenean egestas ultrices turpis, et egestas lectus rhoncus vel. Curabitur mattis nibh in turpis imperdiet rutrum. Pellentesque elementum urna malesuada, dignissim massa vel, mollis leo. Ut purus nisl, hendrerit eu aliquam vitae, elementum ut arcu. Ut sit amet mattis mi. Vestibulum vel aliquet sapien. Quisque tempor elementum diam at imperdiet. Suspendisse malesuada pretium orci sed posuere. Sed nisi orci, facilisis vel scelerisque sollicitudin, vestibulum justo.</dd>
+                        <dt><i></i>Donec pretium tortor quis magna iaculis lobortis.</dt>
+                        <dd>Curabitur mattis nibh in turpis imperdiet rutrum. Pellentesque elementum urna malesuada, dignissim massa vel, mollis leo. Ut purus nisl, hendrerit eu aliquam vitae, elementum ut arcu. Ut sit amet mattis mi. Vestibulum vel aliquet sapien. Quisque tempor elementum diam at imperdiet. Suspendisse malesuada pretium orci sed posuere. Sed nisi orci, facilisis vel scelerisque sollicitudin, vestibulum justo.</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="bg-1" class="page-content-alt">
+        <div class="grid-row composer">
+            <h1 class="center wow fadeInDown">What our customers are saying</h1>
+            <p class="center wow fadeInDown">Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque dolor lectus, consectetur ut condimentum at, lobortis et sapien. Donec eu cursus ligula. Phasellus augue quam, eleifend vitae velit ac, pharetra blandit velit. Vivamus convallis magna at sodales mollis. Integer eu leo quis justo dapibus aliquet. Donec cursus massa nis.</p>
+
+            <br><br><br>
+
+            <div id="testimonials-carousel" class="owl-carousel">
+                <div class="item">
+                    <div class="columns-row">
+                        <div class="columns-col columns-col-6">
+                            <div class="testimonial">
+                                <div class="date"><span>Monday 21 August</span></div>
+                                <div class="author">
+                                    <img src="/images/the8/pic/team/item-1.jpg" alt="">
+                                    <span>John Doe</span>Manager
+                                </div>
+                                <div class="text">
+                                    <p>Duis quis arcu ut odio suscipit semper. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sed justo a leo.</p>
+                                    <a href="#" class="fa fa-share"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="columns-col columns-col-6">
+                            <div class="testimonial testimonial-alt">
+                                <div class="date"><span>Thursday 02 August</span></div>
+                                <div class="author">
+                                    <img src="/images/the8/pic/team/item-2.jpg" alt="">
+                                    <span>Jane Doe</span>Designer
+                                </div>
+                                <div class="text">
+                                    <p>Duis quis arcu ut odio suscipit semper. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sed justo a leo.</p>
+                                    <a href="#" class="fa fa-share"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--/ columns row -->
+                </div><!--/ item -->
+                <div class="item">
+                    <div class="columns-row">
+                        <div class="columns-col columns-col-6">
+                            <div class="testimonial">
+                                <div class="date"><span>Monday 21 August</span></div>
+                                <div class="author">
+                                    <img src="/images/the8/pic/team/item-1.jpg" alt="">
+                                    <span>John Doe</span>Manager
+                                </div>
+                                <div class="text">
+                                    <p>Duis quis arcu ut odio suscipit semper. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sed justo a leo.</p>
+                                    <a href="#" class="fa fa-share"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="columns-col columns-col-6">
+                            <div class="testimonial testimonial-alt">
+                                <div class="date"><span>Thursday 02 August</span></div>
+                                <div class="author">
+                                    <img src="/images/the8/pic/team/item-2.jpg" alt="">
+                                    <span>Jane Doe</span>Designer
+                                </div>
+                                <div class="text">
+                                    <p>Duis quis arcu ut odio suscipit semper. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sed justo a leo.</p>
+                                    <a href="#" class="fa fa-share"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--/ columns row -->
+                </div><!--/ item -->
+                <div class="item">
+                    <div class="columns-row">
+                        <div class="columns-col columns-col-6">
+                            <div class="testimonial">
+                                <div class="date"><span>Monday 21 August</span></div>
+                                <div class="author">
+                                    <img src="/images/the8/pic/team/item-1.jpg" alt="">
+                                    <span>John Doe</span>Manager
+                                </div>
+                                <div class="text">
+                                    <p>Duis quis arcu ut odio suscipit semper. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sed justo a leo.</p>
+                                    <a href="#" class="fa fa-share"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="columns-col columns-col-6">
+                            <div class="testimonial testimonial-alt">
+                                <div class="date"><span>Thursday 02 August</span></div>
+                                <div class="author">
+                                    <img src="/images/the8/pic/team/item-2.jpg" alt="">
+                                    <span>Jane Doe</span>Designer
+                                </div>
+                                <div class="text">
+                                    <p>Duis quis arcu ut odio suscipit semper. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sed justo a leo.</p>
+                                    <a href="#" class="fa fa-share"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--/ columns row -->
+                </div><!--/ item -->
+            </div><!--/ owl carousel -->
+
+            <br><br>
+
+        </div>
+    </section>
+    <!--/ page content -->
+    <!-- page footer top -->
+    <footer class="page-footer-top">
+        <div class="grid-row">
+            <div class="grid-col grid-col-3">
+                <!-- about -->
+                <div class="widget-alt widget-alt-about">
+                    <div class="head">About Us</div>
+                    <div class="cont">
+                        <ul>
+                            <li>Ut tincidunt nisl sapien, eget gravida quam vestibulum vitae. Ut ultrices purus quis tincidunt rutrum. Integer volutpat pretium tellus venenatis ornare. Proin commodo ipsum.</li>
+                            <li>Vestibulum vitae nisl quis elit tristique egestas eget sed nisi. Etiam mi sapien, luctus ac tempor quis, varius eu neque. Nullam vel ipsum mollis mauris porttitor.</li>
+                        </ul>
+                    </div>
+                </div>
+                <!--/ about -->
+            </div>
+
+            <div class="grid-col grid-col-3">
+                <!-- contacts -->
+                <div class="widget-alt widget-alt-contacts">
+                    <div class="head">Contact Info</div>
+                    <div class="cont">
+                        <address><i class="fa fa-map-marker"></i>Interdum et malesuada fames ac ante ipsum primis in faucibus malesuada.</address>
+                        <ul>
+                            <li><i class="fa fa-mobile"></i>(123) 456-7890</li>
+                            <li><i class="fa fa-mobile"></i>(123) 456-7891</li>
+                        </ul>
+                        <ul>
+                            <li><i class="fa fa-envelope-o"></i><a href="#">mail@mail.com</a></li>
+                            <li><i class="fa fa-link"></i><a href="#">www."the 8".com</a></li>
+                        </ul>
+                        <ol>
+                            <li><a href="#" class="fa fa-twitter"></a></li>
+                            <!--
+                            -->
+                            <li><a href="#" class="fa fa-facebook"></a></li>
+                            <!--
+                            -->
+                            <li><a href="#" class="fa fa-skype"></a></li>
+                            <!--
+                            -->
+                            <li><a href="#" class="fa fa-rss"></a></li>
+                            <!--
+                            -->
+                            <li><a href="#" class="fa fa-dribbble"></a></li>
+                        </ol>
+                    </div>
+                </div>
+                <!--/ contacts -->
+            </div>
+
+            <div class="grid-col grid-col-3">
+                <!-- recent posts -->
+                <div class="widget-alt widget-alt-posts">
+                    <div class="head">Recent Posts</div>
+                    <div class="cont">
+                        <ul>
+                            <li>
+                                <a href="#"><img src="/images/the8/pic/recent-posts/item-1.jpg" alt="item-1" width="58" height="58" /></a>
+                                <p><a href="#">Etiam mi sapien, luctus ac tempor quis</a><i class="fa fa-angle-right"></i><span>October 16, 2014</span></p>
+                            </li>
+                            <li>
+                                <a href="#"><img src="/images/the8/pic/recent-posts/item-2.jpg" alt="item-1" width="58" height="58" /></a>
+                                <p><a href="#">Etiam mi sapien, luctus ac tempor quis</a><i class="fa fa-angle-right"></i><span>October 12, 2014</span></p>
+                            </li>
+                            <li>
+                                <a href="#"><img src="/images/the8/pic/recent-posts/item-3.jpg" alt="item-1" width="58" height="58" /></a>
+                                <p><a href="#">Etiam mi sapien, luctus ac tempor quis</a><i class="fa fa-angle-right"></i><span>October 10, 2014</span></p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--/ recent posts -->
+            </div>
+
+            <div class="grid-col grid-col-3">
+                <!-- feedback -->
+                <div class="widget-alt widget-alt-feedback">
+                    <div class="head">Shoot a Message</div>
+                    <div class="cont">
+                        <form action="php/contacts-process.php" method="post" id="widget-form">
+                            <input type="text" name="name" placeholder="Name">
+                            <input type="email" name="email" placeholder="E-mail">
+                            <textarea cols="30" rows="5" name="message" placeholder="Message"></textarea>
+                            <div id="widget_server_responce"></div>
+                            <div class="buttons">
+                                <button type="reset">Reset</button>
+                                <!--
+                                -->
+                                <button type="submit">Send</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!--/ feedback -->
+            </div>
+        </div>
+    </footer>
+    <!--/ page footer top -->
+    <!-- page footer bottom -->
+    <footer class="page-footer-bottom">
+        <div class="grid-row">
+            <!-- secondary nav -->
+            <nav class="secondary-nav">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <!--
+                    -->
+                    <li><a href="#">Features</a></li>
+                    <!--
+                    -->
+                    <li><a href="#">Pages</a></li>
+                    <!--
+                    -->
+                    <li><a href="#">Portfolio</a></li>
+                    <!--
+                    -->
+                    <li><a href="#">Blog</a></li>
+                    <!--
+                    -->
+                    <li><a href="#">Shop</a></li>
+                    <!--
+                    -->
+                    <li><a href="#">Contacts</a></li>
+                </ul>
+            </nav>
+            <!--/ secondary nav -->
+            <!-- copyrights -->
+            <div class="copyrights">Eight © 2014. All rights reserved.</div>
+            <!--/ copyrights -->
+        </div>
+    </footer>
+    <!--/ page footer bottom -->
+
+    <a href="#" id="scroll-top" class="scroll-top fa fa-angle-up"></a>
 </div>
-                
-
-@helper AskAQuestionBox()
-{
-    <div style="margin-bottom: 15px;">
-        <textarea id="askaquestioneditor" name="content" rows="10" style="display: none;"></textarea>
-        <div id="askaquestionsection" class="chat-form">
-            <div class="input-cont">
-                <input id="askaquestion" class="form-control" type="text" placeholder="Ask a question..." />
-            </div>
-            <div class="btn-cont">
-                <span class="arrow"></span>
-                <a href="javascript:;" class="btn blue icn-only"><i class="fa fa-question icon-white"></i></a>
-            </div>
-        </div>
-    </div>
-}
-
-
-@helper Question(string question,string avatarUrl, string status, string username, string date)
-{
-    <li class="in @status">
-        <div>
-            <img class="avatar" alt="" src="@avatarUrl" />
-            <div class="message">
-                <span class="arrow"></span>
-                <div>
-                    <div class="state" style="padding-right: 5px;">
-                        @if (status == "answered")
-                        {
-                            <i class="fa fa-check" style="font-size: 25px;"></i>
-                        }
-                        else
-                        {
-                            <i class="fa fa-question" style="font-size: 25px;"></i>
-                        }
-                    </div>
-                    <div style="display: table-cell; width: 100%;padding: 0 10px;">
-                        <div style="font-size: 13px;">
-                            <a href="#" class="name">
-                                @username
-                            </a>
-                            <span class="datetime">
-                                at @date
-                            </span>
-                            <span class="pull-right">
-                                0 Replies | 2036 Views
-                            </span>
-                        </div>
-                        <div>
-                            <p style="font-weight: 700;color: #578ebe;">@question</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </li>
-}
 
 @section scripts {
-    <script src="~/Scripts/plugins/bootstrap-markdown/lib/markdown.js"></script>
-    <script src="~/Scripts/plugins/bootstrap-markdown/js/bootstrap-markdown.js"></script>
-    <script src="~/Scripts/plugins/bootstrap-markdown/locale/bootstrap-markdown.fr.js"></script>
-    
-    <script>
-        $(document).ready(function() {
-            $("#askaquestionsection").click(function() {
-                var askSection = $(this);
-                $("#askaquestioneditor").show().markdown({
-                    autofocus: true,
-                    savable: true,
-                    hideable: false,
-                    onShow: function (e) {
-                        askSection.hide();
-                        var editorControls = $('.md-controls');
-                        $(editorControls).empty();
-                        var closeElement = $('<a/>').appendTo(editorControls);
-                        $(closeElement).attr('href', 'javascript:;').append('<span class="closeEditor"> Close </span>');
-                        $('.md-footer > .btn.btn-success', '.md-editor ').text('Post');
-
-                        $('.closeEditor').on('click', function() {
-                            $('.md-editor').hide();
-                            e.$editor.removeClass('active');
-                            askSection.show();
-                        });
-
-                        askSection.unbind('click').click(function () {
-                            askSection.hide();
-                            $('.md-editor').show();
-                            e.$textarea.focus();
-                            e.$editor.addClass('active');
-                        });
-                    }
-                });
-                
-            });
-        });
-
-
-    </script>
+    <!-- scripts -->
+    <!--[if lt IE 9]><script src="~/Scripts/the8/js/html5shiv.js"></script><![endif]-->
+    <script src="~/Scripts/the8/js/jquery.migrate.min.js"></script>
+    <script src="~/Scripts/the8/js/jquery.isotope.min.js"></script>
+    <script src="~/Scripts/the8/js/jquery.form.min.js"></script>
+    <script src="~/Scripts/the8/js/jquery.validate.min.js"></script>
+    <script src="~/Scripts/the8/js/jquery.countdown.min.js"></script>
+    <script src="~/Scripts/the8/js/jquery.fancybox.pack.js"></script>
+    <script src="~/Scripts/the8/js/jquery.fancybox-media.js"></script>
+    <script src="~/Scripts/the8/js/retina.min.js"></script>
+    <script src="~/Scripts/the8/js/SmoothScroll.js"></script>
+    <script src="~/Scripts/the8/js/owl.carousel.min.js"></script>
+    <script src="~/Scripts/the8/js/jquery.tweet.js"></script>
+    <script src="~/Scripts/the8/js/wow.min.js"></script>
+    <script src="~/Scripts/the8/js/flot/jquery.flot.js"></script>
+    <script src="~/Scripts/the8/js/flot/jquery.flot.pie.js"></script>
+    <script src="~/Scripts/the8/js/flot/jquery.flot.categories.js"></script>
+    <script src="~/Scripts/the8/js/layerslider/js/greensock.js"></script>
+    <script src="~/Scripts/the8/js/layerslider/js/layerslider.transitions.js"></script>
+    <script src="~/Scripts/the8/js/layerslider/js/layerslider.kreaturamedia.jquery.js"></script>
+    <script src="~/Scripts/the8/js/scripts.js"></script>
+    <!--/ scripts -->
+    <!-- parallax-->
+    <script src="~/Scripts/the8/js/parallax.js"></script>
 }
 
