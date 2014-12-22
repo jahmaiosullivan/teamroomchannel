@@ -13,6 +13,7 @@ namespace GitTester
 {
     public class Program
     {
+        private static string repoPath = @"C:\Dev\MSDN.Forums";
         static void Main(string[] args)
         {
             //Clone();
@@ -21,8 +22,8 @@ namespace GitTester
             Console.WriteLine("{0}: Started", DateTime.Now.ToString("MM-d-yyyy h:mm:ss"));
 
             var gitCommandLine = new GitCommandLine();
-            var commits = gitCommandLine.LoadHistory(@"C:\Dev\MSDN.Forums", @"C:\Dev\MSDN.Forums\Forums.sln");
-
+            var commits = gitCommandLine.LoadHistory(repoPath, @"C:\Dev\MSDN.Forums\Forums.sln");
+            var selectedCommits = GitCommits(repoPath, commits.Select(x => x.Sha).ToList());
             Console.WriteLine("{0}: Ended", DateTime.Now.ToString("MM-d-yyyy h:mm:ss"));
             Console.ReadLine();
         }
@@ -96,6 +97,35 @@ namespace GitTester
                     Console.WriteLine();
                 }
             }
+        }
+
+        static IEnumerable<Commit> GitCommits(string repoPath, List<string> hashes)
+        {
+            List<Commit> selectedCommits = new List<Commit>();
+            using (var repo = new Repository(repoPath))
+            {
+                const string rfc2822Format = "ddd dd MMM HH:mm:ss yyyy K";
+                foreach (var id in hashes)
+                {
+                    var c = repo.Lookup<Commit>(id);
+                    selectedCommits.Add(c);
+
+                    Console.WriteLine("commit {0}", c.Id);
+
+                    if (c.Parents.Count() > 1)
+                    {
+                        Console.WriteLine("Merge: {0}",
+                            string.Join(" ", c.Parents.Select(p => p.Id.Sha.Substring(0, 7)).ToArray()));
+                    }
+
+                    Console.WriteLine("Author: {0} <{1}>", c.Author.Name, c.Author.Email);
+                    Console.WriteLine("Date:   {0}", c.Author.When.ToString(rfc2822Format, CultureInfo.InvariantCulture));
+                    Console.WriteLine();
+                    Console.WriteLine(c.Message);
+                    Console.WriteLine();
+                }
+            }
+            return selectedCommits;
         }
     }
 }
