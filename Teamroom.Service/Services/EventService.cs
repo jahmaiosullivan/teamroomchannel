@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using HobbyClue.Business.Providers;
 using HobbyClue.Common.Extensions;
 using HobbyClue.Common.Helpers;
 using HobbyClue.Data.Models;
 using HobbyClue.Data.Repositories;
+using Teamroom.Business.Providers;
 
 namespace HobbyClue.Business.Services
 {

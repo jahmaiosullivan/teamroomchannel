@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using HobbyClue.Business.Providers;
 using HobbyClue.Data.Models;
 using HobbyClue.Data.Repositories;
+using Teamroom.Business.Providers;
 
 namespace HobbyClue.Business.Services
 {

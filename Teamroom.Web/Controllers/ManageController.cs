@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
-using HobbyClue.Business.Providers;
 using HobbyClue.Business.Services;
 using HobbyClue.Data.Models;
 using HobbyClue.Web.Providers;
@@ -14,6 +13,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using HobbyClue.Web.Models;
+using Teamroom.Business.Providers;
 using Teamroom.Web;
 
 namespace HobbyClue.Web.Controllers

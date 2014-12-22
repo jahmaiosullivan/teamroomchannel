@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Web;
-using HobbyClue.Business.Providers;
 using Microsoft.AspNet.Identity;
+using Teamroom.Business.Providers;
 
-namespace HobbyClue.Web.Providers
+namespace Teamroom.Web.Providers
 {
     public class UserProvider : IUserProvider
     {

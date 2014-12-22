@@ -1,9 +1,9 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 using GeoLib.Models;
-using HobbyClue.Business.Providers;
 using HobbyClue.Business.Services;
 using HobbyClue.Data.Models;
+using Teamroom.Business.Providers;
 using Teamroom.Web.Configuration;
 
 namespace Teamroom.Web.Views

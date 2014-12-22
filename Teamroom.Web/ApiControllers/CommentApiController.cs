@@ -7,10 +7,10 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using AutoMapper;
-using HobbyClue.Business.Providers;
 using HobbyClue.Business.Services;
 using HobbyClue.Data.Models;
 using HobbyClue.Web.ViewModels;
+using Teamroom.Business.Providers;
 
 namespace HobbyClue.Web.ApiControllers
 {

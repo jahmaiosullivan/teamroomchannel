@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HobbyClue.Business.Providers
+namespace Teamroom.Business.Providers
 {
     public interface IUserProvider
     {
