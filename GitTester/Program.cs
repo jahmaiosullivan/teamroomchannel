@@ -13,7 +13,8 @@ namespace GitTester
 {
     public class Program
     {
-        private static string repoPath = @"C:\Dev\MSDN.Forums";
+        private const string RepoPath = @"C:\Dev\MSDN.Forums";
+
         static void Main(string[] args)
         {
             //Clone();
@@ -21,9 +22,8 @@ namespace GitTester
             //GenerateError();
             Console.WriteLine("{0}: Started", DateTime.Now.ToString("MM-d-yyyy h:mm:ss"));
 
-            var gitCommandLine = new GitCommandLine();
-            var commits = gitCommandLine.LoadHistory(repoPath, @"C:\Dev\MSDN.Forums\Forums.sln");
-            var selectedCommits = GitCommits(repoPath, commits.Select(x => x.Sha).ToList());
+            var commits = GitFileHistory(RepoPath, @"Forums.sln");
+
             Console.WriteLine("{0}: Ended", DateTime.Now.ToString("MM-d-yyyy h:mm:ss"));
             Console.ReadLine();
         }
@@ -124,6 +124,17 @@ namespace GitTester
                     Console.WriteLine(c.Message);
                     Console.WriteLine();
                 }
+            }
+            return selectedCommits;
+        }
+
+
+        static IEnumerable<Commit> GitFileHistory(string repoPath, string fileName)
+        {
+            IEnumerable<Commit> selectedCommits;
+            using (var repo = new Repository(repoPath))
+            {
+                selectedCommits = repo.History(@"Forums.sln");
             }
             return selectedCommits;
         }
