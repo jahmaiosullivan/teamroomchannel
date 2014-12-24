@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using GitTester.Models;
 using HobbyClue.Business.Services;
 using HobbyClue.Data.Dapper;
 using HobbyClue.Data.Repositories;
@@ -13,21 +15,49 @@ namespace GitTester
 {
     public class Program
     {
-        private const string RepoPath = @"C:\Dev\MSDN.Forums";
+        private const string RepoPath = @"C:\Dev\TeamRoomChannel";
 
         static void Main(string[] args)
         {
             //Clone();
            //GitLog("Jahmai");
             //GenerateError();
+            var error = ReadError();
             Console.WriteLine("{0}: Started", DateTime.Now.ToString("MM-d-yyyy h:mm:ss"));
 
-            var commits = GitFileHistory(RepoPath, @"Forums.sln");
+            IEnumerable<Commit> commits;
+            if(error != null)
+            {
+                try
+                {
+                    var index = error.File.IndexOf(RepoPath, StringComparison.OrdinalIgnoreCase);
+                    var cleanPath = (index < 0) ? error.File : error.File.Remove(index, RepoPath.Length);
+
+                    commits = GitFileHistory(RepoPath, cleanPath);
+                }
+                catch (FileNotFoundException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
 
             Console.WriteLine("{0}: Ended", DateTime.Now.ToString("MM-d-yyyy h:mm:ss"));
             Console.ReadLine();
         }
 
+
+        private static Error ReadError()
+        {
+            var errorReader = new ErrorReaderService();
+            const string stackTrace = @"at HobbyClue.Data.Dapper.SqlQueryManager.GetConnection() in c:\Dev\TeamRoomChannel\Teamroom.Data\Dapper\SqlQueryManager.cs:line 26 " +
+                                      @"at HobbyClue.Data.Dapper.SqlQueryManager.ExecuteSql[T](String sql, Object params, IDictionary`2 replaceFields, Nullable`1 commandType, Nullable`1 commandTimeOut) in c:\Dev\TeamRoomChannel\Teamroom.Data\Dapper\SqlQueryManager.cs:line 59 " +
+                                      @"at HobbyClue.Data.Dapper.BaseDapperRepository`1.Find(String query) in c:\Dev\TeamRoomChannel\Teamroom.Data\Dapper\BaseDapperRepository.cs:line 64 " +
+                                      @"at HobbyClue.Business.Services.BaseService`1.FindAll() in c:\Dev\TeamRoomChannel\Teamroom.Service\Services\BaseService.cs:line 74 " +
+                                      @"at GitTester.Program.GenerateError() in c:\Dev\TeamRoomChannel\GitTester\Program.cs:line 26 ";
+
+            var er = errorReader.GetError(stackTrace);
+            return er;
+        }
         
 
         private static void GenerateError()
@@ -134,7 +164,7 @@ namespace GitTester
             IEnumerable<Commit> selectedCommits;
             using (var repo = new Repository(repoPath))
             {
-                selectedCommits = repo.History(@"Forums.sln");
+                selectedCommits = repo.History(fileName);
             }
             return selectedCommits;
         }
