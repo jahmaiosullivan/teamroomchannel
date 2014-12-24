@@ -15,11 +15,9 @@ namespace GitTester
 {
     public class Program
     {
-        private const string RepoPath = @"C:\Dev\TeamRoomChannel";
-
         static void Main(string[] args)
         {
-            //Clone();
+            var pathToRepo = Clone(@"https://github.com/jahmaiosullivan/teamroomchannel.git");
            //GitLog("Jahmai");
             //GenerateError();
             var error = ReadError();
@@ -30,10 +28,12 @@ namespace GitTester
             {
                 try
                 {
-                    var index = error.File.IndexOf(RepoPath, StringComparison.OrdinalIgnoreCase);
-                    var cleanPath = (index < 0) ? error.File : error.File.Remove(index, RepoPath.Length);
+                    var executingRepoDir = FindExecutingRepoDirectory(error.File, pathToRepo);
+                    var index = error.File.IndexOf(executingRepoDir, StringComparison.OrdinalIgnoreCase);
+                    var cleanPath = (index < 0) ? error.File : error.File.Remove(index, executingRepoDir.Length + 1);
 
-                    commits = GitFileHistory(RepoPath, cleanPath);
+                    commits = GitFileHistory(pathToRepo, cleanPath);
+                    Console.WriteLine("Found {0}", string.Join(",", commits));
                 }
                 catch (FileNotFoundException ex)
                 {
@@ -43,6 +43,29 @@ namespace GitTester
 
             Console.WriteLine("{0}: Ended", DateTime.Now.ToString("MM-d-yyyy h:mm:ss"));
             Console.ReadLine();
+        }
+
+        private static string FindExecutingRepoDirectory(string errorFilePath, string currentRepoDirectory)
+        {
+            var directories = errorFilePath.Split(Path.DirectorySeparatorChar);
+            for (int i = 0; i < directories.Length; i++)
+            {
+                var testDirectory = currentRepoDirectory + Path.DirectorySeparatorChar + directories[i];
+                if (Directory.Exists(testDirectory))
+                {
+                    var remainder = "";
+                    for (int j = i; j < directories.Length; j++)
+                    {
+                        remainder += Path.DirectorySeparatorChar + directories[j];
+                    }
+                    if (File.Exists(currentRepoDirectory + remainder))
+                    {
+                        return errorFilePath.Substring(0, errorFilePath.LastIndexOf(remainder));
+                    }
+                }
+            }
+
+            return errorFilePath;
         }
 
 
@@ -73,16 +96,17 @@ namespace GitTester
             }
         }
 
-        static void Clone()
+        static string Clone(string cloneUrl)
         {
-            var repo = Repository.Clone(@"https://github.com/jahmaiosullivan/teamroomchannel.git", @"C:\Dev\Temp\Clones",
-                new CloneOptions
-                {
-                    Checkout = true,
-                    CredentialsProvider = LoginHandler,
-                    IsBare = false,
-                    OnCheckoutProgress = OnCheckoutProgress
-                });
+            const string folderPath = @"C:\Dev\Temp\Clones\TeamRoomChannel";
+            if(Directory.Exists(folderPath))
+                return folderPath;
+
+            Directory.CreateDirectory(folderPath);
+
+            string repo = Repository.Clone(cloneUrl, folderPath);
+
+            return folderPath;
         }
 
         private static void OnCheckoutProgress(string path, int completedSteps, int totalSteps)

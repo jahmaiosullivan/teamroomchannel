@@ -7,7 +7,7 @@ namespace GitTester
 {
     public class ErrorReaderService
     {
-        private static readonly Regex ErrorRegex = new Regex(@"^at\s+(?<methodname>.+?(?=\s+in\s+)\s)+in\s+(?<filelocation>.+?(?=line))line\s+(?<linenum>\d+)$");
+        private static readonly Regex ErrorRegex = new Regex(@"^at\s+(?<methodname>.+?(?=\s+in\s+)\s)+in\s+(?<filelocation>.+?(?=:line)):line\s+(?<linenum>\d+)$");
      
         public Error GetError(string exceptionString)
         {
