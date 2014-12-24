@@ -23,7 +23,6 @@ namespace GitTester
             var error = ReadError();
             Console.WriteLine("{0}: Started", DateTime.Now.ToString("MM-d-yyyy h:mm:ss"));
 
-            IEnumerable<Commit> commits;
             if(error != null)
             {
                 try
@@ -32,7 +31,7 @@ namespace GitTester
                     var index = error.File.IndexOf(executingRepoDir, StringComparison.OrdinalIgnoreCase);
                     var cleanPath = (index < 0) ? error.File : error.File.Remove(index, executingRepoDir.Length + 1);
 
-                    commits = GitFileHistory(pathToRepo, cleanPath);
+                    var commits = GitFileHistory(pathToRepo, cleanPath);
                     Console.WriteLine("Found {0}", string.Join(",", commits));
                 }
                 catch (FileNotFoundException ex)
