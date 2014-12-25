@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -9,7 +8,6 @@ using HobbyClue.Business.Services;
 using HobbyClue.Data.Dapper;
 using HobbyClue.Data.Repositories;
 using LibGit2Sharp;
-using LibGit2Sharp.Handlers;
 
 namespace GitTester
 {
@@ -121,12 +119,7 @@ namespace GitTester
                 Password = "Star2014"
             };
         }
-
-        private static Credentials LoginHandler(string url, string usernameFromUrl, SupportedCredentialTypes types)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         static void GitLog(string commitAuthor, int commitCount = 15)
         {
             using (var repo = new Repository(@"C:\Dev\HobbyClue"))
