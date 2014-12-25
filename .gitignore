@@ -16,3 +16,6 @@ test-results.html
 TestResults/*
 _Upgrade*
 RunThemes.Web/temp/*
+*.sln.ide/*
+*/*.sln.ide/*
+FindAllReferences/packages/*
