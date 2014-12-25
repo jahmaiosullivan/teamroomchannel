@@ -155,6 +155,7 @@
     <Compile Include="Helpers\HttpFacts.cs" />
     <Compile Include="Helpers\TagHelper.cs" />
     <Compile Include="HobbyClue.Data\BlobStorageServiceFacts.cs" />
+    <Compile Include="HobbyClue.Data\EventRepositoryFacts.cs" />
     <Compile Include="HobbyClue.Service\BaseServiceFacts.cs" />
     <Compile Include="HobbyClue.Service\EventServiceFacts.cs" />
     <Compile Include="HobbyClue.Service\ScheduleServiceFacts.cs" />
